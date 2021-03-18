@@ -4,7 +4,7 @@ Frontend for inventory system.
 
 ## Before running
 
-nmp install
+npm install
 
 ## To launch
 
