@@ -85,9 +85,24 @@ const ItemHolder = () => {
             });
             addFolderClose();
             whenGoingOnPage();
+            alert('Folder added')
             if (!currentFolderContext) {
                 window.location.reload();
             }
+        }
+    }
+
+    const deleteFolder = () => {
+        axios.delete(`http://localhost:8080/api/folders/${currentFolderId}`)
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            });
+        setCurrentFolderContext(parentFolderId)
+        whenGoingOnPage();
+        alert('Folder deleted')
+        if (!currentFolderId) {
+            window.location.reload();
         }
     }
 
@@ -96,18 +111,19 @@ const ItemHolder = () => {
             <h1>{pathName}</h1>
             <hr></hr>
             <h2>Folders</h2>
-            {folders.map(fol => <div onClick={() => getData(`http://localhost:8080/api/inventory?user=3&folder=${fol.folderId}`)}>
+            {folders.length > 0 ? folders.map(fol => <div onClick={() => getData(`http://localhost:8080/api/inventory?user=3&folder=${fol.folderId}`)}>
                 <FolderNode folder={fol}/>
-            </div>)}
+            </div>) : ''}
             <hr></hr>
             <h2>Items</h2>
-            {items.map(itm => <ItemNode item={itm}/>)}
+            {items.length > 0 ? items.map(itm => <ItemNode item={itm}/>): ''}
             <hr></hr>
             <div className="d-flex justify-content-between">
-                {currentFolderId ? <button type="button" className="btn btn-danger" onClick={() => goBackToParentFolder()}
+                {currentFolderId ? <button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
                 >Go Back</button> : ''}
                 <Link type="button" className="btn btn-primary" to="/add">Add Item</Link>
                 <button type="button" className="btn btn-secondary" onClick={addFolderShow}>Add folder</button>
+                <button type="button" className="btn btn-danger" onClick={deleteFolder}>DeleteFolder</button>
             </div>
 
             <Modal
