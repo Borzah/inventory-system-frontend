@@ -85,6 +85,9 @@ const ItemHolder = () => {
             });
             addFolderClose();
             whenGoingOnPage();
+            if (!currentFolderContext) {
+                window.location.reload();
+            }
         }
     }
 
@@ -117,9 +120,11 @@ const ItemHolder = () => {
                 <Modal.Title>Modal title</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+
                 <input class="form-control me-2" type="text" placeholder="New Folder Name" aria-label="New Folder Name"
                 onChange={(e) => setFolderToAddName(e.target.value)}></input>
                 <button class="btn btn-outline-success" type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
+
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={addFolderClose}>

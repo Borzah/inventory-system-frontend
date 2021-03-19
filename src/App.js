@@ -7,6 +7,7 @@ import AddItem from './views/AddItem';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { CurrentFolderContext } from "./contexts/CurrentFolderContext";
 import ItemDetailView from './views/ItemDetailView';
+import { CategoryView } from './views/CategoryView';
 
 function App() {
   const [currentFolderContext, setCurrentFolderContext] = useState(null);
@@ -28,6 +29,10 @@ function App() {
         path='/add'
         exact
         component={AddItem} />
+      <Route 
+        path='/categories'
+        exact
+        component={CategoryView} />
       <Route
         path='/items/:itemId'
         render={props => <ItemDetailView {...props} />}/>
