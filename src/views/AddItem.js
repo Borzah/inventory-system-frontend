@@ -15,6 +15,7 @@ const AddItem = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [category, setCategory] = useState(null);
     const [description, setDescription] = useState(null);
+    const [itemPrice, setItemPrice] = useState(null)
 
     const [resultItemId, setResultItemId] = useState(null);
 
@@ -34,6 +35,7 @@ const AddItem = () => {
         setSelectedFile(null);
         setCategory(null);
         setDescription(null);
+        setItemPrice(null);
     }
 
     useEffect(() => {
@@ -60,6 +62,9 @@ const AddItem = () => {
             }
             if (description) {
                 item = {...item, description}
+            }
+            if (itemPrice) {
+                item = {...item, itemPrice}
             }
             console.log(item);
             axios.post('http://localhost:8080/api/items', item)
@@ -119,6 +124,14 @@ const AddItem = () => {
                 placeholder="Description" 
                 aria-label="Description"
                 onChange={(e) => setDescription(e.target.value)}></input>
+
+                <input 
+                className="form-control me-2 m-1" 
+                type="number"
+                placeholder="Price" 
+                aria-label="Price"
+                onChange={(e) => setItemPrice(e.target.value)}></input>
+
                 <button className="btn btn-outline-success" type="submit" onClick={(e) => addItem(e)}>Add</button>
             </form>
 

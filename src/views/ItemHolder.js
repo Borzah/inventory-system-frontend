@@ -46,12 +46,16 @@ const ItemHolder = () => {
             })
     }
 
-    useEffect(() => {
+    const whenGoingOnPage = () => {
         if (currentFolderContext) {
             getData(`http://localhost:8080/api/inventory?user=3&folder=${currentFolderContext}`)
         } else {
             getData('http://localhost:8080/api/inventory?user=3');
         }
+    }
+
+    useEffect(() => {
+        whenGoingOnPage();
     }, []);
 
     const goBackToParentFolder = () => {
@@ -80,7 +84,7 @@ const ItemHolder = () => {
                 console.log(error);
             });
             addFolderClose();
-            window.location.reload();
+            whenGoingOnPage();
         }
     }
 

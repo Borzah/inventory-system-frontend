@@ -22,17 +22,39 @@ const ItemDetailView = (props) => {
     return (
         <div>{ item ?
         <div className="container p-5 border border-primary rounded m-5">
-            <div>{item.itemName}</div>
+            <h3>{item.itemName}</h3>
+            <hr></hr>
+            <h4>Date added</h4>
             <div>{item.dateAdded}</div>
             <hr></hr>
-            {item.imageBytes ? <img src={`data:image/png;base64,${item.imageBytes}`} width={200} height={300}/> : ''}
-            <hr></hr>
-            {item.serialNumber ? <div>{item.serialNumber}</div> : ''}
-            <hr></hr>
-            {item.categoryName ? <div>{item.categoryName}</div> : ''}
-            <hr></hr>
-            {item.description ? <div>{item.description}</div> : ''}
-            <hr></hr>
+            {item.imageBytes ? <div>
+                <h4>Item image:</h4>
+                <img src={`data:image/png;base64,${item.imageBytes}`} width={200} height={300}/>
+                <hr></hr>
+            </div> : ''}
+
+            {item.serialNumber ? <div>
+                <h4>Serial number:</h4>
+                <div>{item.serialNumber}</div>
+                <hr></hr>
+            </div> : ''}
+
+            {item.categoryName ? <div>
+                <h4>Category:</h4>
+                <div>{item.categoryName}</div>
+                <hr></hr>
+            </div> : ''}
+
+            {item.description ? <div>
+                <h4>Description:</h4>
+                <div>{item.description}</div>
+            </div> : ''}
+
+            {item.itemPrice ? <div>
+                <h4>Price:</h4>
+                <div>{item.itemPrice}</div>
+            </div> : ''}
+            
         </div> : ''
         }</div>
     )
