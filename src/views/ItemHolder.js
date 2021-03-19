@@ -34,20 +34,24 @@ const ItemHolder = () => {
         axios.get(pathString)
             .then(response => {
                 const data  = response.data
-                console.log(data)
                 setParentFolderId(data.parentFolderId)
                 setFolders(data.folders)
                 setItems(data.items)
                 setCurrentFolderId(data.currentFolderId)
                 setCurrentFolderContext(data.currentFolderId)
                 setPathName(data.currentFolderPathName)
+                console.log(data.items)
             }).catch(error => {
                 console.log(error);
             })
     }
 
     useEffect(() => {
-        getData('http://localhost:8080/api/inventory?user=3');
+        if (currentFolderContext) {
+            getData(`http://localhost:8080/api/inventory?user=3&folder=${currentFolderContext}`)
+        } else {
+            getData('http://localhost:8080/api/inventory?user=3');
+        }
     }, []);
 
     const goBackToParentFolder = () => {

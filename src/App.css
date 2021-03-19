@@ -40,3 +40,7 @@
 .element-node {
   cursor: pointer;
 }
+
+.node-link {
+  text-decoration: none;
+}

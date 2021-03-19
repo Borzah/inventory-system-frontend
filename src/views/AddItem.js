@@ -28,6 +28,14 @@ const AddItem = () => {
             })
     }
 
+    const zeroizeInput = () => {
+        setItemName("");
+        setSerialNumber("");
+        setSelectedFile(null);
+        setCategory(null);
+        setDescription(null);
+    }
+
     useEffect(() => {
         console.log(getCategories())
     }, [])
@@ -72,7 +80,8 @@ const AddItem = () => {
                 console.log(error);
             });
         }
-
+        zeroizeInput();
+        alert("Item added");
     }
 
     return (
