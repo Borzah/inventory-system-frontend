@@ -74,21 +74,23 @@ const ItemHolder = () => {
             let folderName = folderToAddName.trim();
             let newFolder = {
                 folderName: folderName,
-                parentId: currentFolderId,
                 userId: 3
+            }
+            if (currentFolderId) {
+                newFolder = {...newFolder, parentId: currentFolderId}
             }
             axios.post('http://localhost:8080/api/folders', newFolder)
               .then((response) => {
                 console.log(response);
+                addFolderClose();
+                whenGoingOnPage();
+                alert('Folder added')
               }, (error) => {
                 console.log(error);
             });
-            addFolderClose();
-            whenGoingOnPage();
-            alert('Folder added')
-            if (!currentFolderContext) {
-                window.location.reload();
-            }
+                // if (!currentFolderContext) {
+                //     window.location.reload();
+                // }
         }
     }
 
@@ -96,14 +98,13 @@ const ItemHolder = () => {
         axios.delete(`http://localhost:8080/api/folders/${currentFolderId}`)
             .then(res => {
                 console.log(res);
-                console.log(res.data);
+                setCurrentFolderContext(parentFolderId)
+                goBackToParentFolder();
+                alert('Folder deleted')
             });
-        setCurrentFolderContext(parentFolderId)
-        whenGoingOnPage();
-        alert('Folder deleted')
-        if (!currentFolderId) {
-            window.location.reload();
-        }
+        // if (!currentFolderId) {
+        //     window.location.reload();
+        // }
     }
 
     return (
@@ -118,6 +119,7 @@ const ItemHolder = () => {
             <h2>Items</h2>
             {items.length > 0 ? items.map(itm => <ItemNode item={itm}/>): ''}
             <hr></hr>
+            
             <div className="d-flex justify-content-between">
                 {currentFolderId ? <button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
                 >Go Back</button> : ''}

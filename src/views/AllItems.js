@@ -7,6 +7,7 @@ const AllItems = () => {
 
     const [items, setItems] = useState([]);
     const [searchInput, setSearchInput] = useState("");
+    const [searchAttribute, setSearchAttribute] = useState("")
 
     const getData = (pathName) => {
         axios.get(pathName)
@@ -26,7 +27,16 @@ const AllItems = () => {
     const searchForItems = (e) => {
         e.preventDefault();
         let res = searchInput.replace(/ /g, "_");
-        getData(`http://localhost:8080/api/inventory/user/3?search=${res}`);
+        //console.log(searchAttribute)
+        if (searchAttribute === "" && res === "") {
+            getData('http://localhost:8080/api/inventory/user/3');
+        } else if (searchAttribute === "") {
+            getData(`http://localhost:8080/api/inventory/user/3?search=${res}`);
+        } else if (searchInput === "") {
+            getData(`http://localhost:8080/api/inventory/user/3?attribute=${searchAttribute}`)
+        } else {
+            getData(`http://localhost:8080/api/inventory/user/3?attribute=${searchAttribute}&search=${res}`);
+        }
     }
 
     return (
@@ -36,8 +46,29 @@ const AllItems = () => {
 
         <div className="container">
         <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) => setSearchInput(e.target.value)}></input>
+
+        <input 
+            class="form-control me-2" 
+            type="search" placeholder="Search" 
+            aria-label="Search" 
+            onChange={(e) => setSearchInput(e.target.value)}>
+        </input>
+
+        <select 
+            className="form-select"
+            id="inputGroupSelect01"
+            onChange={(e) => setSearchAttribute(e.target.value)}>
+            <option selected value="">Search by</option>
+            <option value="name">Name</option>
+            <option value="serialNumber">Serial number</option>
+            <option value="category">Category</option>
+            <option value="description">Description</option>
+            <option value="price">Price</option>
+            
+        </select>
+
         <button class="btn btn-outline-success" type="submit" onClick={(e) => searchForItems(e)}>Search</button>
+        
         </form>
         </div>
 

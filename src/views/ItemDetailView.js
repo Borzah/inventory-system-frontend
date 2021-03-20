@@ -2,10 +2,12 @@ import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
+import { useHistory } from "react-router-dom";
 
 const ItemDetailView = (props) => {
 
     const { itemId } = props.match.params;
+    const history = useHistory();
 
     const [item, setItem] = useState();
 
@@ -18,6 +20,15 @@ const ItemDetailView = (props) => {
                 console.log(error);
             })
     }, [])
+
+    const deleteItem = () => {
+        axios.delete(`http://localhost:8080/api/items/${itemId}`)
+            .then(res => {
+                console.log(res);
+                history.goBack();
+                alert('Item deleted')
+            });
+    }
 
     return (
         <div>{ item ?
@@ -54,9 +65,14 @@ const ItemDetailView = (props) => {
                 <h4>Price:</h4>
                 <div>{item.itemPrice}</div>
             </div> : ''}
+
+            <div className="d-flex justify-content-between">
+                <button type="button" className="btn btn-danger" onClick={deleteItem}>Delete item</button>
+            </div>
             
         </div> : ''
-        }</div>
+        }
+        </div>
     )
 }
 

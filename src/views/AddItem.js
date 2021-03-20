@@ -81,12 +81,12 @@ const AddItem = () => {
                             console.log(error);
                         });
                 }
+                zeroizeInput();
+                alert("Item added");
               }, (error) => {
                 console.log(error);
             });
         }
-        zeroizeInput();
-        alert("Item added");
     }
 
     return (

@@ -23,10 +23,10 @@ export const CategoryView = () => {
             axios.post('http://localhost:8080/api/categories', category)
               .then((response) => {
                 console.log(response);
+                window.location.reload();
               }, (error) => {
                 console.log(error);
             });
-            window.location.reload();
         }
     }
 
