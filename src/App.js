@@ -26,15 +26,16 @@ function App() {
         exact
         component={AllItems} />
       <Route 
-        path='/add'
+        path='/item/:parameter'
         exact
-        component={AddItem} />
+        render={props => <AddItem {...props} />} />
       <Route 
         path='/categories'
         exact
         component={CategoryView} />
       <Route
         path='/items/:itemId'
+        exact
         render={props => <ItemDetailView {...props} />}/>
     </div>
     </Router>

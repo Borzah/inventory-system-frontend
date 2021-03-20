@@ -123,7 +123,7 @@ const ItemHolder = () => {
             <div className="d-flex justify-content-between">
                 {currentFolderId ? <button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
                 >Go Back</button> : ''}
-                <Link type="button" className="btn btn-primary" to="/add">Add Item</Link>
+                <Link type="button" className="btn btn-primary" to="/item/add">Add Item</Link>
                 <button type="button" className="btn btn-secondary" onClick={addFolderShow}>Add folder</button>
                 <button type="button" className="btn btn-danger" onClick={deleteFolder}>DeleteFolder</button>
             </div>

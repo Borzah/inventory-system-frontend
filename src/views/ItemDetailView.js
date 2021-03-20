@@ -9,6 +9,8 @@ const ItemDetailView = (props) => {
     const { itemId } = props.match.params;
     const history = useHistory();
 
+    const updateString = `/item/${itemId}`
+
     const [item, setItem] = useState();
 
     useEffect(() => {
@@ -68,6 +70,8 @@ const ItemDetailView = (props) => {
 
             <div className="d-flex justify-content-between">
                 <button type="button" className="btn btn-danger" onClick={deleteItem}>Delete item</button>
+                <Link type="button" className="btn btn-primary" to={updateString}>Update Item</Link>
+                <button type="button" className="btn btn-warning" onClick={() => {history.goBack();}}>Go back</button>
             </div>
             
         </div> : ''
