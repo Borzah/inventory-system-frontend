@@ -13,12 +13,6 @@ const ItemHolder = () => {
 
     const history = useHistory();
 
-    useEffect(() => {
-        if (user === undefined) {
-            history.push("/")
-        }
-    }, [])
-
     const [folders, setFolders] = useState([]);
     const [items, setItems] = useState([]);
     const [parentFolderId, setParentFolderId] = useState();
@@ -71,7 +65,11 @@ const ItemHolder = () => {
     }
 
     useEffect(() => {
-        whenGoingOnPage();
+        if (typeof user === 'undefined') {
+            history.push("/")
+        } else {
+            whenGoingOnPage();
+        }
     }, []);
 
     const goBackToParentFolder = () => {
@@ -90,7 +88,7 @@ const ItemHolder = () => {
             let folderName = folderToAddName.trim();
             let newFolder = {
                 folderName: folderName,
-                userId: 3
+                userId: user.userId
             }
             if (currentFolderId) {
                 newFolder = {...newFolder, parentId: currentFolderId}

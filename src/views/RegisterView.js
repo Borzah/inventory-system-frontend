@@ -1,12 +1,31 @@
 import { useState } from 'react'
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 const RegisterView = () => {
+
+    const history = useHistory();
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
     const register = () => {
-        
+        if (!username || !password) {
+            alert("Cannot be empty fields!")
+        } else {
+            let registerUser = {
+                username,
+                password
+            }
+            axios.post('http://localhost:8080/api/user/register', registerUser)
+            .then(response => {
+                console.log(response)
+                alert('You are registered!')
+                history.push("/")
+            }).catch(error => {
+                console.log(error);
+            })
+        }
     }
 
     return (
@@ -29,7 +48,7 @@ const RegisterView = () => {
                 type="text" 
                 placeholder="Password" 
                 aria-label="Password"
-                onChange={(e) => setUsername(e.target.value)}>
+                onChange={(e) => setPassword(e.target.value)}>
             </input>
 
             <hr></hr>

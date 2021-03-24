@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import { LOGIN_USER } from '../constants/actionTypes';
@@ -13,6 +13,19 @@ const HomeView = () => {
     const history = useHistory();
 
     const user = useSelector(state => state);
+
+    useEffect(() => {
+        if (typeof user !== 'undefined') {
+            if (user.role === 'USER') {
+                history.push("/inventory")
+            } else {
+                history.push("/admin")
+            }
+        } else {
+            console.log("NO user yet!")
+        }
+    }, [])
+
     const dispatch = useDispatch();
 
     const login = () => {
@@ -31,7 +44,11 @@ const HomeView = () => {
                     type: LOGIN_USER,
                     payload: data
                 })
-                history.push("/inventory")
+                if (data.role === 'USER') {
+                    history.push("/inventory")
+                } else {
+                    history.push("/admin")
+                }
             }).catch(error => {
                 console.log(error);
             })

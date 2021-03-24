@@ -3,8 +3,13 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { useState, useContext, useEffect } from 'react';
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const AddItem = (props) => {
+
+    const history = useHistory();
+    const user = useSelector(state => state)
 
     const { parameter } = props.match.params;
 
@@ -22,7 +27,9 @@ const AddItem = (props) => {
     const [resultItemId, setResultItemId] = useState(null);
 
     const getCategories = () => {
-        axios.get('http://localhost:8080/api/categories')
+        axios.get(`http://localhost:8080/api/categories/user/${user.userId}`, {headers: {
+            'Authorization': `Bearer ${user.token}`
+          }})
             .then(response => {
                 const data  = response.data
                 setCategories(data);
@@ -49,9 +56,11 @@ const AddItem = (props) => {
     }
 
     useEffect(() => {
-        console.log(getCategories())
+        getCategories()
         if (parameter !== "add") {
-            axios.get(`http://localhost:8080/api/items/${parameter}`)
+            axios.get(`http://localhost:8080/api/items/${parameter}`, {headers: {
+                'Authorization': `Bearer ${user.token}`
+              }})
             .then(response => {
                 const data  = response.data
                 console.log(data);
@@ -73,7 +82,7 @@ const AddItem = (props) => {
         } else {
             let item = {
                 itemName,
-                userId: 3,
+                userId: user.userId,
             }
             if (currentFolderContext) {
                 item = {...item, folderId: currentFolderContext}
@@ -95,14 +104,19 @@ const AddItem = (props) => {
             axios({
                 method: requestMethod,
                 url: requestString,
-                data: item 
+                data: item,
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
               .then((response) => {
                 let itemId = response.data.itemId;
                 if (selectedFile) {
                     let formData = new FormData();
                     formData.append("imageFile", selectedFile);
-                    axios.post(`http://localhost:8080/api/images/${itemId}`, formData)
+                    axios.post(`http://localhost:8080/api/images/${itemId}`, formData, {headers: {
+                        'Authorization': `Bearer ${user.token}`
+                      }})
                         .then((response) => {
                             console.log(response);
                         }, (error) => {

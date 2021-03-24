@@ -41,6 +41,10 @@
   cursor: pointer;
 }
 
+.nav-pointer {
+  cursor: pointer;
+}
+
 .node-link {
   text-decoration: none;
 }

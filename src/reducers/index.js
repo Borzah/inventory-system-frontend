@@ -1,11 +1,6 @@
 import { LOGIN_USER, LOGOUT_USER } from '../constants/actionTypes';
 
-const initialState = {
-        userId: null,
-        username: null,
-        token: null,
-        role: null
-};
+const initialState = {};
   
 function rootReducer(state = initialState, action) {
     const { type, payload } = action;

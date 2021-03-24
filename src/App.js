@@ -1,7 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import ItemHolder from './views/ItemHolder';
-import ClientNavbar from './components/ClientNavbar';
+import Navbar from './components/Navbar';
 import AllItems from './views/AllItems';
 import AddItem from './views/AddItem';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -12,6 +12,7 @@ import RegisterView from './views/RegisterView';
 import HomeView from './views/HomeView';
 import store from './store'
 import { Provider } from 'react-redux'
+import AdminView from './views/AdminView';
 
 function App() {
   const [currentFolderContext, setCurrentFolderContext] = useState(null);
@@ -21,7 +22,7 @@ function App() {
     <CurrentFolderContext.Provider value={[currentFolderContext, setCurrentFolderContext]}>
     <Router>
     <div className="App">
-    <ClientNavbar />
+    <Navbar />
     <Route 
         path='/'
         exact
@@ -50,6 +51,10 @@ function App() {
         path='/items/:itemId'
         exact
         render={props => <ItemDetailView {...props} />}/>
+      <Route 
+        path='/admin'
+        exact
+        component={AdminView} />
     </div>
     </Router>
     </CurrentFolderContext.Provider>
