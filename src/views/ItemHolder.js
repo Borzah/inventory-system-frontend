@@ -6,15 +6,27 @@ import { Link } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const ItemHolder = () => {
-;
+
+    const history = useHistory();
+
+    useEffect(() => {
+        if (user === undefined) {
+            history.push("/")
+        }
+    }, [])
+
     const [folders, setFolders] = useState([]);
     const [items, setItems] = useState([]);
     const [parentFolderId, setParentFolderId] = useState();
     const [currentFolderId, setCurrentFolderId] = useState();
     const [pathName, setPathName] = useState()
     const [showAddFolder, setShowAddFolder] = useState(false);
+
+    const user = useSelector(state => state)
 
     const [folderToAddName, setFolderToAddName] = useState("");
     const [folderToAddParentId, setFolderToAddParentId] = useState();
@@ -30,8 +42,12 @@ const ItemHolder = () => {
         console.log(currentFolderId)
     }
 
-    const getData = (pathString) => {
-        axios.get(pathString)
+    const getData = (pathString, ) => {
+        axios.get(pathString, {
+            headers: {
+              'Authorization': `Bearer ${user.token}`
+            }
+          })
             .then(response => {
                 const data  = response.data
                 setParentFolderId(data.parentFolderId)
@@ -48,9 +64,9 @@ const ItemHolder = () => {
 
     const whenGoingOnPage = () => {
         if (currentFolderContext) {
-            getData(`http://localhost:8080/api/inventory?user=3&folder=${currentFolderContext}`)
+            getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${currentFolderContext}`)
         } else {
-            getData('http://localhost:8080/api/inventory?user=3');
+            getData(`http://localhost:8080/api/inventory?user=${user.userId}`);
         }
     }
 
@@ -60,9 +76,9 @@ const ItemHolder = () => {
 
     const goBackToParentFolder = () => {
         if (parentFolderId) {
-            getData(`http://localhost:8080/api/inventory?user=3&folder=${parentFolderId}`);
+            getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${parentFolderId}`);
         } else {
-            getData('http://localhost:8080/api/inventory?user=3');
+            getData(`http://localhost:8080/api/inventory?user=${user.userId}`);
         }
     }
 
@@ -79,7 +95,9 @@ const ItemHolder = () => {
             if (currentFolderId) {
                 newFolder = {...newFolder, parentId: currentFolderId}
             }
-            axios.post('http://localhost:8080/api/folders', newFolder)
+            axios.post('http://localhost:8080/api/folders', newFolder, {headers: {
+                'Authorization': `Bearer ${user.token}`
+              }})
               .then((response) => {
                 console.log(response);
                 addFolderClose();
@@ -95,7 +113,11 @@ const ItemHolder = () => {
     }
 
     const deleteFolder = () => {
-        axios.delete(`http://localhost:8080/api/folders/${currentFolderId}`)
+        axios.delete(`http://localhost:8080/api/folders/${currentFolderId}`, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+              }
+        })
             .then(res => {
                 console.log(res);
                 setCurrentFolderContext(parentFolderId)
@@ -112,7 +134,7 @@ const ItemHolder = () => {
             <h1>{pathName}</h1>
             <hr></hr>
             <h2>Folders</h2>
-            {folders.length > 0 ? folders.map(fol => <div onClick={() => getData(`http://localhost:8080/api/inventory?user=3&folder=${fol.folderId}`)}>
+            {folders.length > 0 ? folders.map(fol => <div onClick={() => getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
                 <FolderNode folder={fol}/>
             </div>) : ''}
             <hr></hr>

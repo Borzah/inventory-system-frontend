@@ -8,17 +8,30 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { CurrentFolderContext } from "./contexts/CurrentFolderContext";
 import ItemDetailView from './views/ItemDetailView';
 import { CategoryView } from './views/CategoryView';
+import RegisterView from './views/RegisterView';
+import HomeView from './views/HomeView';
+import store from './store'
+import { Provider } from 'react-redux'
 
 function App() {
   const [currentFolderContext, setCurrentFolderContext] = useState(null);
 
   return (
+    <Provider store={store}>
     <CurrentFolderContext.Provider value={[currentFolderContext, setCurrentFolderContext]}>
     <Router>
     <div className="App">
     <ClientNavbar />
     <Route 
         path='/'
+        exact
+        component={HomeView} />
+    <Route 
+        path='/register'
+        exact
+        component={RegisterView} />
+    <Route 
+        path='/inventory'
         exact
         component={ItemHolder} />
       <Route 
@@ -40,6 +53,7 @@ function App() {
     </div>
     </Router>
     </CurrentFolderContext.Provider>
+    </Provider>
   );
 }
 

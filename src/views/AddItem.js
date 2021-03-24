@@ -174,7 +174,7 @@ const AddItem = (props) => {
                 :<button className="btn btn-outline-success" type="submit" onClick={(e) => addItem(e)}>Update</button> }
             </form>
 
-            <Link type="button" className="btn btn-secondary" to="/">Cancel</Link>
+            <Link type="button" className="btn btn-secondary" to="/inventory">Cancel</Link>
         </div>
     )
 }
