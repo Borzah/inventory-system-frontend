@@ -99,9 +99,9 @@ const ItemHolder = () => {
                 addFolderClose();
                 whenGoingOnPage();
                 alert('Folder added')
-              }, (error) => {
+              }).catch(error => {
                 console.log(error);
-            });
+              });
         }
     }
 
