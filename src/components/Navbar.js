@@ -37,11 +37,9 @@ const Navbar = () => {
 
     const logout = (e) => {
         e.preventDefault();
-        // console.log(user.userId)
-        // console.log(user.token)
         let userId = user.userId
         let token = user.token
-        axios.post(`http://localhost:8080/api/user/logout/${userId}`, {}, {headers: {
+        axios.post(`/api/user/logout/${userId}`, {}, {headers: {
             'Authorization': `Bearer ${token}`
           }})
         .then(response => {
@@ -92,12 +90,5 @@ const Navbar = () => {
     </nav>
     )
 }
-
-                    // <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    //     <li><a className="dropdown-item" href="#">Action</a></li>
-                    //     <li><a className="dropdown-item" href="#">Another action</a></li>
-                    //     <li><hr className="dropdown-divider"></hr></li>
-                    //     <li><a className="dropdown-item" href="#">Something else here</a></li>
-                    // </ul>
 
 export default Navbar;

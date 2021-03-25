@@ -23,7 +23,6 @@ const ItemHolder = () => {
     const user = useSelector(state => state)
 
     const [folderToAddName, setFolderToAddName] = useState("");
-    const [folderToAddParentId, setFolderToAddParentId] = useState();
 
     const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
 
@@ -33,10 +32,9 @@ const ItemHolder = () => {
     }
     const addFolderShow = () => {
         setShowAddFolder(true);
-        console.log(currentFolderId)
     }
 
-    const getData = (pathString, ) => {
+    const getData = (pathString) => {
         axios.get(pathString, {
             headers: {
               'Authorization': `Bearer ${user.token}`
@@ -50,7 +48,6 @@ const ItemHolder = () => {
                 setCurrentFolderId(data.currentFolderId)
                 setCurrentFolderContext(data.currentFolderId)
                 setPathName(data.currentFolderPathName)
-                console.log(data.items)
             }).catch(error => {
                 console.log(error);
             })
@@ -58,15 +55,17 @@ const ItemHolder = () => {
 
     const whenGoingOnPage = () => {
         if (currentFolderContext) {
-            getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${currentFolderContext}`)
+            getData(`/api/inventory?user=${user.userId}&folder=${currentFolderContext}`)
         } else {
-            getData(`http://localhost:8080/api/inventory?user=${user.userId}`);
+            getData(`/api/inventory?user=${user.userId}`);
         }
     }
 
     useEffect(() => {
         if (typeof user === 'undefined') {
             history.push("/")
+        } else if (user.role === "ADMIN") {
+            history.push("/admin")
         } else {
             whenGoingOnPage();
         }
@@ -74,9 +73,9 @@ const ItemHolder = () => {
 
     const goBackToParentFolder = () => {
         if (parentFolderId) {
-            getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${parentFolderId}`);
+            getData(`/api/inventory?user=${user.userId}&folder=${parentFolderId}`);
         } else {
-            getData(`http://localhost:8080/api/inventory?user=${user.userId}`);
+            getData(`/api/inventory?user=${user.userId}`);
         }
     }
 
@@ -93,38 +92,30 @@ const ItemHolder = () => {
             if (currentFolderId) {
                 newFolder = {...newFolder, parentId: currentFolderId}
             }
-            axios.post('http://localhost:8080/api/folders', newFolder, {headers: {
+            axios.post('/api/folders', newFolder, {headers: {
                 'Authorization': `Bearer ${user.token}`
               }})
               .then((response) => {
-                console.log(response);
                 addFolderClose();
                 whenGoingOnPage();
                 alert('Folder added')
               }, (error) => {
                 console.log(error);
             });
-                // if (!currentFolderContext) {
-                //     window.location.reload();
-                // }
         }
     }
 
     const deleteFolder = () => {
-        axios.delete(`http://localhost:8080/api/folders/${currentFolderId}`, {
+        axios.delete(`/api/folders/${currentFolderId}`, {
             headers: {
                 'Authorization': `Bearer ${user.token}`
               }
         })
             .then(res => {
-                console.log(res);
                 setCurrentFolderContext(parentFolderId)
                 goBackToParentFolder();
                 alert('Folder deleted')
             });
-        // if (!currentFolderId) {
-        //     window.location.reload();
-        // }
     }
 
     return (
@@ -174,5 +165,5 @@ const ItemHolder = () => {
         </div>
     )
 }
-//onClick={getData(`http://localhost:8080/api/inventory?user=1&folder=${previousFolderId}`)}
+
 export default ItemHolder;

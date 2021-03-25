@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import { LOGIN_USER } from '../constants/actionTypes';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import { CategoriesContext } from '../contexts/CategoriesContext';
 
 const HomeView = () => {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+
+    const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
 
     const history = useHistory();
 
@@ -36,7 +39,7 @@ const HomeView = () => {
                 username,
                 password
             }
-            axios.post('http://localhost:8080/api/user/login', loginUser)
+            axios.post('/api/user/login', loginUser)
             .then(response => {
                 const data  = response.data
                 console.log(data);
@@ -46,6 +49,7 @@ const HomeView = () => {
                 })
                 if (data.role === 'USER') {
                     history.push("/inventory")
+                    getCategories(data);
                 } else {
                     history.push("/admin")
                 }
@@ -55,6 +59,18 @@ const HomeView = () => {
         }
     }
 
+    const getCategories = (user) => {
+        axios.get(`api/categories/user/${user.userId}`, {headers: {
+            'Authorization': `Bearer ${user.token}`
+          }})
+            .then(response => {
+                const data  = response.data
+                setCategoriesContext(data)
+            }).catch(error => {
+                console.log(error);
+            })
+    }
+
     return (
         <div className="container p-5 border border-primary rounded m-5">
             <h1>Inventory app</h1>
@@ -62,7 +78,7 @@ const HomeView = () => {
 
             <input 
                 className="form-control me-2" 
-                type="text" 
+                type="email" 
                 placeholder="Username" 
                 aria-label="Username"
                 onChange={(e) => setUsername(e.target.value)}>
@@ -72,7 +88,7 @@ const HomeView = () => {
 
             <input 
                 className="form-control me-2" 
-                type="text" 
+                type="password" 
                 placeholder="Password" 
                 aria-label="Password"
                 onChange={(e) => setPassword(e.target.value)}>

@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -17,23 +16,28 @@ const ItemDetailView = (props) => {
     const [item, setItem] = useState();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/inventory/${itemId}`, {headers: {
-            'Authorization': `Bearer ${user.token}`
-          }})
-            .then(response => {
-                const data  = response.data
-                setItem(data);
-            }).catch(error => {
-                console.log(error);
-            })
+        if (typeof user === 'undefined') {
+            history.push("/")
+        } else if (user.role === "ADMIN") {
+            history.push("/admin")
+        } else {
+            axios.get(`/api/inventory/${itemId}`, { headers: {
+                'Authorization': `Bearer ${user.token}`
+            }})
+                .then(response => {
+                    const data  = response.data
+                    setItem(data);
+                }).catch(error => {
+                    console.log(error);
+                })
+        }
     }, [])
 
     const deleteItem = () => {
-        axios.delete(`http://localhost:8080/api/items/${itemId}`, {headers: {
+        axios.delete(`/api/items/${itemId}`, {headers: {
             'Authorization': `Bearer ${user.token}`
           }})
             .then(res => {
-                console.log(res);
                 history.goBack();
                 alert('Item deleted')
             });

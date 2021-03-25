@@ -1,10 +1,10 @@
-import React from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { CategoriesContext } from '../contexts/CategoriesContext';
 
 const AddItem = (props) => {
 
@@ -15,7 +15,7 @@ const AddItem = (props) => {
 
     const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
 
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useContext(CategoriesContext);
 
     const [itemName, setItemName] = useState("");
     const [serialNumber, setSerialNumber] = useState(null);
@@ -23,29 +23,6 @@ const AddItem = (props) => {
     const [category, setCategory] = useState(null);
     const [description, setDescription] = useState(null);
     const [itemPrice, setItemPrice] = useState(null)
-
-    const [resultItemId, setResultItemId] = useState(null);
-
-    const getCategories = () => {
-        axios.get(`http://localhost:8080/api/categories/user/${user.userId}`, {headers: {
-            'Authorization': `Bearer ${user.token}`
-          }})
-            .then(response => {
-                const data  = response.data
-                setCategories(data);
-            }).catch(error => {
-                console.log(error);
-            })
-    }
-
-    const zeroizeInput = () => {
-        setItemName("");
-        setSerialNumber(null);
-        setSelectedFile(null);
-        setCategory(null);
-        setDescription(null);
-        setItemPrice(null);
-    }
 
     const fillInput = (name, serialNum, cat, desc, price) => {
         setItemName(name);
@@ -56,26 +33,30 @@ const AddItem = (props) => {
     }
 
     useEffect(() => {
-        getCategories()
-        if (parameter !== "add") {
-            axios.get(`http://localhost:8080/api/items/${parameter}`, {headers: {
-                'Authorization': `Bearer ${user.token}`
-              }})
-            .then(response => {
-                const data  = response.data
-                console.log(data);
-                fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice)
-            }).catch(error => {
-                console.log(error);
-            })
+        if (typeof user === 'undefined') {
+            history.push("/")
+        } else if (user.role === "ADMIN") {
+            history.push("/admin")
+        } else {
+            if (parameter !== "add") {
+                axios.get(`/api/items/${parameter}`, {headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }})
+                .then(response => {
+                    const data  = response.data
+                    fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice)
+                }).catch(error => {
+                    console.log(error);
+                })
+            }
         }
     }, [])
 
     const addItem = (e) => {
         e.preventDefault();
-        let requestString = 'http://localhost:8080/api/items';
+        let requestString = '/api/items';
         if (parameter !== "add") {
-            requestString = `http://localhost:8080/api/items/${parameter}`;
+            requestString = `/api/items/${parameter}`;
         }
         if (itemName.trim() === "") {
             alert("Item name must be present")
@@ -99,7 +80,6 @@ const AddItem = (props) => {
             if (itemPrice) {
                 item = {...item, itemPrice}
             }
-            console.log(item);
             let requestMethod = parameter === "add" ? 'post' : 'put';
             axios({
                 method: requestMethod,
@@ -114,19 +94,14 @@ const AddItem = (props) => {
                 if (selectedFile) {
                     let formData = new FormData();
                     formData.append("imageFile", selectedFile);
-                    axios.post(`http://localhost:8080/api/images/${itemId}`, formData, {headers: {
+                    axios.post(`/api/images/${itemId}`, formData, {headers: {
                         'Authorization': `Bearer ${user.token}`
                       }})
                         .then((response) => {
-                            console.log(response);
                         }, (error) => {
-                            console.log(error);
                         });
                 }
-                if (parameter === "add") {
-                    zeroizeInput();
-                }
-                alert("Item added");
+                history.goBack();
               }, (error) => {
                 console.log(error);
             });
@@ -187,6 +162,8 @@ const AddItem = (props) => {
                 <button className="btn btn-outline-success" type="submit" onClick={(e) => addItem(e)}>Add</button>
                 :<button className="btn btn-outline-success" type="submit" onClick={(e) => addItem(e)}>Update</button> }
             </form>
+
+            <hr></hr>
 
             <Link type="button" className="btn btn-secondary" to="/inventory">Cancel</Link>
         </div>

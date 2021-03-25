@@ -20,7 +20,6 @@ const AllItems = () => {
           }})
             .then(response => {
                 const data  = response.data
-                console.log(data)
                 setItems(data)
             }).catch(error => {
                 console.log(error);
@@ -28,21 +27,26 @@ const AllItems = () => {
     }
 
     useEffect(() => {
-        getData(`http://localhost:8080/api/inventory/user/${user.userId}`);
+        if (typeof user === 'undefined') {
+            history.push("/")
+        } else if (user.role === "ADMIN") {
+            history.push("/admin")
+        } else {
+            getData(`/api/inventory/user/${user.userId}`);
+        }
     }, []);
 
     const searchForItems = (e) => {
         e.preventDefault();
         let res = searchInput.replace(/ /g, "_");
-        //console.log(searchAttribute)
         if (searchAttribute === "" && res === "") {
-            getData(`http://localhost:8080/api/inventory/user/${user.userId}`)
+            getData(`/api/inventory/user/${user.userId}`)
         } else if (searchAttribute === "") {
-            getData(`http://localhost:8080/api/inventory/user/${user.userId}?search=${res}`);
+            getData(`/api/inventory/user/${user.userId}?search=${res}`);
         } else if (searchInput === "") {
-            getData(`http://localhost:8080/api/inventory/user/${user.userId}?attribute=${searchAttribute}`)
+            getData(`/api/inventory/user/${user.userId}?attribute=${searchAttribute}`)
         } else {
-            getData(`http://localhost:8080/api/inventory/user/${user.userId}?attribute=${searchAttribute}&search=${res}`);
+            getData(`/api/inventory/user/${user.userId}?attribute=${searchAttribute}&search=${res}`);
         }
     }
 
@@ -50,10 +54,8 @@ const AllItems = () => {
         <div>
         <h2>Items</h2>
         <hr></hr>
-
         <div className="container">
         <form class="d-flex">
-
         <input 
             class="form-control me-2" 
             type="search" placeholder="Search" 

@@ -12,14 +12,13 @@ const AdminView = () => {
     const [stats, setStats] = useState([]);
 
     const getData = () => {
-        axios.get("http://localhost:8080/api/statistics", {
+        axios.get("/api/statistics", {
             headers: {
               'Authorization': `Bearer ${user.token}`
             }
           })
             .then(response => {
                 const data  = response.data
-                console.log(data);
                 setStats(data);
             }).catch(error => {
                 console.log(error);
@@ -29,6 +28,8 @@ const AdminView = () => {
     useEffect(() => {
         if (typeof user === 'undefined') {
             history.push("/")
+        } else if (user.role === "USER") {
+            history.push("/inventory")
         } else {
             getData();
         }

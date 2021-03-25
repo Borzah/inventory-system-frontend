@@ -17,7 +17,7 @@ const RegisterView = () => {
                 username,
                 password
             }
-            axios.post('http://localhost:8080/api/user/register', registerUser)
+            axios.post('/api/user/register', registerUser)
             .then(response => {
                 console.log(response)
                 alert('You are registered!')
@@ -35,7 +35,7 @@ const RegisterView = () => {
 
             <input 
                 className="form-control me-2" 
-                type="text" 
+                type="email" 
                 placeholder="Username" 
                 aria-label="Username"
                 onChange={(e) => setUsername(e.target.value)}>
@@ -45,7 +45,7 @@ const RegisterView = () => {
 
             <input 
                 className="form-control me-2" 
-                type="text" 
+                type="password" 
                 placeholder="Password" 
                 aria-label="Password"
                 onChange={(e) => setPassword(e.target.value)}>

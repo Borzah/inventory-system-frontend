@@ -6,17 +6,28 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { CategoriesContext } from '../contexts/CategoriesContext';
 
 export const CategoryView = () => {
 
     const history = useHistory();
     const user = useSelector(state => state)
 
+    const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
+
     const [categoryToAdd, setCategoryToAdd] = useState("");
     const [show, setShow] = useState(false);
 
     const closeAddCategory = () => setShow(false);
     const openAddCategory = () => setShow(true);
+
+    useEffect(() => {
+        if (typeof user === 'undefined') {
+            history.push("/")
+        } else if (user.role === "ADMIN") {
+            history.push("/admin")
+        }
+    }, [])
 
     const addNewCategory = (e) => {
         e.preventDefault();
@@ -27,11 +38,11 @@ export const CategoryView = () => {
                 categoryName: categoryToAdd,
                 userId: user.userId
             }
-            axios.post('http://localhost:8080/api/categories', category, {headers: {
+            axios.post('/api/categories', category, {headers: {
                 'Authorization': `Bearer ${user.token}`
               }})
               .then((response) => {
-                console.log(response);
+                setCategoriesContext([...categoriesContext, response.data])
                 alert("Category added")
               }, (error) => {
                 console.log(error);
@@ -42,6 +53,8 @@ export const CategoryView = () => {
     return (
         <div className="container p-5 border border-primary rounded m-5">
             <h3>Categories</h3>
+            <hr></hr>
+            {categoriesContext.map(category => <div><h4>{category.categoryName}</h4><hr></hr></div>)}
             
             <Button variant="primary" onClick={openAddCategory}>
                 Add new category!
