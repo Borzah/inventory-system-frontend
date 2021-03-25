@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { deleteItemWithApi, getItemFromApi } from '../services';
 
 const ItemDetailView = (props) => {
 
@@ -21,9 +21,7 @@ const ItemDetailView = (props) => {
         } else if (user.role === "ADMIN") {
             history.push("/admin")
         } else {
-            axios.get(`/api/inventory/${itemId}`, { headers: {
-                'Authorization': `Bearer ${user.token}`
-            }})
+            getItemFromApi(itemId, user.token)
                 .then(response => {
                     const data  = response.data
                     setItem(data);
@@ -34,9 +32,7 @@ const ItemDetailView = (props) => {
     }, [])
 
     const deleteItem = () => {
-        axios.delete(`/api/items/${itemId}`, {headers: {
-            'Authorization': `Bearer ${user.token}`
-          }})
+        deleteItemWithApi(itemId, user.token)
             .then(res => {
                 history.goBack();
                 alert('Item deleted')

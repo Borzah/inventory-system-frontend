@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table'
+import { getAdminStatistics } from '../services';
 
 const AdminView = () => {
 
@@ -12,11 +13,7 @@ const AdminView = () => {
     const [stats, setStats] = useState([]);
 
     const getData = () => {
-        axios.get("/api/statistics", {
-            headers: {
-              'Authorization': `Bearer ${user.token}`
-            }
-          })
+        getAdminStatistics(user.token)
             .then(response => {
                 const data  = response.data
                 setStats(data);

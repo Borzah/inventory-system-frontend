@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import { registerUserIn } from '../services';
 
 const RegisterView = () => {
 
@@ -17,14 +18,15 @@ const RegisterView = () => {
                 username,
                 password
             }
-            axios.post('/api/user/register', registerUser)
+            registerUserIn(registerUser)
             .then(response => {
                 console.log(response)
                 alert('You are registered!')
                 history.push("/")
             }).catch(error => {
-                console.log(error);
-            })
+                let errMsg =  (error.response.data.message);
+                alert(errMsg);
+          });
         }
     }
 

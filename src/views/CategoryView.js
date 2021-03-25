@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
+import { addCategoryToApi } from '../services';
 
 export const CategoryView = () => {
 
@@ -38,15 +39,14 @@ export const CategoryView = () => {
                 categoryName: categoryToAdd,
                 userId: user.userId
             }
-            axios.post('/api/categories', category, {headers: {
-                'Authorization': `Bearer ${user.token}`
-              }})
+            addCategoryToApi(category, user.token)
               .then((response) => {
                 setCategoriesContext([...categoriesContext, response.data])
                 alert("Category added")
-              }, (error) => {
-                console.log(error);
-            });
+              }).catch(error => {
+                let errMsg =  (error.response.data.message);
+                alert(errMsg);
+          });
         }
     }
 

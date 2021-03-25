@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { addFodlerWithApi, deleteFolderWithApi, getInventoryContent } from '../services';
 
 const ItemHolder = () => {
 
@@ -35,11 +36,7 @@ const ItemHolder = () => {
     }
 
     const getData = (pathString) => {
-        axios.get(pathString, {
-            headers: {
-              'Authorization': `Bearer ${user.token}`
-            }
-          })
+        getInventoryContent(pathString, user.token)
             .then(response => {
                 const data  = response.data
                 setParentFolderId(data.parentFolderId)
@@ -92,25 +89,20 @@ const ItemHolder = () => {
             if (currentFolderId) {
                 newFolder = {...newFolder, parentId: currentFolderId}
             }
-            axios.post('/api/folders', newFolder, {headers: {
-                'Authorization': `Bearer ${user.token}`
-              }})
+            addFodlerWithApi(newFolder, user.token)
               .then((response) => {
-                addFolderClose();
-                whenGoingOnPage();
-                alert('Folder added')
+                    addFolderClose();
+                    whenGoingOnPage();
+                    alert('Folder added')
               }).catch(error => {
-                console.log(error);
+                    let errMsg =  (error.response.data.message);
+                    alert(errMsg);
               });
         }
     }
 
     const deleteFolder = () => {
-        axios.delete(`/api/folders/${currentFolderId}`, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-              }
-        })
+        deleteFolderWithApi(currentFolderId, user.token)
             .then(res => {
                 setCurrentFolderContext(parentFolderId)
                 goBackToParentFolder();

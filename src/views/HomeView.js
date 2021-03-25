@@ -5,6 +5,10 @@ import { LOGIN_USER } from '../constants/actionTypes';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
+import { 
+    getCategoriesFromApi, 
+    loginUserIn 
+} from '../services'
 
 const HomeView = () => {
 
@@ -39,7 +43,7 @@ const HomeView = () => {
                 username,
                 password
             }
-            axios.post('/api/user/login', loginUser)
+            loginUserIn(loginUser)
             .then(response => {
                 const data  = response.data
                 console.log(data);
@@ -54,20 +58,21 @@ const HomeView = () => {
                     history.push("/admin")
                 }
             }).catch(error => {
-                console.log(error);
+                if (error.response.data.message === "Unauthorized") {
+                    alert("Wrong username and/or password!");
+                }
             })
         }
     }
 
     const getCategories = (user) => {
-        axios.get(`api/categories/user/${user.userId}`, {headers: {
-            'Authorization': `Bearer ${user.token}`
-          }})
+        getCategoriesFromApi(user.userId, user.token)
             .then(response => {
                 const data  = response.data
                 setCategoriesContext(data)
             }).catch(error => {
-                console.log(error);
+                let errMsg =  (error.response.data.message);
+                    alert(errMsg);
             })
     }
 

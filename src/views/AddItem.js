@@ -5,6 +5,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
+import { addImageToItem, addOrUpdateItem } from '../services';
 
 const AddItem = (props) => {
 
@@ -81,30 +82,24 @@ const AddItem = (props) => {
                 item = {...item, itemPrice}
             }
             let requestMethod = parameter === "add" ? 'post' : 'put';
-            axios({
-                method: requestMethod,
-                url: requestString,
-                data: item,
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
+            addOrUpdateItem(requestMethod, requestString, item, user.token)
               .then((response) => {
                 let itemId = response.data.itemId;
                 if (selectedFile) {
                     let formData = new FormData();
                     formData.append("imageFile", selectedFile);
-                    axios.post(`/api/images/${itemId}`, formData, {headers: {
-                        'Authorization': `Bearer ${user.token}`
-                      }})
+                    addImageToItem(itemId, formData, user.token)
                         .then((response) => {
-                        }, (error) => {
-                        });
+                        }).catch(error => {
+                            let errMsg =  (error.response.data.message);
+                            alert(errMsg);
+                      });
                 }
                 history.goBack();
-              }, (error) => {
-                console.log(error);
-            });
+              }).catch(error => {
+                let errMsg =  (error.response.data.message);
+                alert(errMsg);
+          });
         }
     }
 

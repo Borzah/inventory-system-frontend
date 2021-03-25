@@ -4,6 +4,7 @@ import axios from 'axios';
 import ItemNode from '../components/ItemNode';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { getAllItems } from '../services';
 
 const AllItems = () => {
 
@@ -15,14 +16,13 @@ const AllItems = () => {
     const [searchAttribute, setSearchAttribute] = useState("")
 
     const getData = (pathName) => {
-        axios.get(pathName, {headers: {
-            'Authorization': `Bearer ${user.token}`
-          }})
+        getAllItems(pathName, user.token)
             .then(response => {
                 const data  = response.data
                 setItems(data)
             }).catch(error => {
-                console.log(error);
+                let errMsg =  error.response.data.message;
+                alert(errMsg);
             })
     }
 
