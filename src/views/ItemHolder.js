@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
 import ItemNode from '../components/ItemNode'
 import FolderNode from '../components/FolderNode'
 import { Link } from 'react-router-dom'

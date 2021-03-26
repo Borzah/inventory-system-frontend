@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { LOGOUT_USER } from '../constants/actionTypes';
 import axios from 'axios';
+import { logUserOut } from '../services';
 
 const Navbar = () => {
 
@@ -37,11 +38,7 @@ const Navbar = () => {
 
     const logout = (e) => {
         e.preventDefault();
-        let userId = user.userId
-        let token = user.token
-        axios.post(`/api/user/logout/${userId}`, {}, {headers: {
-            'Authorization': `Bearer ${token}`
-          }})
+        logUserOut(user.userId, user.token)
         .then(response => {
             dispatch({
                 type: LOGOUT_USER,
@@ -49,7 +46,8 @@ const Navbar = () => {
             })
             window.location.reload();
         }).catch(error => {
-            console.log(error);
+            let errMsg =  error.response.data.message;
+            alert(errMsg);
         })
     }
 

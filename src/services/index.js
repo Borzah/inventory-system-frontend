@@ -6,14 +6,22 @@ export const loginUserIn = (loginUser) =>
 export const registerUserIn = (registerUser) => 
     axios.post('/api/user/register', registerUser)
 
+export const logUserOut = (userId, token) => 
+    axios.post(`/api/user/logout/${userId}`, {}, { 
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+)
+
 export const getCategoriesFromApi = (userId, token) => 
     axios.get(
         `api/categories/user/${userId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
         }
-      }
-    )
+    }
+)
 
 export const addOrUpdateItem = (requestMethod, requestString, item, token) => 
     axios({

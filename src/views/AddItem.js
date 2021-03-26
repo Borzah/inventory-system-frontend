@@ -1,11 +1,10 @@
-import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
-import { addImageToItem, addOrUpdateItem } from '../services';
+import { addImageToItem, addOrUpdateItem, getItemFromApi } from '../services';
 
 const AddItem = (props) => {
 
@@ -40,9 +39,7 @@ const AddItem = (props) => {
             history.push("/admin")
         } else {
             if (parameter !== "add") {
-                axios.get(`/api/items/${parameter}`, {headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }})
+                getItemFromApi(parameter, user.token)
                 .then(response => {
                     const data  = response.data
                     fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice)

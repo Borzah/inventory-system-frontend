@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import { LOGIN_USER } from '../constants/actionTypes';
-import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
 import { 
@@ -28,8 +27,6 @@ const HomeView = () => {
             } else {
                 history.push("/admin")
             }
-        } else {
-            console.log("NO user yet!")
         }
     }, [])
 

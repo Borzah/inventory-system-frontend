@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import axios from 'axios';
 import Table from 'react-bootstrap/Table'
 import { getAdminStatistics } from '../services';
+import { getDateFromFullDate } from '../utils';
 
 const AdminView = () => {
 
@@ -31,10 +31,6 @@ const AdminView = () => {
             getData();
         }
     }, [])
-
-    const getDateFromFullDate = (fullDate) => {
-        return fullDate.substring(0, 10)
-    }
 
     return (
         <div className="container p-5 border border-primary rounded m-5">

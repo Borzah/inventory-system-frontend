@@ -1,7 +1,5 @@
 import React from 'react'
 import { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import { useSelector } from "react-redux";

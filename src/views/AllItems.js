@@ -1,6 +1,5 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import ItemNode from '../components/ItemNode';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";

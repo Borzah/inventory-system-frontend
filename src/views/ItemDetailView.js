@@ -1,8 +1,9 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { deleteItemWithApi, getItemFromApi } from '../services';
+import { getDateFromFullDate } from '../utils';
 
 const ItemDetailView = (props) => {
 
@@ -45,7 +46,7 @@ const ItemDetailView = (props) => {
             <h3>{item.itemName}</h3>
             <hr></hr>
             <h4>Date added</h4>
-            <div>{item.dateAdded}</div>
+            <div>{getDateFromFullDate(item.dateAdded)}</div>
             <hr></hr>
             {item.imageBytes ? <div>
                 <h4>Item image:</h4>
@@ -72,7 +73,7 @@ const ItemDetailView = (props) => {
 
             {item.itemPrice ? <div>
                 <h4>Price:</h4>
-                <div>{item.itemPrice}</div>
+                <div>{`${item.itemPrice} $`}</div>
             </div> : ''}
 
             <div className="d-flex justify-content-between">
