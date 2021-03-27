@@ -42,7 +42,7 @@ const ItemDetailView = (props) => {
 
     return (
         <div>{ item ?
-        <div className="container p-5 border border-primary rounded m-5">
+        <div className="container mb-3 mt-3">
             <h3>{item.itemName}</h3>
             <hr></hr>
             <h4>Date added</h4>
@@ -76,9 +76,9 @@ const ItemDetailView = (props) => {
                 <div>{`${item.itemPrice} $`}</div>
             </div> : ''}
 
-            <div className="d-flex justify-content-between">
-                <button type="button" className="btn btn-danger" onClick={deleteItem}>Delete item</button>
-                <Link type="button" className="btn btn-primary" to={updateString}>Update Item</Link>
+            <div className="d-flex justify-content-between mt-2">
+                <button type="button" className="btn btn-danger" onClick={deleteItem}>Delete</button>
+                <Link type="button" className="btn btn-primary" to={updateString}>Update</Link>
                 <button type="button" className="btn btn-warning" onClick={() => {history.goBack();}}>Go back</button>
             </div>
             
@@ -89,3 +89,5 @@ const ItemDetailView = (props) => {
 }
 
 export default ItemDetailView;
+
+            

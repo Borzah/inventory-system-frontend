@@ -110,24 +110,34 @@ const ItemHolder = () => {
     }
 
     return (
-        <div className="container p-5 border border-primary rounded m-5">
-            <h1>{pathName}</h1>
+        <div className="container mb-3 mt-3">
+            <h2>Inventory</h2>
             <hr></hr>
-            <h2>Folders</h2>
+            <h3>{pathName}</h3>
+            <hr></hr>
+            <h4>Folders</h4>
             {folders.length > 0 ? folders.map(fol => <div onClick={() => getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
                 <FolderNode folder={fol}/>
             </div>) : ''}
             <hr></hr>
-            <h2>Items</h2>
+            <h4>Items</h4>
             {items.length > 0 ? items.map(itm => <ItemNode item={itm}/>): ''}
             <hr></hr>
             
-            <div className="d-flex justify-content-between">
-                {currentFolderId ? <button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
-                >Go Back</button> : ''}
+            
+
+            <div class="row">
+                {currentFolderId ? <div className="col-md mt-2"><button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
+                >Go Back</button></div> : ''}
+                <div className="col-md mt-2">
                 <Link type="button" className="btn btn-primary" to="/item/add">Add Item</Link>
+                </div>
+                <div className="col-md mt-2">
                 <button type="button" className="btn btn-secondary" onClick={addFolderShow}>Add folder</button>
+                </div>
+                <div className="col-md mt-2">
                 <button type="button" className="btn btn-danger" onClick={deleteFolder}>DeleteFolder</button>
+                </div>
             </div>
 
             <Modal
@@ -158,3 +168,11 @@ const ItemHolder = () => {
 }
 
 export default ItemHolder;
+
+            // <div className="d-flex justify-content-between">
+            //     {currentFolderId ? <button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
+            //     >Go Back</button> : ''}
+            //     <Link type="button" className="btn btn-primary" to="/item/add">Add Item</Link>
+            //     <button type="button" className="btn btn-secondary" onClick={addFolderShow}>Add folder</button>
+            //     <button type="button" className="btn btn-danger" onClick={deleteFolder}>DeleteFolder</button>
+            // </div>

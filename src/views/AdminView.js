@@ -33,7 +33,7 @@ const AdminView = () => {
     }, [])
 
     return (
-        <div className="container p-5 border border-primary rounded m-5">
+        <div className="container mb-3 mt-3">
             <h2>Statistics</h2>
 
             <Table striped bordered hover responsive>

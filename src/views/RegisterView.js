@@ -30,7 +30,7 @@ const RegisterView = () => {
     }
 
     return (
-        <div className="container p-5 border border-primary rounded m-5">
+        <div className="container mb-3 mt-3">
             <h2>Register</h2>
             <hr></hr>
 

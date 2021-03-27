@@ -49,7 +49,7 @@ export const CategoryView = () => {
     }
 
     return (
-        <div className="container p-5 border border-primary rounded m-5">
+        <div className="container mb-3 mt-3">
             <h3>Categories</h3>
             <hr></hr>
             {categoriesContext.map(category => <div><h4>{category.categoryName}</h4><hr></hr></div>)}

@@ -50,7 +50,7 @@ const AllItems = () => {
     }
 
     return (
-        <div>
+        <div className="container mb-3 mt-3">
         <h2>Items</h2>
         <hr></hr>
         <div className="container">
