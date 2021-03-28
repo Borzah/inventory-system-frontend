@@ -5,7 +5,10 @@ import Button from 'react-bootstrap/Button'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
-import { addCategoryToApi } from '../services';
+import { addCategoryToApi, getItemsByCategory } from '../services';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import ItemNode from '../components/ItemNode';
 
 export const CategoryView = () => {
 
@@ -16,6 +19,7 @@ export const CategoryView = () => {
 
     const [categoryToAdd, setCategoryToAdd] = useState("");
     const [show, setShow] = useState(false);
+    const [categoryItems, setCategoryItems] = useState([]);
 
     const closeAddCategory = () => setShow(false);
     const openAddCategory = () => setShow(true);
@@ -25,6 +29,23 @@ export const CategoryView = () => {
             history.push("/")
         } else if (user.role === "ADMIN") {
             history.push("/admin")
+        } else {
+            getItemsByCategory(user.userId, user.token)
+            .then(response => {
+                let data = response.data;
+                let resultList = []
+                for (var key of Object.keys(data)) {
+                    if (data[key].length > 0) {
+                        resultList.push(
+                            {
+                                "name": key,
+                                "items": data[key]
+                            }
+                        )
+                    }
+                }
+                setCategoryItems(resultList)
+            })
         }
     }, [])
 
@@ -52,7 +73,26 @@ export const CategoryView = () => {
         <div className="container mb-3 mt-3">
             <h3>Categories</h3>
             <hr></hr>
-            {categoriesContext.map(category => <div><h4>{category.categoryName}</h4><hr></hr></div>)}
+
+            
+            
+            {categoryItems.length > 0 ? <Accordion>
+
+                {categoryItems.map((category, index) => 
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
+                        {category.name}
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey={index.toString()}>
+                        <Card.Body>
+                            {category.items.map(itm => <ItemNode item={itm}/>)}
+                        </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>)}
+            </Accordion>
+             : <p>You have no items with categories yet.</p>
+                }
+                <hr></hr>
             
             <Button variant="primary" onClick={openAddCategory}>
                 Add new category!

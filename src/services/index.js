@@ -53,6 +53,15 @@ export const addCategoryToApi = (category, token) =>
   }
 })
 
+export const getItemsByCategory = (userId, token) => 
+    axios.get(`http://localhost:8080/api/inventory/user/${userId}/categories`, { 
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+)
+
+
 export const getItemFromApi = (itemId, token) => 
     axios.get(`/api/inventory/${itemId}`, { 
         headers: {
