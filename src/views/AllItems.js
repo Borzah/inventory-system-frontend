@@ -54,16 +54,16 @@ const AllItems = () => {
         <h2>Items</h2>
         <hr></hr>
         <div className="container">
-        <form class="d-flex">
+        <form class="row">
         <input 
-            class="form-control me-2" 
+            class="form-control me-2 col-md mt-2" 
             type="search" placeholder="Search" 
             aria-label="Search" 
             onChange={(e) => setSearchInput(e.target.value)}>
         </input>
 
         <select 
-            className="form-select"
+            className="form-select col-md mt-2"
             id="inputGroupSelect01"
             onChange={(e) => setSearchAttribute(e.target.value)}>
             <option selected value="">Search by</option>
@@ -71,11 +71,10 @@ const AllItems = () => {
             <option value="serialNumber">Serial number</option>
             <option value="category">Category</option>
             <option value="description">Description</option>
-            <option value="price">Price</option>
-            
+            <option value="price">Price</option>        
         </select>
 
-        <button class="btn btn-outline-success" type="submit" onClick={(e) => searchForItems(e)}>Search</button>
+        <button class="btn btn-outline-success col-md mt-2" type="submit" onClick={(e) => searchForItems(e)}>Search</button>
         
         </form>
         </div>

@@ -87,6 +87,7 @@ const AddItem = (props) => {
                     formData.append("imageFile", selectedFile);
                     addImageToItem(itemId, formData, user.token)
                         .then((response) => {
+                            history.goBack();
                         }).catch(error => {
                             let errMsg =  (error.response.data.message);
                             alert(errMsg);
