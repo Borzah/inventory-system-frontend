@@ -1,44 +1,27 @@
+:root {
+  --mainColor: #2d3647;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.element-node {
+  cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.item-node:hover {
+  background-color: var(--mainColor);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.element-node {
-  cursor: pointer;
+.folder-node:hover {
+  background-color: var(--mainColor);
+  color: white;
 }
 
 .nav-pointer {
@@ -47,4 +30,38 @@
 
 .node-link {
   text-decoration: none;
+}
+
+.background-main {
+  background-color: var(--mainColor);
+}
+
+.text-color-white {
+  color: white;
+}
+
+.secondary-block {
+  background-color: var(--mainColor);
+  color: white;
+}
+
+.secondary-block-pointer {
+  background-color: var(--mainColor);
+  color: white;
+  cursor: pointer;
+}
+
+.my-button {
+  background-color: var(--mainColor);
+  color: white;
+}
+
+.my-button:hover {
+  border-color: var(--mainColor);
+  background-color: white;
+  color: var(--mainColor);
+}
+
+.extra-margin-top {
+  margin-top: 30vh;
 }

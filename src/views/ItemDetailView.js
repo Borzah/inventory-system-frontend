@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { deleteItemWithApi, getItemFromApi } from '../services';
 import { getDateFromFullDate } from '../utils';
+import Spinner from 'react-bootstrap/Spinner';
 
 const ItemDetailView = (props) => {
 
@@ -14,6 +15,8 @@ const ItemDetailView = (props) => {
 
     const updateString = `/item/${itemId}`
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [item, setItem] = useState();
 
     useEffect(() => {
@@ -22,10 +25,12 @@ const ItemDetailView = (props) => {
         } else if (user.role === "ADMIN") {
             history.push("/admin")
         } else {
+            setIsLoading(true)
             getItemFromApi(itemId, user.token)
                 .then(response => {
                     const data  = response.data
                     setItem(data);
+                    setIsLoading(false)
                 }).catch(error => {
                     console.log(error);
                 })
@@ -41,8 +46,8 @@ const ItemDetailView = (props) => {
     }
 
     return (
-        <div>{ item ?
-        <div className="container mb-3 mt-3">
+        <div>{ !isLoading ?
+        <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
             <h3>{item.itemName}</h3>
             <hr></hr>
             <h4>Date added</h4>
@@ -69,20 +74,22 @@ const ItemDetailView = (props) => {
             {item.description ? <div>
                 <h4>Description:</h4>
                 <div>{item.description}</div>
+                <hr></hr>
             </div> : ''}
 
             {item.itemPrice ? <div>
                 <h4>Price:</h4>
                 <div>{`${item.itemPrice} $`}</div>
+                <hr></hr>
             </div> : ''}
 
             <div className="d-flex justify-content-between mt-2">
-                <button type="button" className="btn btn-danger" onClick={deleteItem}>Delete</button>
-                <Link type="button" className="btn btn-primary" to={updateString}>Update</Link>
-                <button type="button" className="btn btn-warning" onClick={() => {history.goBack();}}>Go back</button>
+                <button type="button" className="btn my-button" onClick={deleteItem}>Delete</button>
+                <Link type="button" className="btn my-button" to={updateString}>Update</Link>
+                <button type="button" className="btn my-button" onClick={() => {history.goBack();}}>Go back</button>
             </div>
             
-        </div> : ''
+        </div> : <Spinner className="extra-margin-top" animation="border" />
         }
         </div>
     )

@@ -85,6 +85,14 @@ export const deleteItemWithApi = (itemId, token) =>
         }
     }
 )
+//items/
+export const getItemDtoFromApi = (itemId, token) =>
+    axios.get(`/api/items/${itemId}`, { 
+        headers: {
+                'Authorization': `Bearer ${token}`
+        }
+    }
+)
 
 export const getInventoryContent = (pathString, token) =>
     axios.get(pathString, {

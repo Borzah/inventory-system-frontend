@@ -32,30 +32,27 @@ const RegisterView = () => {
     return (
         <div className="container mb-3 mt-3">
             <h2>Register</h2>
-            <hr></hr>
+            
+            <div className="container mb-5 mt-5 pb-3 pt-3 shadow-lg rounded">
 
             <input 
-                className="form-control me-2" 
+                className="form-control me-2 mb-3" 
                 type="email" 
                 placeholder="Username" 
                 aria-label="Username"
                 onChange={(e) => setUsername(e.target.value)}>
             </input>
 
-            <hr></hr>
-
             <input 
-                className="form-control me-2" 
+                className="form-control me-2 mb-3" 
                 type="password" 
                 placeholder="Password" 
                 aria-label="Password"
                 onChange={(e) => setPassword(e.target.value)}>
             </input>
 
-            <hr></hr>
-
             <button className="btn btn-outline-success" type="submit" onClick={(e) => register(e)}>Register</button>
-            
+            </div>
         </div>
     )
 }

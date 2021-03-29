@@ -8,7 +8,7 @@ const ItemNode = (props) => {
     const pathString = `/items/${props.item.itemId}`;
 
     return (
-            <div onClick={() => history.push(pathString)} className="element-node border border border-success rounded m-2 p-3">
+            <div onClick={() => history.push(pathString)} className="item-node element-node border border-dark rounded m-2 p-3 shadow-sm">
                 <i class="far fa-sticky-note"></i> {props.item.itemName}
             </div>
     )

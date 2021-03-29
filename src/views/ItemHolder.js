@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
+import { CategoriesContext } from '../contexts/CategoriesContext';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addFodlerWithApi, deleteFolderWithApi, getInventoryContent } from '../services';
+import { addFodlerWithApi, deleteFolderWithApi, getCategoriesFromApi, getInventoryContent } from '../services';
+import Spinner from 'react-bootstrap/Spinner';
 
 const ItemHolder = () => {
 
@@ -20,11 +22,14 @@ const ItemHolder = () => {
     const [pathName, setPathName] = useState()
     const [showAddFolder, setShowAddFolder] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(true)
+
     const user = useSelector(state => state)
 
     const [folderToAddName, setFolderToAddName] = useState("");
 
     const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
+    const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
 
     const addFolderClose = () => {
         setShowAddFolder(false);
@@ -34,7 +39,19 @@ const ItemHolder = () => {
         setShowAddFolder(true);
     }
 
+    const getCategories = (user) => {
+        getCategoriesFromApi(user.userId, user.token)
+            .then(response => {
+                const data  = response.data
+                setCategoriesContext(data)
+            }).catch(error => {
+                let errMsg =  (error.response.data.message);
+                    alert(errMsg);
+            })
+    }
+
     const getData = (pathString) => {
+        setIsLoading(true);
         getInventoryContent(pathString, user.token)
             .then(response => {
                 const data  = response.data
@@ -44,6 +61,7 @@ const ItemHolder = () => {
                 setCurrentFolderId(data.currentFolderId)
                 setCurrentFolderContext(data.currentFolderId)
                 setPathName(data.currentFolderPathName)
+                setIsLoading(false)
             }).catch(error => {
                 console.log(error);
             })
@@ -55,6 +73,7 @@ const ItemHolder = () => {
         } else {
             getData(`/api/inventory?user=${user.userId}`);
         }
+        getCategories(user);
     }
 
     useEffect(() => {
@@ -112,31 +131,36 @@ const ItemHolder = () => {
     return (
         <div className="container mb-3 mt-3">
             <h2>Inventory</h2>
+            
+            { !isLoading ?
+            <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
+
+            <p className="h6 text-start">{pathName}</p>
             <hr></hr>
-            <h3>{pathName}</h3>
-            <hr></hr>
-            <h4>Folders</h4>
-            {folders.length > 0 ? folders.map(fol => <div onClick={() => getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
+            <div className="row"><h4 className="col-md mw-50">Folders</h4></div>
+            <div class="row">
+            {folders.map(fol => <div className="col-md mw-25"><div onClick={() => getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
                 <FolderNode folder={fol}/>
-            </div>) : ''}
+            </div></div>)}</div>
             <hr></hr>
             <h4>Items</h4>
-            {items.length > 0 ? items.map(itm => <ItemNode item={itm}/>): ''}
+            <div class="row">
+            {items.map(itm => <div className="col-md mw-25"><ItemNode item={itm}/></div>)}</div>
             <hr></hr>
             
             
 
             <div class="row">
-                {currentFolderId ? <div className="col-md mt-2"><button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
+                {currentFolderId ? <div className="col-md mt-2"><button type="button" className="btn my-button" onClick={() => goBackToParentFolder()}
                 >Go Back</button></div> : ''}
                 <div className="col-md mt-2">
-                <Link type="button" className="btn btn-primary" to="/item/add">Add Item</Link>
+                <Link type="button" className="btn my-button" to="/item/add">Add Item</Link>
                 </div>
                 <div className="col-md mt-2">
-                <button type="button" className="btn btn-secondary" onClick={addFolderShow}>Add folder</button>
+                <button type="button" className="btn my-button" onClick={addFolderShow}>Add folder</button>
                 </div>
                 <div className="col-md mt-2">
-                <button type="button" className="btn btn-danger" onClick={deleteFolder}>DeleteFolder</button>
+                {currentFolderId ? <button type="button" className="btn my-button" onClick={deleteFolder}>DeleteFolder</button>: ''}
                 </div>
             </div>
 
@@ -146,33 +170,27 @@ const ItemHolder = () => {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header closeButton>
+                <Modal.Header>
                 <Modal.Title>Modal title</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
                 <input class="form-control me-2" type="text" placeholder="New Folder Name" aria-label="New Folder Name"
                 onChange={(e) => setFolderToAddName(e.target.value)}></input>
-                <button class="btn btn-outline-success" type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
+                <button class="btn my-button" type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={addFolderClose}>
+                <Button className="my-button" onClick={addFolderClose}>
                     Close
                 </Button>
                 </Modal.Footer>
             </Modal>
-
+            
+            </div>
+            : <Spinner className="extra-margin-top" animation="border" />}
         </div>
     )
 }
 
 export default ItemHolder;
-
-            // <div className="d-flex justify-content-between">
-            //     {currentFolderId ? <button type="button" className="btn btn-warning" onClick={() => goBackToParentFolder()}
-            //     >Go Back</button> : ''}
-            //     <Link type="button" className="btn btn-primary" to="/item/add">Add Item</Link>
-            //     <button type="button" className="btn btn-secondary" onClick={addFolderShow}>Add folder</button>
-            //     <button type="button" className="btn btn-danger" onClick={deleteFolder}>DeleteFolder</button>
-            // </div>

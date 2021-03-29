@@ -4,6 +4,7 @@ import ItemNode from '../components/ItemNode';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllItems } from '../services';
+import Spinner from 'react-bootstrap/Spinner';
 
 const AllItems = () => {
 
@@ -14,11 +15,15 @@ const AllItems = () => {
     const [searchInput, setSearchInput] = useState("");
     const [searchAttribute, setSearchAttribute] = useState("")
 
+    const [isLoading, setIsLoading] = useState(true)
+
     const getData = (pathName) => {
+        setIsLoading(true);
         getAllItems(pathName, user.token)
             .then(response => {
                 const data  = response.data
                 setItems(data)
+                setIsLoading(false);
             }).catch(error => {
                 let errMsg =  error.response.data.message;
                 alert(errMsg);
@@ -52,7 +57,7 @@ const AllItems = () => {
     return (
         <div className="container mb-3 mt-3">
         <h2>Items</h2>
-        <hr></hr>
+        <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
         <div className="container">
         <form class="row">
         <input 
@@ -74,13 +79,18 @@ const AllItems = () => {
             <option value="price">Price</option>        
         </select>
 
-        <button class="btn btn-outline-success col-md mt-2" type="submit" onClick={(e) => searchForItems(e)}>Search</button>
+        <button class="btn my-button col-md mt-2" type="submit" onClick={(e) => searchForItems(e)}>Search</button>
         
         </form>
         </div>
 
         <hr></hr>
-        {items.map(itm => <ItemNode item={itm}/>)}
+        {
+                !isLoading ? 
+            items.map(itm => <div className="mw-50 mx-auto"><ItemNode item={itm}/></div>) : 
+            <Spinner className="extra-margin-top" animation="border" />
+        }
+        </div>
         </div>
     )
 }

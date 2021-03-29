@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
-import { addImageToItem, addOrUpdateItem, getItemFromApi } from '../services';
+import { addImageToItem, addOrUpdateItem, getItemDtoFromApi, getItemFromApi } from '../services';
 
 const AddItem = (props) => {
 
@@ -39,10 +39,12 @@ const AddItem = (props) => {
             history.push("/admin")
         } else {
             if (parameter !== "add") {
-                getItemFromApi(parameter, user.token)
+                getItemDtoFromApi(parameter, user.token)
                 .then(response => {
                     const data  = response.data
+                    console.log(data)
                     fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice)
+                    console.log(category)
                 }).catch(error => {
                     console.log(error);
                 })
@@ -152,13 +154,13 @@ const AddItem = (props) => {
                 onChange={(e) => setItemPrice(e.target.value)}></input>
 
                 {parameter === "add" ? 
-                <button className="btn btn-outline-success" type="submit" onClick={(e) => addItem(e)}>Add</button>
-                :<button className="btn btn-outline-success" type="submit" onClick={(e) => addItem(e)}>Update</button> }
+                <button className="btn my-button" type="submit" onClick={(e) => addItem(e)}>Add</button>
+                :<button className="btn my-button" type="submit" onClick={(e) => addItem(e)}>Update</button> }
             </form>
 
             <hr></hr>
 
-            <Link type="button" className="btn btn-secondary" to="/inventory">Cancel</Link>
+            <Link type="button" className="btn my-button" to="/inventory">Cancel</Link>
         </div>
     )
 }

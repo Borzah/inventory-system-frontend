@@ -10,6 +10,7 @@ import {
     getUserDataWithCookie, 
     loginUserIn 
 } from '../services'
+import HomeCarousel from '../components/HomeCarousel';
 
 const HomeView = () => {
 
@@ -17,8 +18,6 @@ const HomeView = () => {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-
-    const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
 
     const history = useHistory();
 
@@ -73,7 +72,7 @@ const HomeView = () => {
                 )
                 if (data.role === 'USER') {
                     history.push("/inventory")
-                    getCategories(data);
+                    //getCategories(data);
                 } else {
                     history.push("/admin")
                 }
@@ -85,47 +84,41 @@ const HomeView = () => {
         }
     }
 
-    const getCategories = (user) => {
-        getCategoriesFromApi(user.userId, user.token)
-            .then(response => {
-                const data  = response.data
-                setCategoriesContext(data)
-            }).catch(error => {
-                let errMsg =  (error.response.data.message);
-                    alert(errMsg);
-            })
-    }
-
     return (
+        <>
+        <HomeCarousel />
         <div className="container mb-3 mt-3">
-            <h1>Inventory app</h1>
-            <hr></hr>
+
+        <div className="container mb-5 mt-5 pb-3 pt-3 shadow-lg rounded">
+            <h3 className="d-flex justify-content-around mb-4">Login</h3>
 
             <input 
-                className="form-control me-2" 
+                className="form-control me-2 mb-3" 
                 type="email" 
                 placeholder="Username" 
                 aria-label="Username"
                 onChange={(e) => setUsername(e.target.value)}>
             </input>
 
-            <hr></hr>
-
             <input 
-                className="form-control me-2" 
+                className="form-control me-2 mb-3" 
                 type="password" 
                 placeholder="Password" 
                 aria-label="Password"
                 onChange={(e) => setPassword(e.target.value)}>
             </input>
 
-            <hr></hr>
+            <div className="d-flex justify-content-around mb-3">
+                <button className="btn my-button" type="submit" onClick={(e) => login(e)}>Login</button>
+            </div>
 
-            <button className="btn btn-outline-success" type="submit" onClick={(e) => login(e)}>Login</button>
-
-            <hr></hr>
-            <Link className="btn btn-outline-warning" to="/register">Register</Link>
+            <div className="d-flex justify-content-around">
+                <Link className="btn my-button" to="/register">Register</Link>
+            
+            </div>
         </div>
+        </div>
+        </>
     )
 }
 

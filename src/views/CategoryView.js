@@ -72,15 +72,14 @@ export const CategoryView = () => {
     return (
         <div className="container mb-3 mt-3">
             <h3>Categories</h3>
-            <hr></hr>
-
             
+            <div className="container rounded mb-3 pb-3 pt-3 mt-3 shadow-lg">
             
             {categoryItems.length > 0 ? <Accordion>
 
                 {categoryItems.map((category, index) => 
                     <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
+                        <Accordion.Toggle className="secondary-block-pointer pt-3 pb-3" as={Card.Header} eventKey={index.toString()}>
                         {category.name}
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={index.toString()}>
@@ -94,7 +93,7 @@ export const CategoryView = () => {
                 }
                 <hr></hr>
             
-            <Button variant="primary" onClick={openAddCategory}>
+            <Button className="my-button" onClick={openAddCategory}>
                 Add new category!
             </Button>
 
@@ -115,12 +114,13 @@ export const CategoryView = () => {
 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={closeAddCategory}>
+                <Button className="my-button" onClick={closeAddCategory}>
                     Close
                 </Button>
                 </Modal.Footer>
             </Modal>
 
+            </div>
         </div>
     )
 }

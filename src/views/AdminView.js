@@ -37,7 +37,7 @@ const AdminView = () => {
             <h2>Statistics</h2>
 
             <Table striped bordered hover responsive>
-                <thead>
+                <thead className="secondary-block">
                     <tr>
                         <th>#</th>
                         <th>User</th>
