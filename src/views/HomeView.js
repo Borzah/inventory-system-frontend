@@ -1,15 +1,19 @@
 import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
-import { LOGIN_USER } from '../constants/actionTypes';
+import { LOGIN_USER, LOGOUT_USER } from '../constants/actionTypes';
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
+import { useCookies } from "react-cookie";
 import { 
     getCategoriesFromApi, 
+    getUserDataWithCookie, 
     loginUserIn 
 } from '../services'
 
 const HomeView = () => {
+
+    const [cookie, setCookie, removeCookie] = useCookies(["jwtToken"]);
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
@@ -21,12 +25,27 @@ const HomeView = () => {
     const user = useSelector(state => state);
 
     useEffect(() => {
-        if (typeof user !== 'undefined') {
-            if (user.role === 'USER') {
-                history.push("/inventory")
-            } else {
-                history.push("/admin")
-            }
+        if (cookie.jwtToken) {
+            const jwt = cookie.jwtToken;
+            getUserDataWithCookie(jwt)
+            .then(response => {
+                const data = response.data;
+                dispatch({
+                    type: LOGIN_USER,
+                    payload: data
+                })
+                if (data.role === 'USER') {
+                    history.push("/inventory")
+                } else {
+                    history.push("/admin")
+                }
+            }).catch(error => {
+                dispatch({
+                    type: LOGOUT_USER,
+                    payload: {}
+                })
+                removeCookie("jwtToken");
+            })
         }
     }, [])
 
@@ -43,11 +62,15 @@ const HomeView = () => {
             loginUserIn(loginUser)
             .then(response => {
                 const data  = response.data
-                console.log(data);
                 dispatch({
                     type: LOGIN_USER,
                     payload: data
                 })
+                setCookie("jwtToken", data.token,
+                    {
+                        path: '/'
+                    }
+                )
                 if (data.role === 'USER') {
                     history.push("/inventory")
                     getCategories(data);

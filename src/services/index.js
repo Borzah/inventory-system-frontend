@@ -14,6 +14,14 @@ export const logUserOut = (userId, token) =>
     }
 )
 
+export const getUserDataWithCookie = (token) =>
+    axios.get('api/user/data', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+)
+
 export const getCategoriesFromApi = (userId, token) => 
     axios.get(
         `api/categories/user/${userId}`, {

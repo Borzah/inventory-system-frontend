@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import { LOGOUT_USER } from '../constants/actionTypes';
 import { logUserOut } from '../services';
+import { useCookies } from "react-cookie";
 
 const Navbar = () => {
+
+    const [cookie, setCookie, removeCookie] = useCookies(["jwtToken"]);
 
     const user = useSelector(state => state)
 
@@ -42,6 +45,7 @@ const Navbar = () => {
                 type: LOGOUT_USER,
                 payload: {}
             })
+            removeCookie("jwtToken");
             window.location.reload();
         }).catch(error => {
             let errMsg =  error.response.data.message;
