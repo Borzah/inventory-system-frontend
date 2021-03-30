@@ -56,12 +56,12 @@ const AllItems = () => {
 
     return (
         <div className="container mb-3 mt-3">
-        <h2>Items</h2>
+        <h2><i className="fas fa-cubes"></i> Items</h2>
         <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
         <div className="container">
-        <form class="row">
+        <form className="row">
         <input 
-            class="form-control me-2 col-md mt-2" 
+            className="form-control me-2 col-md mt-2" 
             type="search" placeholder="Search" 
             aria-label="Search" 
             onChange={(e) => setSearchInput(e.target.value)}>
@@ -71,7 +71,7 @@ const AllItems = () => {
             className="form-select col-md mt-2"
             id="inputGroupSelect01"
             onChange={(e) => setSearchAttribute(e.target.value)}>
-            <option selected value="">Search by</option>
+            <option defaultValue="">Search by</option>
             <option value="name">Name</option>
             <option value="serialNumber">Serial number</option>
             <option value="category">Category</option>
@@ -79,7 +79,8 @@ const AllItems = () => {
             <option value="price">Price</option>        
         </select>
 
-        <button class="btn my-button col-md mt-2" type="submit" onClick={(e) => searchForItems(e)}>Search</button>
+        <button className="btn my-button col-md mt-2" type="submit" onClick={(e) => searchForItems(e)}>
+        <i className="fas fa-search"></i> Search</button>
         
         </form>
         </div>
@@ -88,8 +89,8 @@ const AllItems = () => {
         
         {
             !isLoading ? 
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                {items.map(itm => <div className="col mb-4"><ItemNode item={itm}/></div>)} </div>: 
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                {items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)} </div>: 
             <Spinner className="extra-margin-top" animation="border" />
         }
         

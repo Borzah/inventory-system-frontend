@@ -89,7 +89,8 @@ const HomeView = () => {
         <div className="container mb-3 mt-3">
 
         <div className="container mb-5 mt-5 pb-3 pt-3 shadow-lg rounded">
-            <h3 className="d-flex justify-content-around mb-4">Login</h3>
+            <h3 className="d-flex justify-content-around mb-4">
+            <div><i className="fas fa-user-ninja"></i> Login</div></h3>
 
             <input 
                 className="form-control me-2 mb-3" 
@@ -108,11 +109,13 @@ const HomeView = () => {
             </input>
 
             <div className="d-flex justify-content-around mb-3">
-                <button className="btn my-button" type="submit" onClick={(e) => login(e)}>Login</button>
+                <button className="btn my-button" type="submit" onClick={(e) => login(e)}>
+                 Login</button>
             </div>
 
             <div className="d-flex justify-content-around">
-                <Link className="btn my-button" to="/register">Register</Link>
+                <Link className="btn my-button" to="/register">
+                 Register</Link>
             
             </div>
         </div>

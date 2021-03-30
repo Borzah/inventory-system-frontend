@@ -131,7 +131,7 @@ const ItemHolder = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h2>Inventory</h2>
+            <h2><i className="fas fa-warehouse"></i> Inventory</h2>
             
             { !isLoading ?
             <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
@@ -139,19 +139,19 @@ const ItemHolder = () => {
             <p className="h6 text-start">{pathName.length > 20 ? handleBigOnePieceString(pathName) : pathName}</p>
             <hr></hr>
             <div className="row"><h4 className="col-md mw-50">Folders</h4></div>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {folders.map(fol => <div className="col mb-4"><div onClick={() => getData(`/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
-                <FolderNode folder={fol}/>
-            </div></div>)}</div>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+            {folders.map(fol => <div key={fol.folderId} onClick={() => getData(`/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
+                <FolderNode key={fol.folderId} folder={fol}/>
+            </div>)}</div>
             <hr></hr>
             <h4>Items</h4>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {items.map(itm => <div className="col mb-4"><ItemNode item={itm}/></div>)}</div>
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+            {items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)}</div>
             <hr></hr>
             
             
 
-            <div class="row">
+            <div className="row">
                 {currentFolderId ? <div className="col-md mt-2"><button type="button" className="btn my-button" onClick={() => goBackToParentFolder()}
                 >Go Back</button></div> : ''}
                 <div className="col-md mt-2">
@@ -176,9 +176,9 @@ const ItemHolder = () => {
                 </Modal.Header>
                 <Modal.Body>
 
-                <input class="form-control me-2" type="text" placeholder="New Folder Name" aria-label="New Folder Name"
+                <input className="form-control me-2" type="text" placeholder="New Folder Name" aria-label="New Folder Name"
                 onChange={(e) => setFolderToAddName(e.target.value)}></input>
-                <button class="btn my-button" type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
+                <button className="btn my-button" type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
 
                 </Modal.Body>
                 <Modal.Footer>

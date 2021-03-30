@@ -71,21 +71,21 @@ export const CategoryView = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h3>Categories</h3>
+            <h3><i className="far fa-list-alt"></i> Categories</h3>
             
             <div className="container rounded mb-3 pb-3 pt-3 mt-3 shadow-lg">
             
             {categoryItems.length > 0 ? <Accordion>
 
                 {categoryItems.map((category, index) => 
-                    <Card>
+                    <Card key={index}>
                         <Accordion.Toggle className="secondary-block-pointer pt-3 pb-3" as={Card.Header} eventKey={index.toString()}>
                         {category.name}
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={index.toString()}>
                         <Card.Body>
-                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                            {category.items.map(itm => <div className="col mb-4"><ItemNode item={itm}/></div>)}
+                            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                            {category.items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)}
                             </div>
                         </Card.Body>
                         </Accordion.Collapse>
@@ -110,9 +110,9 @@ export const CategoryView = () => {
                 </Modal.Header>
                 <Modal.Body>
                 
-                <input class="form-control me-2" type="text" placeholder="New Category" aria-label="New Category"
+                <input className="form-control me-2" type="text" placeholder="New Category" aria-label="New Category"
                 onChange={(e) => setCategoryToAdd(e.target.value)}></input>
-                <button class="btn btn-outline-success" type="submit" onClick={(e) => addNewCategory(e)}>Add!</button>
+                <button className="btn btn-outline-success" type="submit" onClick={(e) => addNewCategory(e)}>Add!</button>
 
                 </Modal.Body>
                 <Modal.Footer>

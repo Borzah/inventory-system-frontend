@@ -42,11 +42,10 @@ const AddItem = (props) => {
                 getItemDtoFromApi(parameter, user.token)
                 .then(response => {
                     const data  = response.data
-                    console.log(data)
                     fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice)
-                    console.log(category)
                 }).catch(error => {
-                    console.log(error);
+                    let errMsg =  (error.response.data.message);
+                    alert(errMsg);
                 })
             }
         }
@@ -123,7 +122,7 @@ const AddItem = (props) => {
                 aria-label="Serial Number"
                 onChange={(e) => setSerialNumber(e.target.value)}></input>
 
-                <label for="formFile" class="form-label">Image</label>
+                <label htmlFor="formFile" className="form-label">Image</label>
                 <input className="form-control m-1"
                  type="file" 
                  onChange={(e) => setSelectedFile(e.target.files[0])}></input>
@@ -133,8 +132,8 @@ const AddItem = (props) => {
                     className="form-select"
                     id="inputGroupSelect01"
                     onChange={(e) => setCategory(e.target.value)}>
-                    <option selected value={category}>Choose...</option>
-                    {categories.map(category => <option value={category.categoryId}>{category.categoryName}</option>)}
+                    <option defaultValue={category}>Choose...</option>
+                    {categories.map(category => <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>)}
                 </select>
 
                 <label>Description</label>

@@ -65,16 +65,16 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                    <Link style={{color: "white"}} className="nav-link" to='/inventory'>My inventory</Link>
+                    <Link style={{color: "white"}} className="nav-link" to='/inventory'><i className="fas fa-warehouse"></i> My inventory</Link>
                     </li>
                     <li className="nav-item">
-                    <Link style={{color: "white"}} className="nav-link" to="/all">All items</Link>
+                    <Link style={{color: "white"}} className="nav-link" to="/all"><i className="fas fa-cubes"></i> All items</Link>
                     </li>
                     <li className="nav-item">
-                    <Link style={{color: "white"}} className="nav-link" to="/categories">Categories</Link>
+                    <Link style={{color: "white"}} className="nav-link" to="/categories"><i className="far fa-list-alt"></i> Categories</Link>
                     </li>
                     <li className="nav-item">
-                    <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}>Log out</div>
+                    <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}><i className="fas fa-sign-out-alt"></i> Log out</div>
                     </li>
                 </ul>
         </div>
@@ -83,7 +83,7 @@ const Navbar = () => {
         <div style={{color: "white"}} className="navbar-brand">Inventory</div>
         {isAdmin && cookie.jwtToken ? 
             
-            <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}>Log out</div>
+            <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}><i className="fas fa-sign-out-alt"></i> Log out</div>
             
             : ''}
     </div>}

@@ -34,7 +34,7 @@ const AdminView = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h2>Statistics</h2>
+            <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
 
             <Table striped bordered hover responsive>
                 <thead className="secondary-block">
@@ -49,7 +49,7 @@ const AdminView = () => {
                 </thead>
                 <tbody>
                     {stats.map((stat, index) => 
-                        <tr>
+                        <tr key={index}>
                             <th>{index}</th>
                             <th>{stat.username}</th>
                             <th>{stat.numOfItems}</th>

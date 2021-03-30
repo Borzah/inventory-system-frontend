@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { registerUserIn } from '../services';
 
 const RegisterView = () => {
@@ -31,27 +31,36 @@ const RegisterView = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h2>Register</h2>
+            <h2><i className="fas fa-user-plus"></i> Register</h2>
             
             <div className="container mb-5 mt-5 pb-3 pt-3 shadow-lg rounded">
 
-            <input 
-                className="form-control me-2 mb-3" 
-                type="email" 
-                placeholder="Username" 
-                aria-label="Username"
-                onChange={(e) => setUsername(e.target.value)}>
-            </input>
+                <input 
+                    className="form-control me-2 mb-3" 
+                    type="email" 
+                    placeholder="Username (email)" 
+                    aria-label="Username (email)"
+                    onChange={(e) => setUsername(e.target.value)}>
+                </input>
 
-            <input 
-                className="form-control me-2 mb-3" 
-                type="password" 
-                placeholder="Password" 
-                aria-label="Password"
-                onChange={(e) => setPassword(e.target.value)}>
-            </input>
+                <input 
+                    className="form-control me-2 mb-3" 
+                    type="password" 
+                    placeholder="Password" 
+                    aria-label="Password"
+                    onChange={(e) => setPassword(e.target.value)}>
+                </input>
 
-            <button className="btn btn-outline-success" type="submit" onClick={(e) => register(e)}>Register</button>
+                <div className="d-flex justify-content-around">
+                    <button className="btn my-button" type="submit" onClick={(e) => register(e)}>
+                     Register</button>
+                </div>
+
+                <div className="d-flex justify-content-around mt-3">
+                    <Link type="button" className="btn my-button" to="/">
+                     Back</Link>
+                </div>
+            
             </div>
         </div>
     )
