@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { useState } from 'react';
 import ItemHolder from './views/ItemHolder';
 import Navbar from './components/Navbar';
@@ -14,17 +14,26 @@ import HomeView from './views/HomeView';
 import store from './store'
 import { Provider } from 'react-redux'
 import AdminView from './views/AdminView';
+import { ThemeContext } from './contexts/ThemeContext';
+import SettingsView from './views/SettingsView';
 
 function App() {
   const [currentFolderContext, setCurrentFolderContext] = useState(null);
   const [categoriesContext, setCategoriesContext] = useState([]);
+  const [themeContext, setThemeContext] = useState({
+    backgroundTheme: "background-main",
+    buttonTheme: "main-button",
+    appTheme: "App-main",
+    elementNode: "element-node-main"
+  })
 
   return (
     <Provider store={store}>
+    <ThemeContext.Provider value={[themeContext, setThemeContext]}>
     <CurrentFolderContext.Provider value={[currentFolderContext, setCurrentFolderContext]}>
     <CategoriesContext.Provider value={[categoriesContext, setCategoriesContext]}>
     <Router>
-    <div className="App">
+    <div className={`App ${themeContext.appTheme}`}>
     <Navbar />
     <Route 
         path='/'
@@ -38,30 +47,35 @@ function App() {
         path='/inventory'
         exact
         component={ItemHolder} />
-      <Route 
+    <Route 
         path='/all'
         exact
         component={AllItems} />
-      <Route 
+    <Route 
         path='/item/:parameter'
         exact
         render={props => <AddItem {...props} />} />
-      <Route 
+    <Route 
         path='/categories'
         exact
         component={CategoryView} />
-      <Route
+    <Route
         path='/items/:itemId'
         exact
         render={props => <ItemDetailView {...props} />}/>
-      <Route 
+    <Route 
         path='/admin'
         exact
         component={AdminView} />
+    <Route 
+        path='/settings'
+        exact
+        component={SettingsView} />
     </div>
     </Router>
     </CategoriesContext.Provider>
     </CurrentFolderContext.Provider>
+    </ThemeContext.Provider>
     </Provider>
   );
 }

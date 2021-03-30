@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Table from 'react-bootstrap/Table'
 import { getAdminStatistics } from '../services';
 import { getDateFromFullDate } from '../utils';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const AdminView = () => {
 
     const history = useHistory();
     const user = useSelector(state => state)
+
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const [stats, setStats] = useState([]);
 
@@ -37,7 +40,7 @@ const AdminView = () => {
             <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
 
             <Table striped bordered hover responsive>
-                <thead className="secondary-block">
+                <thead className={`secondary-block ${themeContext.backgroundTheme}`}>
                     <tr>
                         <th>#</th>
                         <th>User</th>

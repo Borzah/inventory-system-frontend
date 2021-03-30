@@ -1,0 +1,153 @@
+:root {
+  --mainColor: #2d3647;
+  --secondaryColor: #320a7e;
+  --thirdColor: #612104;
+  --fourthColor: #032c1c;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-main {
+  color: var(--mainColor);
+}
+
+.App-second {
+  color: var(--secondaryColor);
+}
+
+.App-third {
+  color: var(--thirdColor);
+}
+
+.App-fourth {
+  color: var(--fourthColor);
+}
+
+.element-node-main {
+  cursor: pointer;
+  &:hover {
+    background-color: var(--mainColor);
+    color: white;
+  }
+}
+
+.element-node-second {
+  cursor: pointer;
+  &:hover {
+    background-color: var(--secondaryColor);
+    color: white;
+  }
+}
+
+.element-node-third {
+  cursor: pointer;
+  &:hover {
+    background-color: var(--thirdColor);
+    color: white;
+  }
+}
+
+.element-node-fourth {
+  cursor: pointer;
+  &:hover {
+    background-color: var(--fourthColor);
+    color: white;
+  }
+}
+
+// .item-node:hover {
+//   background-color: var(--mainColor);
+//   color: white;
+// }
+
+// .folder-node:hover {
+//   background-color: var(--mainColor);
+//   color: white;
+// }
+
+.nav-pointer {
+  cursor: pointer;
+}
+
+.node-link {
+  text-decoration: none;
+}
+
+.background-main {
+  background-color: var(--mainColor);
+}
+
+.background-secondary {
+  background-color: var(--secondaryColor);
+}
+
+.background-third {
+  background-color: var(--thirdColor);
+}
+
+.background-fourth {
+  background-color: var(--fourthColor);
+}
+
+.text-color-white {
+  color: white;
+}
+
+.secondary-block {
+  color: white;
+}
+
+.secondary-block-pointer {
+  color: white;
+  cursor: pointer;
+}
+
+.main-button {
+  background-color: var(--mainColor);
+  color: white;
+  &:hover {
+    border-color: var(--mainColor);
+    background-color: white;
+    color: var(--mainColor);
+  }
+}
+
+.second-button {
+  background-color: var(--secondaryColor);
+  color: white;
+  &:hover {
+    border-color: var(--secondaryColor);
+    background-color: white;
+    color: var(--secondaryColor);
+  }
+}
+
+.third-button {
+  background-color: var(--thirdColor);
+  color: white;
+  &:hover {
+    border-color: var(--thirdColor);
+    background-color: white;
+    color: var(--thirdColor);
+  }
+}
+
+.fourth-button {
+  background-color: var(--fourthColor);
+  color: white;
+  &:hover {
+    border-color: var(--fourthColor);
+    background-color: white;
+    color: var(--fourthColor);
+  }
+}
+
+.extra-margin-top {
+  margin-top: 30vh;
+}

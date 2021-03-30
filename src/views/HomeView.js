@@ -11,8 +11,11 @@ import {
     loginUserIn 
 } from '../services'
 import HomeCarousel from '../components/HomeCarousel';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const HomeView = () => {
+
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const [cookie, setCookie, removeCookie] = useCookies(["jwtToken"]);
 
@@ -109,12 +112,12 @@ const HomeView = () => {
             </input>
 
             <div className="d-flex justify-content-around mb-3">
-                <button className="btn my-button" type="submit" onClick={(e) => login(e)}>
+                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => login(e)}>
                  Login</button>
             </div>
 
             <div className="d-flex justify-content-around">
-                <Link className="btn my-button" to="/register">
+                <Link className={`btn ${themeContext.buttonTheme}`} to="/register">
                  Register</Link>
             
             </div>

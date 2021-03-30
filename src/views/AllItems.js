@@ -1,12 +1,15 @@
 import React from 'react'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import ItemNode from '../components/ItemNode';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllItems } from '../services';
 import Spinner from 'react-bootstrap/Spinner';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const AllItems = () => {
+
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const history = useHistory();
     const user = useSelector(state => state)
@@ -79,7 +82,7 @@ const AllItems = () => {
             <option value="price">Price</option>        
         </select>
 
-        <button className="btn my-button col-md mt-2" type="submit" onClick={(e) => searchForItems(e)}>
+        <button className={`btn ${themeContext.buttonTheme} col-md mt-2`} type="submit" onClick={(e) => searchForItems(e)}>
         <i className="fas fa-search"></i> Search</button>
         
         </form>

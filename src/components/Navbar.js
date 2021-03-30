@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import { LOGOUT_USER } from '../constants/actionTypes';
 import { logUserOut } from '../services';
 import { useCookies } from "react-cookie";
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const Navbar = () => {
+
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const [cookie, setCookie, removeCookie] = useCookies(["jwtToken"]);
 
@@ -54,7 +57,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="background-main navbar navbar-expand-lg navbar-light sticky-top shadow">
+        <nav className={`${themeContext.backgroundTheme} navbar navbar-expand-lg navbar-light sticky-top shadow`}>
         { isUser ? 
             <div className="container-fluid">
                 <div style={{color: "white"}} className="navbar-brand">Inventory</div>
@@ -72,6 +75,9 @@ const Navbar = () => {
                     </li>
                     <li className="nav-item">
                     <Link style={{color: "white"}} className="nav-link" to="/categories"><i className="far fa-list-alt"></i> Categories</Link>
+                    </li>
+                    <li className="nav-item">
+                    <Link style={{color: "white"}} className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</Link>
                     </li>
                     <li className="nav-item">
                     <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}><i className="fas fa-sign-out-alt"></i> Log out</div>

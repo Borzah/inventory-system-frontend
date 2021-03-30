@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
 import { addImageToItem, addOrUpdateItem, getItemDtoFromApi, getItemFromApi } from '../services';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const AddItem = (props) => {
 
@@ -16,6 +17,7 @@ const AddItem = (props) => {
     const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
 
     const [categories, setCategories] = useContext(CategoriesContext);
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const [itemName, setItemName] = useState("");
     const [serialNumber, setSerialNumber] = useState(null);
@@ -153,13 +155,13 @@ const AddItem = (props) => {
                 onChange={(e) => setItemPrice(e.target.value)}></input>
 
                 {parameter === "add" ? 
-                <button className="btn my-button" type="submit" onClick={(e) => addItem(e)}>Add</button>
-                :<button className="btn my-button" type="submit" onClick={(e) => addItem(e)}>Update</button> }
+                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addItem(e)}>Add</button>
+                :<button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addItem(e)}>Update</button> }
             </form>
 
             <hr></hr>
 
-            <Link type="button" className="btn my-button" to="/inventory">Cancel</Link>
+            <Link type="button" className={`btn ${themeContext.buttonTheme}`} to="/inventory">Cancel</Link>
         </div>
     )
 }

@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { deleteItemWithApi, getItemFromApi } from '../services';
 import { getDateFromFullDate, handleBigOnePieceString } from '../utils';
 import Spinner from 'react-bootstrap/Spinner';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const ItemDetailView = (props) => {
+
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const user = useSelector(state => state)
 
@@ -84,9 +87,9 @@ const ItemDetailView = (props) => {
             </div> : ''}
 
             <div className="d-flex justify-content-between mt-2">
-                <button type="button" className="btn my-button" onClick={deleteItem}>Delete</button>
-                <Link type="button" className="btn my-button" to={updateString}>Update</Link>
-                <button type="button" className="btn my-button" onClick={() => {history.goBack();}}>Go back</button>
+                <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={deleteItem}>Delete</button>
+                <Link type="button" className={`btn ${themeContext.buttonTheme}`} to={updateString}>Update</Link>
+                <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={() => {history.goBack();}}>Go back</button>
             </div>
             
         </div> : <Spinner className="extra-margin-top" animation="border" />

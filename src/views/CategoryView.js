@@ -9,6 +9,7 @@ import { addCategoryToApi, getItemsByCategory } from '../services';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import ItemNode from '../components/ItemNode';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 export const CategoryView = () => {
 
@@ -16,6 +17,7 @@ export const CategoryView = () => {
     const user = useSelector(state => state)
 
     const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const [categoryToAdd, setCategoryToAdd] = useState("");
     const [show, setShow] = useState(false);
@@ -79,7 +81,7 @@ export const CategoryView = () => {
 
                 {categoryItems.map((category, index) => 
                     <Card key={index}>
-                        <Accordion.Toggle className="secondary-block-pointer pt-3 pb-3" as={Card.Header} eventKey={index.toString()}>
+                        <Accordion.Toggle className={`${themeContext.backgroundTheme} secondary-block-pointer pt-3 pb-3`} as={Card.Header} eventKey={index.toString()}>
                         {category.name}
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={index.toString()}>
@@ -95,7 +97,7 @@ export const CategoryView = () => {
                 }
                 <hr></hr>
             
-            <Button className="my-button" onClick={openAddCategory}>
+            <Button className={`${themeContext.buttonTheme}`} onClick={openAddCategory}>
                 Add new category!
             </Button>
 
@@ -105,20 +107,20 @@ export const CategoryView = () => {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header closeButton>
+                <Modal.Header>
                 <Modal.Title>Add Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 
                 <input className="form-control me-2" type="text" placeholder="New Category" aria-label="New Category"
                 onChange={(e) => setCategoryToAdd(e.target.value)}></input>
-                <button className="btn btn-outline-success" type="submit" onClick={(e) => addNewCategory(e)}>Add!</button>
+                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addNewCategory(e)}>Add!</button>
 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button className="my-button" onClick={closeAddCategory}>
+                <button className={`btn ${themeContext.buttonTheme}`} onClick={closeAddCategory}>
                     Close
-                </Button>
+                </button>
                 </Modal.Footer>
             </Modal>
 

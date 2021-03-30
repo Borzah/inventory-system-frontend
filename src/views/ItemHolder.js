@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { addFodlerWithApi, deleteFolderWithApi, getCategoriesFromApi, getInventoryContent } from '../services';
 import Spinner from 'react-bootstrap/Spinner';
 import { handleBigOnePieceString } from '../utils';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const ItemHolder = () => {
 
@@ -31,6 +32,7 @@ const ItemHolder = () => {
 
     const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
     const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const addFolderClose = () => {
         setShowAddFolder(false);
@@ -152,16 +154,16 @@ const ItemHolder = () => {
             
 
             <div className="row">
-                {currentFolderId ? <div className="col-md mt-2"><button type="button" className="btn my-button" onClick={() => goBackToParentFolder()}
+                {currentFolderId ? <div className="col-md mt-2"><button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={() => goBackToParentFolder()}
                 >Go Back</button></div> : ''}
                 <div className="col-md mt-2">
-                <Link type="button" className="btn my-button" to="/item/add">Add Item</Link>
+                <Link type="button" className={`btn ${themeContext.buttonTheme}`} to="/item/add">Add Item</Link>
                 </div>
                 <div className="col-md mt-2">
-                <button type="button" className="btn my-button" onClick={addFolderShow}>Add folder</button>
+                <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={addFolderShow}>Add folder</button>
                 </div>
                 <div className="col-md mt-2">
-                {currentFolderId ? <button type="button" className="btn my-button" onClick={deleteFolder}>DeleteFolder</button>: ''}
+                {currentFolderId ? <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={deleteFolder}>DeleteFolder</button>: ''}
                 </div>
             </div>
 
@@ -178,11 +180,11 @@ const ItemHolder = () => {
 
                 <input className="form-control me-2" type="text" placeholder="New Folder Name" aria-label="New Folder Name"
                 onChange={(e) => setFolderToAddName(e.target.value)}></input>
-                <button className="btn my-button" type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
+                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button className="my-button" onClick={addFolderClose}>
+                <Button className={`${themeContext.buttonTheme}`} onClick={addFolderClose}>
                     Close
                 </Button>
                 </Modal.Footer>

@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useHistory } from "react-router-dom";
 import { registerUserIn } from '../services';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const RegisterView = () => {
+
+    const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const history = useHistory();
 
@@ -52,12 +55,12 @@ const RegisterView = () => {
                 </input>
 
                 <div className="d-flex justify-content-around">
-                    <button className="btn my-button" type="submit" onClick={(e) => register(e)}>
+                    <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => register(e)}>
                      Register</button>
                 </div>
 
                 <div className="d-flex justify-content-around mt-3">
-                    <Link type="button" className="btn my-button" to="/">
+                    <Link type="button" className={`btn ${themeContext.buttonTheme}`} to="/">
                      Back</Link>
                 </div>
             
