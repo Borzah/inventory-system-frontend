@@ -85,11 +85,14 @@ const AllItems = () => {
         </div>
 
         <hr></hr>
+        
         {
-                !isLoading ? 
-            items.map(itm => <div className="mw-50 mx-auto"><ItemNode item={itm}/></div>) : 
+            !isLoading ? 
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                {items.map(itm => <div className="col mb-4"><ItemNode item={itm}/></div>)} </div>: 
             <Spinner className="extra-margin-top" animation="border" />
         }
+        
         </div>
         </div>
     )

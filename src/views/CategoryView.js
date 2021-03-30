@@ -84,7 +84,9 @@ export const CategoryView = () => {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={index.toString()}>
                         <Card.Body>
-                            {category.items.map(itm => <ItemNode item={itm}/>)}
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                            {category.items.map(itm => <div className="col mb-4"><ItemNode item={itm}/></div>)}
+                            </div>
                         </Card.Body>
                         </Accordion.Collapse>
                     </Card>)}
