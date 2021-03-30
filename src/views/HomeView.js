@@ -72,7 +72,6 @@ const HomeView = () => {
                 )
                 if (data.role === 'USER') {
                     history.push("/inventory")
-                    //getCategories(data);
                 } else {
                     history.push("/admin")
                 }

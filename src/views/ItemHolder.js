@@ -138,14 +138,14 @@ const ItemHolder = () => {
             <p className="h6 text-start">{pathName}</p>
             <hr></hr>
             <div className="row"><h4 className="col-md mw-50">Folders</h4></div>
-            <div class="row">
-            {folders.map(fol => <div className="col-md mw-25"><div onClick={() => getData(`http://localhost:8080/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+            {folders.map(fol => <div className="col mb-4"><div onClick={() => getData(`/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
                 <FolderNode folder={fol}/>
             </div></div>)}</div>
             <hr></hr>
             <h4>Items</h4>
-            <div class="row">
-            {items.map(itm => <div className="col-md mw-25"><ItemNode item={itm}/></div>)}</div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+            {items.map(itm => <div className="col mb-4"><ItemNode item={itm}/></div>)}</div>
             <hr></hr>
             
             
