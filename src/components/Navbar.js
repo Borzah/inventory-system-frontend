@@ -89,7 +89,17 @@ const Navbar = () => {
         <div style={{color: "white"}} className="navbar-brand">Inventory</div>
         {isAdmin && cookie.jwtToken ? 
             
-            <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}><i className="fas fa-sign-out-alt"></i> Log out</div>
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+                    <Link style={{color: "white"}} className="nav-link" to='/admin'><i className="fas fa-chart-bar"></i> Statistics</Link>
+            </li>
+            <li className="nav-item">
+                <Link style={{color: "white"}} className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</Link>
+            </li>
+            <li className="nav-item">
+                <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}><i className="fas fa-sign-out-alt"></i> Log out</div>
+            </li>
+            </ul>
             
             : ''}
     </div>}

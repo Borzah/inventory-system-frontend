@@ -37,7 +37,7 @@ const AdminView = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
+            <h2><i className="fas fa-chart-bar"></i> Statistics</h2>
 
             <Table striped bordered hover responsive>
                 <thead className={`secondary-block ${themeContext.backgroundTheme}`}>
