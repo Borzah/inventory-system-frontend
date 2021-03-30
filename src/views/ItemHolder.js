@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addFodlerWithApi, deleteFolderWithApi, getCategoriesFromApi, getInventoryContent } from '../services';
 import Spinner from 'react-bootstrap/Spinner';
+import { handleBigOnePieceString } from '../utils';
 
 const ItemHolder = () => {
 
@@ -135,7 +136,7 @@ const ItemHolder = () => {
             { !isLoading ?
             <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
 
-            <p className="h6 text-start">{pathName}</p>
+            <p className="h6 text-start">{pathName.length > 20 ? handleBigOnePieceString(pathName) : pathName}</p>
             <hr></hr>
             <div className="row"><h4 className="col-md mw-50">Folders</h4></div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">

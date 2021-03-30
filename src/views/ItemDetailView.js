@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { deleteItemWithApi, getItemFromApi } from '../services';
-import { getDateFromFullDate } from '../utils';
+import { getDateFromFullDate, handleBigOnePieceString } from '../utils';
 import Spinner from 'react-bootstrap/Spinner';
 
 const ItemDetailView = (props) => {
@@ -48,7 +48,7 @@ const ItemDetailView = (props) => {
     return (
         <div>{ !isLoading ?
         <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
-            <h3>{item.itemName}</h3>
+            <h3>{item.itemName.length > 20 ? handleBigOnePieceString(item.itemName) : item.itemName}</h3>
             <hr></hr>
             <h4>Date added</h4>
             <div>{getDateFromFullDate(item.dateAdded)}</div>
@@ -61,7 +61,7 @@ const ItemDetailView = (props) => {
 
             {item.serialNumber ? <div>
                 <h4>Serial number:</h4>
-                <div>{item.serialNumber}</div>
+                <div>{item.serialNumber.length > 20 ? handleBigOnePieceString(item.serialNumber) : item.serialNumber}</div>
                 <hr></hr>
             </div> : ''}
 
@@ -79,7 +79,7 @@ const ItemDetailView = (props) => {
 
             {item.itemPrice ? <div>
                 <h4>Price:</h4>
-                <div>{`${item.itemPrice} $`}</div>
+                <div>{`${item.itemPrice.toFixed(2)} $`}</div>
                 <hr></hr>
             </div> : ''}
 

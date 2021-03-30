@@ -69,7 +69,7 @@ const AddItem = (props) => {
                 item = {...item, folderId: currentFolderContext}
             }
             if (serialNumber) {
-                item = {...item, serialNumber}
+                item = {...item, serialNumber: serialNumber.split(" ").join("")}
             }
             if (category) {
                 item = {...item, categoryId: category}
