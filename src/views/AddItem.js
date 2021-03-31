@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
@@ -6,11 +6,12 @@ import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
 import { addImageToItem, addOrUpdateItem, getItemDtoFromApi, getItemFromApi } from '../services';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { getItemToAddOrUpdate } from '../utils';
 
 const AddItem = (props) => {
 
     const history = useHistory();
-    const user = useSelector(state => state)
+    const user = useSelector(state => state);
 
     const { parameter } = props.match.params;
 
@@ -19,7 +20,7 @@ const AddItem = (props) => {
     const [categories, setCategories] = useContext(CategoriesContext);
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
-    const [itemName, setItemName] = useState("");
+    const [itemName, setItemName] = useState(null);
     const [serialNumber, setSerialNumber] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [category, setCategory] = useState(null);
@@ -38,9 +39,9 @@ const AddItem = (props) => {
 
     useEffect(() => {
         if (typeof user === 'undefined') {
-            history.push("/")
+            history.push("/");
         } else if (user.role === "ADMIN") {
-            history.push("/admin")
+            history.push("/admin");
         } else {
             if (parameter !== "add") {
                 getItemDtoFromApi(parameter, user.token)
@@ -61,30 +62,19 @@ const AddItem = (props) => {
         if (parameter !== "add") {
             requestString = `/api/items/${parameter}`;
         }
-        if (itemName.trim() === "") {
+        if (!itemName || itemName.trim() === "") {
             alert("Item name must be present")
         } else {
-            let item = {
-                itemName,
-                userId: user.userId,
-            }
-            if (parameter !== "add") {
-                item = {...item, folderId: folderToAddInto}
-            } else if (currentFolderContext) {
-                item = {...item, folderId: currentFolderContext}
-            }
-            if (serialNumber) {
-                item = {...item, serialNumber: serialNumber.split(" ").join("")}
-            }
-            if (category) {
-                item = {...item, categoryId: category}
-            }
-            if (description) {
-                item = {...item, description}
-            }
-            if (itemPrice) {
-                item = {...item, itemPrice}
-            }
+            let item = getItemToAddOrUpdate(
+                parameter, 
+                currentFolderContext, 
+                itemName, 
+                user, 
+                folderToAddInto, 
+                serialNumber, 
+                category, 
+                description, 
+                itemPrice);
             let requestMethod = parameter === "add" ? 'post' : 'put';
             addOrUpdateItem(requestMethod, requestString, item, user.token)
               .then((response) => {
@@ -159,13 +149,22 @@ const AddItem = (props) => {
                 onChange={(e) => setItemPrice(e.target.value)}></input>
 
                 {parameter === "add" ? 
-                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addItem(e)}>Add</button>
-                :<button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addItem(e)}>Update</button> }
+                <button className={`btn ${themeContext.buttonTheme}`} 
+                        type="submit" 
+                        onClick={(e) => addItem(e)}>Add</button>
+
+                : <button className={`btn ${themeContext.buttonTheme}`} 
+                          type="submit" 
+                          onClick={(e) => addItem(e)}>Update</button> }
             </form>
 
             <hr></hr>
 
-            <Link type="button" className={`btn ${themeContext.buttonTheme}`} to="/inventory">Cancel</Link>
+            <Link type="button" 
+                  className={`btn ${themeContext.buttonTheme}`} 
+                  to="/inventory">Cancel
+            </Link>
+
         </div>
     )
 }

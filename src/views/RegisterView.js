@@ -22,8 +22,6 @@ const RegisterView = () => {
             }
             registerUserIn(registerUser)
             .then(response => {
-                console.log(response)
-                alert('You are registered!')
                 history.push("/")
             }).catch(error => {
                 let errMsg =  (error.response.data.message);
@@ -55,7 +53,10 @@ const RegisterView = () => {
                 </input>
 
                 <div className="d-flex justify-content-around">
-                    <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => register(e)}>
+                    <button 
+                    className={`btn ${themeContext.buttonTheme}`} 
+                    type="submit" 
+                    onClick={(e) => register(e)}>
                      Register</button>
                 </div>
 

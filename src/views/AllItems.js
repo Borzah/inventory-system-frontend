@@ -1,24 +1,24 @@
 import React from 'react'
-import { useEffect, useState, useContext } from 'react';
 import ItemNode from '../components/ItemNode';
+import Spinner from 'react-bootstrap/Spinner';
+import { useEffect, useState, useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeContext';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllItems } from '../services';
-import Spinner from 'react-bootstrap/Spinner';
-import { ThemeContext } from '../contexts/ThemeContext';
 
 const AllItems = () => {
 
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const history = useHistory();
-    const user = useSelector(state => state)
+    const user = useSelector(state => state);
 
     const [items, setItems] = useState([]);
     const [searchInput, setSearchInput] = useState("");
-    const [searchAttribute, setSearchAttribute] = useState("")
+    const [searchAttribute, setSearchAttribute] = useState("");
 
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
     const getData = (pathName) => {
         setIsLoading(true);
@@ -35,9 +35,9 @@ const AllItems = () => {
 
     useEffect(() => {
         if (typeof user === 'undefined') {
-            history.push("/")
+            history.push("/");
         } else if (user.role === "ADMIN") {
-            history.push("/admin")
+            history.push("/admin");
         } else {
             getData(`/api/inventory/user/${user.userId}`);
         }
@@ -82,7 +82,10 @@ const AllItems = () => {
             <option value="price">Price</option>        
         </select>
 
-        <button className={`btn ${themeContext.buttonTheme} col-md mt-2`} type="submit" onClick={(e) => searchForItems(e)}>
+        <button 
+            className={`btn ${themeContext.buttonTheme} col-md mt-2`} 
+            type="submit" 
+            onClick={(e) => searchForItems(e)}>
         <i className="fas fa-search"></i> Search</button>
         
         </form>

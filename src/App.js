@@ -1,23 +1,24 @@
 import './App.scss';
-import { useState } from 'react';
 import ItemHolder from './views/ItemHolder';
 import Navbar from './components/Navbar';
 import AllItems from './views/AllItems';
 import AddItem from './views/AddItem';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { CurrentFolderContext } from "./contexts/CurrentFolderContext";
-import { CategoriesContext } from './contexts/CategoriesContext'
-import ItemDetailView from './views/ItemDetailView';
-import { CategoryView } from './views/CategoryView';
 import RegisterView from './views/RegisterView';
 import HomeView from './views/HomeView';
-import store from './store'
-import { Provider } from 'react-redux'
+import store from './store';
+import ItemDetailView from './views/ItemDetailView';
 import AdminView from './views/AdminView';
-import { ThemeContext } from './contexts/ThemeContext';
 import SettingsView from './views/SettingsView';
+import { useState } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { CurrentFolderContext } from "./contexts/CurrentFolderContext";
+import { CategoriesContext } from './contexts/CategoriesContext';
+import { CategoryView } from './views/CategoryView';
+import { Provider } from 'react-redux';
+import { ThemeContext } from './contexts/ThemeContext';
 
 function App() {
+    
   const [currentFolderContext, setCurrentFolderContext] = useState(null);
   const [categoriesContext, setCategoriesContext] = useState([]);
   const [themeContext, setThemeContext] = useState({
@@ -25,7 +26,7 @@ function App() {
     buttonTheme: "main-button",
     appTheme: "App-main",
     elementNode: "element-node-main"
-  })
+  });
 
   return (
     <Provider store={store}>

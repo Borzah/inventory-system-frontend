@@ -85,7 +85,7 @@ export const deleteItemWithApi = (itemId, token) =>
         }
     }
 )
-//items/
+
 export const getItemDtoFromApi = (itemId, token) =>
     axios.get(`/api/items/${itemId}`, { 
         headers: {

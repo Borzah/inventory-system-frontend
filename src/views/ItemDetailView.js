@@ -35,7 +35,8 @@ const ItemDetailView = (props) => {
                     setItem(data);
                     setIsLoading(false)
                 }).catch(error => {
-                    console.log(error);
+                    let errMsg =  (error.response.data.message);
+                    alert(errMsg);
                 })
         }
     }, [])
@@ -44,7 +45,6 @@ const ItemDetailView = (props) => {
         deleteItemWithApi(itemId, user.token)
             .then(res => {
                 history.goBack();
-                alert('Item deleted')
             });
     }
 

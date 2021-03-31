@@ -30,26 +30,46 @@ const SettingsView = () => {
                     <div className="row">
 
                         <div className="col">
-                                <div className="theme-change-btn background-main mb-2 mt-2 mx-auto" onClick={() => setThemeContext(mainTheme)}>
-                                    {themeContext.appTheme === "App-main" ? <i className="theme-change-check fas fa-check"></i> : ''}
+
+                                <div className="theme-change-btn background-main mb-2 mt-2 mx-auto" 
+                                     onClick={() => setThemeContext(mainTheme)}>
+
+                                    {themeContext.appTheme === "App-main" ? 
+                                    <i className="theme-change-check fas fa-check"></i> : ''}
+
                                 </div>
                         </div>
 
                         <div className="col">
-                            <div className="theme-change-btn background-secondary mb-2 mt-2 mx-auto" onClick={() => setThemeContext(secondTheme)}>
-                                {themeContext.appTheme === "App-second" ? <i className="theme-change-check fas fa-check"></i> : ''}
+
+                            <div className="theme-change-btn background-secondary mb-2 mt-2 mx-auto" 
+                                 onClick={() => setThemeContext(secondTheme)}>
+
+                                {themeContext.appTheme === "App-second" ? 
+                                <i className="theme-change-check fas fa-check"></i> : ''}
+
                             </div>
                         </div>
 
                         <div className="col">
-                            <div className="theme-change-btn background-third mb-2 mt-2 mx-auto" onClick={() => setThemeContext(thirdTheme)}>
-                                {themeContext.appTheme === "App-third" ? <i className="theme-change-check fas fa-check"></i> : ''}
+
+                            <div className="theme-change-btn background-third mb-2 mt-2 mx-auto" 
+                                 onClick={() => setThemeContext(thirdTheme)}>
+
+                                {themeContext.appTheme === "App-third" ? 
+                                <i className="theme-change-check fas fa-check"></i> : ''}
+
                             </div>
                         </div>
 
                         <div className="col">
-                            <div className="theme-change-btn background-fourth mb-2 mt-2 mx-auto" onClick={() => setThemeContext(fourthTheme)}>
-                                {themeContext.appTheme === "App-fourth" ? <i className="theme-change-check fas fa-check"></i> : ''}
+
+                            <div className="theme-change-btn background-fourth mb-2 mt-2 mx-auto" 
+                                 onClick={() => setThemeContext(fourthTheme)}>
+
+                                {themeContext.appTheme === "App-fourth" ? 
+                                <i className="theme-change-check fas fa-check"></i> : ''}
+                                
                             </div>
                         </div>
 

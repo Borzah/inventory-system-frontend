@@ -1,7 +1,7 @@
+import Table from 'react-bootstrap/Table'
 import { useState, useEffect, useContext } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Table from 'react-bootstrap/Table'
 import { getAdminStatistics } from '../services';
 import { getDateFromFullDate } from '../utils';
 import { ThemeContext } from '../contexts/ThemeContext';
@@ -9,7 +9,7 @@ import { ThemeContext } from '../contexts/ThemeContext';
 const AdminView = () => {
 
     const history = useHistory();
-    const user = useSelector(state => state)
+    const user = useSelector(state => state);
 
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
@@ -18,7 +18,7 @@ const AdminView = () => {
     const getData = () => {
         getAdminStatistics(user.token)
             .then(response => {
-                const data  = response.data
+                const data  = response.data;
                 setStats(data);
             }).catch(error => {
                 console.log(error);
@@ -27,9 +27,9 @@ const AdminView = () => {
 
     useEffect(() => {
         if (typeof user === 'undefined') {
-            history.push("/")
+            history.push("/");
         } else if (user.role === "USER") {
-            history.push("/inventory")
+            history.push("/inventory");
         } else {
             getData();
         }
@@ -40,7 +40,8 @@ const AdminView = () => {
             <h2><i className="fas fa-chart-bar"></i> Statistics</h2>
 
             <Table striped bordered hover responsive>
-                <thead className={`secondary-block ${themeContext.backgroundTheme}`}>
+                <thead 
+                className={`secondary-block ${themeContext.backgroundTheme}`}>
                     <tr>
                         <th>#</th>
                         <th>User</th>

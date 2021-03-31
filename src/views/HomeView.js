@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
 import { useCookies } from "react-cookie";
 import { 
-    getCategoriesFromApi, 
     getUserDataWithCookie, 
     loginUserIn 
 } from '../services'
@@ -37,9 +36,9 @@ const HomeView = () => {
                     payload: data
                 })
                 if (data.role === 'USER') {
-                    history.push("/inventory")
+                    history.push("/inventory");
                 } else {
-                    history.push("/admin")
+                    history.push("/admin");
                 }
             }).catch(error => {
                 dispatch({
@@ -74,9 +73,9 @@ const HomeView = () => {
                     }
                 )
                 if (data.role === 'USER') {
-                    history.push("/inventory")
+                    history.push("/inventory");
                 } else {
-                    history.push("/admin")
+                    history.push("/admin");
                 }
             }).catch(error => {
                 if (error.response.data.message === "Unauthorized") {

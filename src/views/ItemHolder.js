@@ -114,7 +114,6 @@ const ItemHolder = () => {
               .then((response) => {
                     addFolderClose();
                     whenGoingOnPage();
-                    alert('Folder added')
               }).catch(error => {
                     let errMsg =  (error.response.data.message);
                     alert(errMsg);
@@ -127,7 +126,6 @@ const ItemHolder = () => {
             .then(res => {
                 setCurrentFolderContext(parentFolderId)
                 goBackToParentFolder();
-                alert('Folder deleted')
             });
     }
 

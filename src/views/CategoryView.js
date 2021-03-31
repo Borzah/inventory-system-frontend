@@ -1,25 +1,25 @@
-import React from 'react'
-import { useEffect, useState, useContext } from 'react';
+import React from 'react';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import ItemNode from '../components/ItemNode';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import { useEffect, useState, useContext } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
 import { addCategoryToApi, getItemsByCategory } from '../services';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
-import ItemNode from '../components/ItemNode';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 export const CategoryView = () => {
 
     const history = useHistory();
-    const user = useSelector(state => state)
+    const user = useSelector(state => state);
 
     const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
-    const [categoryToAdd, setCategoryToAdd] = useState("");
+    const [categoryToAdd, setCategoryToAdd] = useState(null);
     const [show, setShow] = useState(false);
     const [categoryItems, setCategoryItems] = useState([]);
 
@@ -28,14 +28,14 @@ export const CategoryView = () => {
 
     useEffect(() => {
         if (typeof user === 'undefined') {
-            history.push("/")
+            history.push("/");
         } else if (user.role === "ADMIN") {
-            history.push("/admin")
+            history.push("/admin");
         } else {
             getItemsByCategory(user.userId, user.token)
             .then(response => {
                 let data = response.data;
-                let resultList = []
+                let resultList = [];
                 for (var key of Object.keys(data)) {
                     if (data[key].length > 0) {
                         resultList.push(
@@ -46,15 +46,15 @@ export const CategoryView = () => {
                         )
                     }
                 }
-                setCategoryItems(resultList)
+                setCategoryItems(resultList);
             })
         }
     }, [])
 
     const addNewCategory = (e) => {
         e.preventDefault();
-        if (categoryToAdd.trim() == "") {
-            alert("Category name cannot be empty!")
+        if (!categoryToAdd || categoryToAdd.trim() == "") {
+            alert("Category name cannot be empty!");
         } else {
             const category = {
                 categoryName: categoryToAdd,
@@ -63,7 +63,7 @@ export const CategoryView = () => {
             addCategoryToApi(category, user.token)
               .then((response) => {
                 setCategoriesContext([...categoriesContext, response.data])
-                alert("Category added")
+                closeAddCategory();
               }).catch(error => {
                 let errMsg =  (error.response.data.message);
                 alert(errMsg);
@@ -112,9 +112,20 @@ export const CategoryView = () => {
                 </Modal.Header>
                 <Modal.Body>
                 
-                <input className="form-control me-2" type="text" placeholder="New Category" aria-label="New Category"
-                onChange={(e) => setCategoryToAdd(e.target.value)}></input>
-                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addNewCategory(e)}>Add!</button>
+                <input 
+                    className="form-control me-2" 
+                    type="text" 
+                    placeholder="New Category" 
+                    aria-label="New Category"
+                    onChange={(e) => setCategoryToAdd(e.target.value)}>
+                </input>
+
+                <button 
+                    className={`btn ${themeContext.buttonTheme}`} 
+                    type="submit" 
+                    onClick={(e) => addNewCategory(e)}>
+                    Add!
+                </button>
 
                 </Modal.Body>
                 <Modal.Footer>
