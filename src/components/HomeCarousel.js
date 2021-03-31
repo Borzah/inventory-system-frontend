@@ -20,10 +20,6 @@ const HomeCarousel = () => {
                 src={picTwo}
                 alt="Second slide"
                 />
-
-                <Carousel.Caption>
-                <h1>Easy</h1>
-                </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
                 <img
@@ -31,10 +27,6 @@ const HomeCarousel = () => {
                 src={picThree}
                 alt="Third slide"
                 />
-
-                <Carousel.Caption>
-                <h1>Effective</h1>
-                </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
     )

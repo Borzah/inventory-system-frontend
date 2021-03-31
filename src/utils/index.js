@@ -1,5 +1,5 @@
 export const getDateFromFullDate = (fullDate) => 
-    fullDate.substring(0, 10);
+    fullDate ? fullDate.substring(0, 10) : "No items";
 
 export const handleBigOnePieceString = (str) => {
     const max_size = 10;
