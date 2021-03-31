@@ -57,8 +57,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className={`${themeContext.backgroundTheme} navbar navbar-expand-lg navbar-light sticky-top shadow`}>
-        { isUser ? 
+        <nav className={`${themeContext.backgroundTheme} navbar navbar-expand-lg navbar-light sticky-top shadow`}> 
             <div className="container-fluid">
                 <div style={{color: "white"}} className="navbar-brand">Inventory</div>
                 
@@ -67,42 +66,32 @@ const Navbar = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
+                    {isUser && cookie.jwtToken ? <li className="nav-item">
                     <Link style={{color: "white"}} className="nav-link" to='/inventory'><i className="fas fa-warehouse"></i> My inventory</Link>
-                    </li>
+                    </li> : ''}
+                    {isUser && cookie.jwtToken ?
                     <li className="nav-item">
                     <Link style={{color: "white"}} className="nav-link" to="/all"><i className="fas fa-cubes"></i> All items</Link>
-                    </li>
+                    </li> : ''}
+                    {isUser && cookie.jwtToken ?
                     <li className="nav-item">
                     <Link style={{color: "white"}} className="nav-link" to="/categories"><i className="far fa-list-alt"></i> Categories</Link>
-                    </li>
+                    </li> : ''}
+                    {isAdmin && cookie.jwtToken ? 
+                    <li className="nav-item">
+                    <Link style={{color: "white"}} className="nav-link" to='/admin'><i className="fas fa-chart-bar"></i> Statistics</Link>
+                    </li> : ''}
+                    {(isAdmin || isUser) && cookie.jwtToken ?
                     <li className="nav-item">
                     <Link style={{color: "white"}} className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</Link>
-                    </li>
+                    </li> : ''}
+                    {(isAdmin || isUser) && cookie.jwtToken ?
                     <li className="nav-item">
                     <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}><i className="fas fa-sign-out-alt"></i> Log out</div>
-                    </li>
+                    </li> : ''}
                 </ul>
         </div>
     </div>
-        : <div className="container-fluid">
-        <div style={{color: "white"}} className="navbar-brand">Inventory</div>
-        {isAdmin && cookie.jwtToken ? 
-            
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-                    <Link style={{color: "white"}} className="nav-link" to='/admin'><i className="fas fa-chart-bar"></i> Statistics</Link>
-            </li>
-            <li className="nav-item">
-                <Link style={{color: "white"}} className="nav-link" to="/settings"><i className="fas fa-cog"></i> Settings</Link>
-            </li>
-            <li className="nav-item">
-                <div style={{color: "white"}} className="nav-link nav-pointer" onClick={(e) => logout(e)}><i className="fas fa-sign-out-alt"></i> Log out</div>
-            </li>
-            </ul>
-            
-            : ''}
-    </div>}
     </nav>
     )
 }
