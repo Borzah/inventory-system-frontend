@@ -25,13 +25,15 @@ const AddItem = (props) => {
     const [category, setCategory] = useState(null);
     const [description, setDescription] = useState(null);
     const [itemPrice, setItemPrice] = useState(null)
+    const [folderToAddInto, setFolderToAddInto] = useState(null);
 
-    const fillInput = (name, serialNum, cat, desc, price) => {
+    const fillInput = (name, serialNum, cat, desc, price, folder) => {
         setItemName(name);
         setSerialNumber(serialNum);
         setCategory(cat);
         setDescription(desc);
         setItemPrice(price);
+        setFolderToAddInto(folder)
     }
 
     useEffect(() => {
@@ -44,7 +46,7 @@ const AddItem = (props) => {
                 getItemDtoFromApi(parameter, user.token)
                 .then(response => {
                     const data  = response.data
-                    fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice)
+                    fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice, data.folderId)
                 }).catch(error => {
                     let errMsg =  (error.response.data.message);
                     alert(errMsg);
@@ -66,7 +68,9 @@ const AddItem = (props) => {
                 itemName,
                 userId: user.userId,
             }
-            if (currentFolderContext) {
+            if (parameter !== "add") {
+                item = {...item, folderId: folderToAddInto}
+            } else if (currentFolderContext) {
                 item = {...item, folderId: currentFolderContext}
             }
             if (serialNumber) {
@@ -90,13 +94,13 @@ const AddItem = (props) => {
                     formData.append("imageFile", selectedFile);
                     addImageToItem(itemId, formData, user.token)
                         .then((response) => {
-                            history.goBack();
+                            history.push("/inventory");
                         }).catch(error => {
                             let errMsg =  (error.response.data.message);
                             alert(errMsg);
                       });
                 }
-                history.goBack();
+                history.push("/inventory");
               }).catch(error => {
                 let errMsg =  (error.response.data.message);
                 alert(errMsg);
