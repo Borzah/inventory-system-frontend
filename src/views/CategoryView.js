@@ -107,7 +107,7 @@ export const CategoryView = () => {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header>
+                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
                 <Modal.Title>Add Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

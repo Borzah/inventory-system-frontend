@@ -26,7 +26,11 @@ const RegisterView = () => {
                 alert("You can login now");
             }).catch(error => {
                 let errMsg =  (error.response.data.message);
-                alert(errMsg);
+                if (errMsg === "Validation failed for object='registerDto'. Error count: 1") {
+                    alert("Make sure username is valid email.")
+                } else {
+                    alert(errMsg);
+                }
           });
         }
     }

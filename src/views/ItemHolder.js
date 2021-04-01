@@ -21,12 +21,14 @@ const ItemHolder = () => {
     const [items, setItems] = useState([]);
     const [parentFolderId, setParentFolderId] = useState();
     const [currentFolderId, setCurrentFolderId] = useState();
-    const [pathName, setPathName] = useState()
+    const [pathName, setPathName] = useState();
+
     const [showAddFolder, setShowAddFolder] = useState(false);
+    const [showDeleteFolder, setShowDeleteFolder] = useState(false);
 
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
-    const user = useSelector(state => state)
+    const user = useSelector(state => state);
 
     const [folderToAddName, setFolderToAddName] = useState("");
 
@@ -36,10 +38,19 @@ const ItemHolder = () => {
 
     const addFolderClose = () => {
         setShowAddFolder(false);
-        setFolderToAddName()
+        setFolderToAddName();
     }
+
     const addFolderShow = () => {
         setShowAddFolder(true);
+    }
+
+    const deleteFolderShow = () => {
+        setShowDeleteFolder(true);
+    }
+
+    const deleteFolderClose = () => {
+        setShowDeleteFolder(false);
     }
 
     const getCategories = (user) => {
@@ -66,7 +77,8 @@ const ItemHolder = () => {
                 setPathName(data.currentFolderPathName)
                 setIsLoading(false)
             }).catch(error => {
-                console.log(error);
+                let errMsg =  (error.response.data.message);
+                    alert(errMsg);
             })
     }
 
@@ -122,6 +134,7 @@ const ItemHolder = () => {
     }
 
     const deleteFolder = () => {
+        deleteFolderClose();
         deleteFolderWithApi(currentFolderId, user.token)
             .then(res => {
                 setCurrentFolderContext(parentFolderId)
@@ -161,7 +174,7 @@ const ItemHolder = () => {
                 <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={addFolderShow}>Add folder</button>
                 </div>
                 <div className="col-md mt-2">
-                {currentFolderId ? <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={deleteFolder}>DeleteFolder</button>: ''}
+                {currentFolderId ? <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={deleteFolderShow}>DeleteFolder</button>: ''}
                 </div>
             </div>
 
@@ -171,8 +184,8 @@ const ItemHolder = () => {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header>
-                <Modal.Title>Modal title</Modal.Title>
+                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
+                <Modal.Title>Add folder</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
@@ -183,6 +196,28 @@ const ItemHolder = () => {
                 </Modal.Body>
                 <Modal.Footer>
                 <Button className={`${themeContext.buttonTheme}`} onClick={addFolderClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal
+                show={showDeleteFolder}
+                onHide={setShowDeleteFolder}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
+                <Modal.Title>Are you sure?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                <div className="text-bold">All items and folders in it will be also deleted!</div>
+                <button className={`btn ${themeContext.buttonTheme} mt-2`} type="submit" onClick={() => deleteFolder()}>Delete</button>
+
+                </Modal.Body>
+                <Modal.Footer>
+                <Button className={`${themeContext.buttonTheme}`} onClick={deleteFolderClose}>
                     Close
                 </Button>
                 </Modal.Footer>

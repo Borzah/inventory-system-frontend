@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
-import { addImageToItem, addOrUpdateItem, getItemDtoFromApi, getItemFromApi } from '../services';
+import { addImageToItem, addOrUpdateItem, getAllUserFoldersFromApi, getItemDtoFromApi, getItemFromApi } from '../services';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { getItemToAddOrUpdate } from '../utils';
 
@@ -26,7 +26,8 @@ const AddItem = (props) => {
     const [category, setCategory] = useState(null);
     const [description, setDescription] = useState(null);
     const [itemPrice, setItemPrice] = useState(null)
-    const [folderToAddInto, setFolderToAddInto] = useState(null);
+    const [folderToAddInto, setFolderToAddInto] = useState(currentFolderContext);
+    const [allFolders, setAllFolders] = useState([]);
 
     const fillInput = (name, serialNum, cat, desc, price, folder) => {
         setItemName(name);
@@ -43,6 +44,14 @@ const AddItem = (props) => {
         } else if (user.role === "ADMIN") {
             history.push("/admin");
         } else {
+            getAllUserFoldersFromApi(user.userId, user.token)
+            .then(response => {
+                const data = response.data;
+                setAllFolders(data);
+            }).catch(error => {
+                let errMsg =  (error.response.data.message);
+                alert(errMsg);
+            })
             if (parameter !== "add") {
                 getItemDtoFromApi(parameter, user.token)
                 .then(response => {
@@ -65,9 +74,7 @@ const AddItem = (props) => {
         if (!itemName || itemName.trim() === "") {
             alert("Item name must be present")
         } else {
-            let item = getItemToAddOrUpdate(
-                parameter, 
-                currentFolderContext, 
+            let item = getItemToAddOrUpdate( 
                 itemName, 
                 user, 
                 folderToAddInto, 
@@ -75,6 +82,9 @@ const AddItem = (props) => {
                 category, 
                 description, 
                 itemPrice);
+            if (item.folderId === "NO_FOLDER") {
+                item.folderId = null;
+            }
             let requestMethod = parameter === "add" ? 'post' : 'put';
             addOrUpdateItem(requestMethod, requestString, item, user.token)
               .then((response) => {
@@ -130,6 +140,16 @@ const AddItem = (props) => {
                     onChange={(e) => setCategory(e.target.value)}>
                     <option defaultValue={category}>Choose...</option>
                     {categories.map(category => <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>)}
+                </select>
+
+                <label>Folder</label>
+                <select 
+                    className="form-select"
+                    id="inputGroupSelect02"
+                    onChange={(e) => setFolderToAddInto(e.target.value)}>
+                    <option defaultValue={folderToAddInto}>Choose...</option>
+                    <option value={null}>NO_FOLDER</option>
+                    {allFolders.map(folder => <option key={folder.folderId} value={folder.folderId}>{folder.folderName}</option>)}
                 </select>
 
                 <label>Description</label>

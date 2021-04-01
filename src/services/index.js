@@ -102,6 +102,14 @@ export const getInventoryContent = (pathString, token) =>
     }
 )
 
+export const getAllUserFoldersFromApi = (userId, token) => 
+    axios.get(`/api/folders/user/${userId}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+)
+
 export const addFodlerWithApi = (newFolder, token) =>
     axios.post('/api/folders', newFolder, { 
         headers: {

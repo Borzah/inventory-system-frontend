@@ -11,15 +11,11 @@ export const handleBigOnePieceString = (str) => {
     return pieces.join(" ");
 }
 
-export const getItemToAddOrUpdate = (parameter, currentFolderContext, itemName, user, folderToAddInto, serialNumber, category, description, itemPrice) => {
+export const getItemToAddOrUpdate = (itemName, user, folderToAddInto, serialNumber, category, description, itemPrice) => {
     let item = {
         itemName,
         userId: user.userId,
-    }
-    if (parameter !== "add") {
-        item = {...item, folderId: folderToAddInto}
-    } else if (currentFolderContext) {
-        item = {...item, folderId: currentFolderContext}
+        folderId: folderToAddInto
     }
     if (serialNumber) {
         item = {...item, serialNumber: serialNumber.split(" ").join("")}
