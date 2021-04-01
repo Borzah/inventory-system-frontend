@@ -22,7 +22,8 @@ const RegisterView = () => {
             }
             registerUserIn(registerUser)
             .then(response => {
-                history.push("/")
+                history.push("/");
+                alert("You can login now");
             }).catch(error => {
                 let errMsg =  (error.response.data.message);
                 alert(errMsg);
