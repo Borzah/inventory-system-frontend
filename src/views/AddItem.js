@@ -4,7 +4,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
-import { addImageToItem, addOrUpdateItem, getAllUserFoldersFromApi, getItemDtoFromApi, getItemFromApi } from '../services';
+import { addImageToItem, addOrUpdateItem, getAllUserFoldersFromApi, getItemDtoFromApi } from '../services';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { getItemToAddOrUpdate } from '../utils';
 
@@ -55,7 +55,7 @@ const AddItem = (props) => {
             if (parameter !== "add") {
                 getItemDtoFromApi(parameter, user.token)
                 .then(response => {
-                    const data  = response.data
+                    const data  = response.data;
                     fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice, data.folderId)
                 }).catch(error => {
                     let errMsg =  (error.response.data.message);
@@ -72,7 +72,7 @@ const AddItem = (props) => {
             requestString = `/api/items/${parameter}`;
         }
         if (!itemName || itemName.trim() === "") {
-            alert("Item name must be present")
+            alert("Item name must be present");
         } else {
             let item = getItemToAddOrUpdate( 
                 itemName, 

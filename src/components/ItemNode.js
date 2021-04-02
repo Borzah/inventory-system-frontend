@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { handleBigOnePieceString } from '../utils';
 import { ThemeContext } from '../contexts/ThemeContext';

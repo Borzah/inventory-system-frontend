@@ -1,5 +1,5 @@
-import Table from 'react-bootstrap/Table'
-import { useState, useEffect, useContext } from 'react'
+import Table from 'react-bootstrap/Table';
+import { useState, useEffect, useContext } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAdminStatistics } from '../services';

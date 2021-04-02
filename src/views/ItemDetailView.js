@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { deleteItemWithApi, getItemFromApi } from '../services';
@@ -11,12 +11,12 @@ const ItemDetailView = (props) => {
 
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
-    const user = useSelector(state => state)
+    const user = useSelector(state => state);
 
     const { itemId } = props.match.params;
     const history = useHistory();
 
-    const updateString = `/item/${itemId}`
+    const updateString = `/item/${itemId}`;
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -24,16 +24,16 @@ const ItemDetailView = (props) => {
 
     useEffect(() => {
         if (typeof user === 'undefined') {
-            history.push("/")
+            history.push("/");
         } else if (user.role === "ADMIN") {
-            history.push("/admin")
+            history.push("/admin");
         } else {
-            setIsLoading(true)
+            setIsLoading(true);
             getItemFromApi(itemId, user.token)
                 .then(response => {
-                    const data  = response.data
+                    const data  = response.data;
                     setItem(data);
-                    setIsLoading(false)
+                    setIsLoading(false);
                 }).catch(error => {
                     let errMsg =  (error.response.data.message);
                     alert(errMsg);

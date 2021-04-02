@@ -1,8 +1,8 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ThemeContext } from '../contexts/ThemeContext';
-import { mainTheme, secondTheme, thirdTheme, fourthTheme } from '../themes'
+import { mainTheme, secondTheme, thirdTheme, fourthTheme } from '../themes';
 
 const SettingsView = () => {
 

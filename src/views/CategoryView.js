@@ -62,7 +62,7 @@ export const CategoryView = () => {
             }
             addCategoryToApi(category, user.token)
               .then((response) => {
-                setCategoriesContext([...categoriesContext, response.data])
+                setCategoriesContext([...categoriesContext, response.data]);
                 closeAddCategory();
               }).catch(error => {
                 let errMsg =  (error.response.data.message);

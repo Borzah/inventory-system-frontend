@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
-import ItemNode from '../components/ItemNode'
-import FolderNode from '../components/FolderNode'
-import { Link } from 'react-router-dom'
+import ItemNode from '../components/ItemNode';
+import FolderNode from '../components/FolderNode';
+import { Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
@@ -56,8 +56,8 @@ const ItemHolder = () => {
     const getCategories = (user) => {
         getCategoriesFromApi(user.userId, user.token)
             .then(response => {
-                const data  = response.data
-                setCategoriesContext(data)
+                const data  = response.data;
+                setCategoriesContext(data);
             }).catch(error => {
                 let errMsg =  (error.response.data.message);
                     alert(errMsg);
@@ -68,14 +68,14 @@ const ItemHolder = () => {
         setIsLoading(true);
         getInventoryContent(pathString, user.token)
             .then(response => {
-                const data  = response.data
-                setParentFolderId(data.parentFolderId)
-                setFolders(data.folders)
-                setItems(data.items)
-                setCurrentFolderId(data.currentFolderId)
-                setCurrentFolderContext(data.currentFolderId)
-                setPathName(data.currentFolderPathName)
-                setIsLoading(false)
+                const data  = response.data;
+                setParentFolderId(data.parentFolderId);
+                setFolders(data.folders);
+                setItems(data.items);
+                setCurrentFolderId(data.currentFolderId);
+                setCurrentFolderContext(data.currentFolderId);
+                setPathName(data.currentFolderPathName);
+                setIsLoading(false);
             }).catch(error => {
                 let errMsg =  (error.response.data.message);
                     alert(errMsg);
@@ -84,7 +84,7 @@ const ItemHolder = () => {
 
     const whenGoingOnPage = () => {
         if (currentFolderContext) {
-            getData(`/api/inventory?user=${user.userId}&folder=${currentFolderContext}`)
+            getData(`/api/inventory?user=${user.userId}&folder=${currentFolderContext}`);
         } else {
             getData(`/api/inventory?user=${user.userId}`);
         }
@@ -93,9 +93,9 @@ const ItemHolder = () => {
 
     useEffect(() => {
         if (typeof user === 'undefined') {
-            history.push("/")
+            history.push("/");
         } else if (user.role === "ADMIN") {
-            history.push("/admin")
+            history.push("/admin");
         } else {
             whenGoingOnPage();
         }
@@ -112,7 +112,7 @@ const ItemHolder = () => {
     const addNewFolder = (e) => {
         e.preventDefault();
         if (!folderToAddName || folderToAddName.trim() == "") {
-            alert("Folder name cannot be empty!")
+            alert("Folder name cannot be empty!");
         } else {
             let folderName = folderToAddName.trim();
             let newFolder = {
@@ -137,7 +137,7 @@ const ItemHolder = () => {
         deleteFolderClose();
         deleteFolderWithApi(currentFolderId, user.token)
             .then(res => {
-                setCurrentFolderContext(parentFolderId)
+                setCurrentFolderContext(parentFolderId);
                 goBackToParentFolder();
             });
     }

@@ -1,5 +1,5 @@
-import { useEffect, useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { LOGOUT_USER } from '../constants/actionTypes';
 import { logUserOut } from '../services';

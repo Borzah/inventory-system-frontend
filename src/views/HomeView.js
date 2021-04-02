@@ -1,14 +1,13 @@
 import { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { LOGIN_USER, LOGOUT_USER } from '../constants/actionTypes';
 import { useHistory } from "react-router-dom";
-import { CategoriesContext } from '../contexts/CategoriesContext';
 import { useCookies } from "react-cookie";
 import { 
     getUserDataWithCookie, 
     loginUserIn 
-} from '../services'
+} from '../services';
 import HomeCarousel from '../components/HomeCarousel';
 import { ThemeContext } from '../contexts/ThemeContext';
 
@@ -22,8 +21,6 @@ const HomeView = () => {
     const [password, setPassword] = useState();
 
     const history = useHistory();
-
-    const user = useSelector(state => state);
 
     useEffect(() => {
         if (cookie.jwtToken) {
@@ -54,7 +51,7 @@ const HomeView = () => {
 
     const login = () => {
         if (!username || !password) {
-            alert("Cannot be empty fiels!")
+            alert("Cannot be empty fiels!");
         } else {
             let loginUser = {
                 username,
@@ -62,7 +59,7 @@ const HomeView = () => {
             }
             loginUserIn(loginUser)
             .then(response => {
-                const data  = response.data
+                const data  = response.data;
                 dispatch({
                     type: LOGIN_USER,
                     payload: data

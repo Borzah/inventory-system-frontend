@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ItemNode from '../components/ItemNode';
 import Spinner from 'react-bootstrap/Spinner';
 import { useEffect, useState, useContext } from 'react';
@@ -47,11 +47,11 @@ const AllItems = () => {
         e.preventDefault();
         let res = searchInput.replace(/ /g, "_");
         if (searchAttribute === "" && res === "") {
-            getData(`/api/inventory/user/${user.userId}`)
+            getData(`/api/inventory/user/${user.userId}`);
         } else if (searchAttribute === "") {
             getData(`/api/inventory/user/${user.userId}?search=${res}`);
         } else if (searchInput === "") {
-            getData(`/api/inventory/user/${user.userId}?attribute=${searchAttribute}`)
+            getData(`/api/inventory/user/${user.userId}?attribute=${searchAttribute}`);
         } else {
             getData(`/api/inventory/user/${user.userId}?attribute=${searchAttribute}&search=${res}`);
         }
