@@ -68,6 +68,12 @@ const ItemDetailView = (props) => {
                 <hr></hr>
             </div> : ''}
 
+            {item.folderName ? <div>
+                <h4>Folder:</h4>
+                <div>{item.folderName.length > 20 ? handleBigOnePieceString(item.folderName) : item.folderName}</div>
+                <hr></hr>
+            </div> : ''}
+
             {item.categoryName ? <div>
                 <h4>Category:</h4>
                 <div>{item.categoryName}</div>
