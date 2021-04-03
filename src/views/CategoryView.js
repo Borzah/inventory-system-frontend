@@ -32,7 +32,7 @@ export const CategoryView = () => {
         } else if (user.role === "ADMIN") {
             history.push("/admin");
         } else {
-            getItemsByCategory(user.userId, user.token)
+            getItemsByCategory(user.token)
             .then(response => {
                 let data = response.data;
                 let resultList = [];

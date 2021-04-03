@@ -27,7 +27,7 @@ const HomeView = () => {
             const jwt = cookie.jwtToken;
             getUserDataWithCookie(jwt)
             .then(response => {
-                const data = response.data;
+                const data = {...response.data, token: jwt};
                 dispatch({
                     type: LOGIN_USER,
                     payload: data

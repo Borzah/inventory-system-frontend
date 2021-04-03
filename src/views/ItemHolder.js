@@ -54,7 +54,7 @@ const ItemHolder = () => {
     }
 
     const getCategories = (user) => {
-        getCategoriesFromApi(user.userId, user.token)
+        getCategoriesFromApi(user.token)
             .then(response => {
                 const data  = response.data;
                 setCategoriesContext(data);
@@ -84,9 +84,9 @@ const ItemHolder = () => {
 
     const whenGoingOnPage = () => {
         if (currentFolderContext) {
-            getData(`/api/inventory?user=${user.userId}&folder=${currentFolderContext}`);
+            getData(`/api/inventory?folderId=${currentFolderContext}`);
         } else {
-            getData(`/api/inventory?user=${user.userId}`);
+            getData('/api/inventory');
         }
         getCategories(user);
     }
@@ -103,9 +103,9 @@ const ItemHolder = () => {
 
     const goBackToParentFolder = () => {
         if (parentFolderId) {
-            getData(`/api/inventory?user=${user.userId}&folder=${parentFolderId}`);
+            getData(`/api/inventory?folderId=${parentFolderId}`);
         } else {
-            getData(`/api/inventory?user=${user.userId}`);
+            getData('/api/inventory');
         }
     }
 
@@ -153,7 +153,7 @@ const ItemHolder = () => {
             <hr></hr>
             <div className="row"><h4 className="col-md mw-50">Folders</h4></div>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {folders.map(fol => <div key={fol.folderId} onClick={() => getData(`/api/inventory?user=${user.userId}&folder=${fol.folderId}`)}>
+            {folders.map(fol => <div key={fol.folderId} onClick={() => getData(`/api/inventory?folderId=${fol.folderId}`)}>
                 <FolderNode key={fol.folderId} folder={fol}/>
             </div>)}</div>
             <hr></hr>

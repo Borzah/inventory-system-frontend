@@ -44,7 +44,7 @@ const AddItem = (props) => {
         } else if (user.role === "ADMIN") {
             history.push("/admin");
         } else {
-            getAllUserFoldersFromApi(user.userId, user.token)
+            getAllUserFoldersFromApi(user.token)
             .then(response => {
                 const data = response.data;
                 setAllFolders(data);
@@ -67,16 +67,15 @@ const AddItem = (props) => {
 
     const addItem = (e) => {
         e.preventDefault();
-        let requestString = '/api/items';
+        let requestString = '/api/item';
         if (parameter !== "add") {
-            requestString = `/api/items/${parameter}`;
+            requestString = `/api/item/${parameter}`;
         }
         if (!itemName || itemName.trim() === "") {
             alert("Item name must be present");
         } else {
             let item = getItemToAddOrUpdate( 
                 itemName, 
-                user, 
                 folderToAddInto, 
                 serialNumber, 
                 category, 

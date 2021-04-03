@@ -42,7 +42,7 @@ const Navbar = () => {
 
     const logout = (e) => {
         e.preventDefault();
-        logUserOut(user.userId, user.token)
+        logUserOut(user.token)
         .then(response => {
             dispatch({
                 type: LOGOUT_USER,

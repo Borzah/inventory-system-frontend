@@ -6,8 +6,8 @@ export const loginUserIn = (loginUser) =>
 export const registerUserIn = (registerUser) => 
     axios.post('/api/user/register', registerUser)
 
-export const logUserOut = (userId, token) => 
-    axios.post(`/api/user/logout/${userId}`, {}, { 
+export const logUserOut = (token) => 
+    axios.post('/api/user/logout', {}, { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -22,9 +22,9 @@ export const getUserDataWithCookie = (token) =>
     }
 )
 
-export const getCategoriesFromApi = (userId, token) => 
+export const getCategoriesFromApi = (token) => 
     axios.get(
-        `api/categories/user/${userId}`, {
+        'api/category/all', {
             headers: {
                 'Authorization': `Bearer ${token}`
         }
@@ -42,7 +42,7 @@ export const addOrUpdateItem = (requestMethod, requestString, item, token) =>
 });
 
 export const addImageToItem = (itemId, formData, token) => 
-    axios.post(`/api/images/${itemId}`, formData, { 
+    axios.post(`/api/image/${itemId}`, formData, { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -56,13 +56,13 @@ export const getAllItems = (pathName, token) =>
 })
 
 export const addCategoryToApi = (category, token) =>
-    axios.post('/api/categories', category, {headers: {
+    axios.post('/api/category', category, {headers: {
         'Authorization': `Bearer ${token}`
   }
 })
 
-export const getItemsByCategory = (userId, token) => 
-    axios.get(`http://localhost:8080/api/inventory/user/${userId}/categories`, { 
+export const getItemsByCategory = (token) => 
+    axios.get('/api/inventory/user/categories', { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -79,7 +79,7 @@ export const getItemFromApi = (itemId, token) =>
 )
 
 export const deleteItemWithApi = (itemId, token) =>
-    axios.delete(`/api/items/${itemId}`, { 
+    axios.delete(`/api/item/${itemId}`, { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -87,7 +87,7 @@ export const deleteItemWithApi = (itemId, token) =>
 )
 
 export const getItemDtoFromApi = (itemId, token) =>
-    axios.get(`/api/items/${itemId}`, { 
+    axios.get(`/api/item/${itemId}`, { 
         headers: {
                 'Authorization': `Bearer ${token}`
         }
@@ -102,8 +102,8 @@ export const getInventoryContent = (pathString, token) =>
     }
 )
 
-export const getAllUserFoldersFromApi = (userId, token) => 
-    axios.get(`/api/folders/user/${userId}`, {
+export const getAllUserFoldersFromApi = (token) => 
+    axios.get('/api/folder/all', {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -111,7 +111,7 @@ export const getAllUserFoldersFromApi = (userId, token) =>
 )
 
 export const addFodlerWithApi = (newFolder, token) =>
-    axios.post('/api/folders', newFolder, { 
+    axios.post('/api/folder', newFolder, { 
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -119,7 +119,7 @@ export const addFodlerWithApi = (newFolder, token) =>
 )
 
 export const deleteFolderWithApi = (currentFolderId, token) =>
-    axios.delete(`/api/folders/${currentFolderId}`, {
+    axios.delete(`/api/folder/${currentFolderId}`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
