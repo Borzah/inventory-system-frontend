@@ -67,9 +67,9 @@ const AddItem = (props) => {
 
     const addItem = (e) => {
         e.preventDefault();
-        let requestString = '/api/item';
+        let requestString = '/api/items';
         if (parameter !== "add") {
-            requestString = `/api/item/${parameter}`;
+            requestString = `/api/items/${parameter}`;
         }
         if (!itemName || itemName.trim() === "") {
             alert("Item name must be present");

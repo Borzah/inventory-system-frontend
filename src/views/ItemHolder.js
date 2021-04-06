@@ -116,8 +116,7 @@ const ItemHolder = () => {
         } else {
             let folderName = folderToAddName.trim();
             let newFolder = {
-                folderName: folderName,
-                userId: user.userId
+                folderName: folderName
             }
             if (currentFolderId) {
                 newFolder = {...newFolder, parentId: currentFolderId}

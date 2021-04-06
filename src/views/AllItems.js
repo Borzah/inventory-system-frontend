@@ -39,7 +39,7 @@ const AllItems = () => {
         } else if (user.role === "ADMIN") {
             history.push("/admin");
         } else {
-            getData('/api/inventory/user');
+            getData('/api/inventory/items');
         }
     }, []);
 
@@ -47,13 +47,13 @@ const AllItems = () => {
         e.preventDefault();
         let res = searchInput.replace(/ /g, "_");
         if (searchAttribute === "" && res === "") {
-            getData('/api/inventory/user');
+            getData('/api/inventory/items');
         } else if (searchAttribute === "") {
-            getData(`/api/inventory/user?search=${res}`);
+            getData(`/api/inventory/items?search=${res}`);
         } else if (searchInput === "") {
-            getData(`/api/inventory/user?attribute=${searchAttribute}`);
+            getData(`/api/inventory/items?attribute=${searchAttribute}`);
         } else {
-            getData(`/api/inventory/user?attribute=${searchAttribute}&search=${res}`);
+            getData(`/api/inventory/items?attribute=${searchAttribute}&search=${res}`);
         }
     }
 
