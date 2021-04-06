@@ -6,6 +6,7 @@ import { deleteItemWithApi, getItemFromApi } from '../services';
 import { getDateFromFullDate, handleBigOnePieceString } from '../utils';
 import Spinner from 'react-bootstrap/Spinner';
 import { ThemeContext } from '../contexts/ThemeContext';
+import defaultImage from '../assets/default-img.png';
 
 const ItemDetailView = (props) => {
 
@@ -58,9 +59,13 @@ const ItemDetailView = (props) => {
             <hr></hr>
             {item.imageBytes ? <div>
                 <h4>Item image:</h4>
-                <img src={`data:image/png;base64,${item.imageBytes}`} width={200} height={300}/>
+                <img src={`data:image/png;base64,${item.imageBytes}`} alt="Item image" width={200} height={300}/>
                 <hr></hr>
-            </div> : ''}
+            </div> : 
+            <div>
+                <h4>Item image:</h4><img src={defaultImage} alt="Item image" width={200} height={300}></img>
+                <hr></hr>
+            </div> }
 
             {item.serialNumber ? <div>
                 <h4>Serial number:</h4>
