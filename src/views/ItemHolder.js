@@ -1,17 +1,18 @@
-import { useEffect, useState, useContext } from 'react';
 import ItemNode from '../components/ItemNode';
 import FolderNode from '../components/FolderNode';
+import Spinner from 'react-bootstrap/Spinner';
+import AddFolderModal from '../components/AddFolderModal';
+import DeleteFolderModal from '../components/DeleteFolderModal';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button'
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { CategoriesContext } from '../contexts/CategoriesContext';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { addFodlerWithApi, deleteFolderWithApi, getCategoriesFromApi, getInventoryContent } from '../services';
-import Spinner from 'react-bootstrap/Spinner';
+import { getCategoriesFromApi, getInventoryContent } from '../services';
 import { handleBigOnePieceString } from '../utils';
 import { ThemeContext } from '../contexts/ThemeContext';
+
 
 const ItemHolder = () => {
 
@@ -30,15 +31,12 @@ const ItemHolder = () => {
 
     const user = useSelector(state => state);
 
-    const [folderToAddName, setFolderToAddName] = useState("");
-
     const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
     const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const addFolderClose = () => {
         setShowAddFolder(false);
-        setFolderToAddName();
     }
 
     const addFolderShow = () => {
@@ -109,38 +107,6 @@ const ItemHolder = () => {
         }
     }
 
-    const addNewFolder = (e) => {
-        e.preventDefault();
-        if (!folderToAddName || folderToAddName.trim() == "") {
-            alert("Folder name cannot be empty!");
-        } else {
-            let folderName = folderToAddName.trim();
-            let newFolder = {
-                folderName: folderName
-            }
-            if (currentFolderId) {
-                newFolder = {...newFolder, parentId: currentFolderId}
-            }
-            addFodlerWithApi(newFolder, user.token)
-              .then((response) => {
-                    addFolderClose();
-                    whenGoingOnPage();
-              }).catch(error => {
-                    let errMsg =  (error.response.data.message);
-                    alert(errMsg);
-              });
-        }
-    }
-
-    const deleteFolder = () => {
-        deleteFolderClose();
-        deleteFolderWithApi(currentFolderId, user.token)
-            .then(res => {
-                setCurrentFolderContext(parentFolderId);
-                goBackToParentFolder();
-            });
-    }
-
     return (
         <div className="container mb-3 mt-3">
             <h2><i className="fas fa-warehouse"></i> Inventory</h2>
@@ -152,75 +118,50 @@ const ItemHolder = () => {
             <hr></hr>
             <div className="row"><h4 className="col-md mw-50">Folders</h4></div>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {folders.map(fol => <div key={fol.folderId} onClick={() => getData(`/api/inventory?folderId=${fol.folderId}`)}>
-                <FolderNode key={fol.folderId} folder={fol}/>
-            </div>)}</div>
+            {folders.map(fol => 
+                <div key={fol.folderId} onClick={() => 
+                    getData(`/api/inventory?folderId=${fol.folderId}`)}>
+                    <FolderNode key={fol.folderId} folder={fol}/>
+                </div>)}</div>
             <hr></hr>
             <h4>Items</h4>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
             {items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)}</div>
-            <hr></hr>
-            
-            
+
+            <hr></hr>            
 
             <div className="row">
-                {currentFolderId ? <div className="col-md mt-2"><button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={() => goBackToParentFolder()}
-                >Go Back</button></div> : ''}
                 <div className="col-md mt-2">
-                <Link type="button" className={`btn ${themeContext.buttonTheme}`} to="/item/add">Add Item</Link>
+                <Link type="button" 
+                    className={`btn ${themeContext.buttonTheme}`} 
+                    to="/item/add">Add Item</Link>
                 </div>
                 <div className="col-md mt-2">
-                <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={addFolderShow}>Add folder</button>
+                <button type="button" 
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        onClick={addFolderShow}>Add folder</button>
                 </div>
-                <div className="col-md mt-2">
-                {currentFolderId ? <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={deleteFolderShow}>DeleteFolder</button>: ''}
-                </div>
+                {currentFolderId ? <div className="col-md mt-2">
+                            <button type="button" 
+                            className={`btn ${themeContext.buttonTheme}`} 
+                            onClick={deleteFolderShow}>DeleteFolder</button></div>: ''}
+                {currentFolderId ? <div className="col-md mt-2">
+                    <button type="button" 
+                    className={`btn ${themeContext.buttonTheme}`} 
+                    onClick={() => goBackToParentFolder()}
+                    >Go Back</button></div> : ''}
             </div>
 
-            <Modal
-                show={showAddFolder}
-                onHide={addFolderClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
-                <Modal.Title>Add folder</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+            <AddFolderModal 
+                show={showAddFolder} 
+                hideModal={addFolderClose} 
+                whenGoingOnPage={whenGoingOnPage}/>
 
-                <input className="form-control me-2" type="text" placeholder="New Folder Name" aria-label="New Folder Name"
-                onChange={(e) => setFolderToAddName(e.target.value)}></input>
-                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
-
-                </Modal.Body>
-                <Modal.Footer>
-                <Button className={`${themeContext.buttonTheme}`} onClick={addFolderClose}>
-                    Close
-                </Button>
-                </Modal.Footer>
-            </Modal>
-
-            <Modal
-                show={showDeleteFolder}
-                onHide={setShowDeleteFolder}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
-                <Modal.Title>Are you sure?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-
-                <div className="text-bold">All items and folders in it will be also deleted!</div>
-                <button className={`btn ${themeContext.buttonTheme} mt-2`} type="submit" onClick={() => deleteFolder()}>Delete</button>
-
-                </Modal.Body>
-                <Modal.Footer>
-                <Button className={`${themeContext.buttonTheme}`} onClick={deleteFolderClose}>
-                    Close
-                </Button>
-                </Modal.Footer>
-            </Modal>
+            <DeleteFolderModal 
+                show={showDeleteFolder} 
+                hideModal={deleteFolderClose} 
+                goBackToParentFolder={goBackToParentFolder} 
+                folderId={currentFolderId} />
             
             </div>
             : <Spinner className="extra-margin-top" animation="border" />}

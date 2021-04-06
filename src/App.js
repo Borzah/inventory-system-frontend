@@ -20,7 +20,9 @@ import { ThemeContext } from './contexts/ThemeContext';
 function App() {
     
   const [currentFolderContext, setCurrentFolderContext] = useState(null);
+
   const [categoriesContext, setCategoriesContext] = useState([]);
+  
   const [themeContext, setThemeContext] = useState({
     backgroundTheme: "background-main",
     buttonTheme: "main-button",

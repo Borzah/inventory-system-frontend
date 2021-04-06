@@ -2,13 +2,12 @@ import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import ItemNode from '../components/ItemNode';
-import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import AddCategoryModal from '../components/AddCategoryModal';
 import { useEffect, useState, useContext } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { CategoriesContext } from '../contexts/CategoriesContext';
-import { addCategoryToApi, getItemsByCategory } from '../services';
+import { getItemsByCategory } from '../services';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 export const CategoryView = () => {
@@ -16,10 +15,8 @@ export const CategoryView = () => {
     const history = useHistory();
     const user = useSelector(state => state);
 
-    const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
-    const [categoryToAdd, setCategoryToAdd] = useState(null);
     const [show, setShow] = useState(false);
     const [categoryItems, setCategoryItems] = useState([]);
 
@@ -51,26 +48,6 @@ export const CategoryView = () => {
         }
     }, [])
 
-    const addNewCategory = (e) => {
-        e.preventDefault();
-        if (!categoryToAdd || categoryToAdd.trim() == "") {
-            alert("Category name cannot be empty!");
-        } else {
-            const category = {
-                categoryName: categoryToAdd,
-                userId: user.userId
-            }
-            addCategoryToApi(category, user.token)
-              .then((response) => {
-                setCategoriesContext([...categoriesContext, response.data]);
-                closeAddCategory();
-              }).catch(error => {
-                let errMsg =  (error.response.data.message);
-                alert(errMsg);
-          });
-        }
-    }
-
     return (
         <div className="container mb-3 mt-3">
             <h3><i className="far fa-list-alt"></i> Categories</h3>
@@ -101,39 +78,7 @@ export const CategoryView = () => {
                 Add new category!
             </Button>
 
-            <Modal
-                show={show}
-                onHide={closeAddCategory}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
-                <Modal.Title>Add Category</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                
-                <input 
-                    className="form-control me-2" 
-                    type="text" 
-                    placeholder="New Category" 
-                    aria-label="New Category"
-                    onChange={(e) => setCategoryToAdd(e.target.value)}>
-                </input>
-
-                <button 
-                    className={`btn ${themeContext.buttonTheme}`} 
-                    type="submit" 
-                    onClick={(e) => addNewCategory(e)}>
-                    Add!
-                </button>
-
-                </Modal.Body>
-                <Modal.Footer>
-                <button className={`btn ${themeContext.buttonTheme}`} onClick={closeAddCategory}>
-                    Close
-                </button>
-                </Modal.Footer>
-            </Modal>
+            <AddCategoryModal show={show} hideModal={closeAddCategory}/> 
 
             </div>
         </div>
