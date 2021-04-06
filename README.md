@@ -26,6 +26,3 @@ App runs on http://localhost:3000/
 |------------------|------------|--------|
 |  admin@mail.com  | password   | Admin  |
 |  john@mail.com  | password   | User    |
-|  anna@mail.com  | password   | User    |
-|  mike@mail.com  | password   | User    |
-|  jane@mail.com  | password   | User    |
