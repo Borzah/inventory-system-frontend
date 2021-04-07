@@ -6,14 +6,17 @@ import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { 
     getUserDataWithCookie, 
-    loginUserIn 
+    loginUserIn, 
+    getCategoriesFromApi
 } from '../services';
 import HomeCarousel from '../components/HomeCarousel';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { CategoriesContext } from '../contexts/CategoriesContext';
 
 const HomeView = () => {
 
     const [themeContext, setThemeContext] = useContext(ThemeContext);
+    const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
 
     const [cookie, setCookie, removeCookie] = useCookies(["jwtToken"]);
 
@@ -33,6 +36,7 @@ const HomeView = () => {
                     payload: data
                 })
                 if (data.role === 'USER') {
+                    getCategories(jwt);
                     history.push("/inventory");
                 } else {
                     history.push("/admin");
@@ -70,6 +74,7 @@ const HomeView = () => {
                     }
                 )
                 if (data.role === 'USER') {
+                    getCategories(data.token);
                     history.push("/inventory");
                 } else {
                     history.push("/admin");
@@ -80,6 +85,21 @@ const HomeView = () => {
                 }
             })
         }
+    }
+
+    const getCategories = (token) => {
+        getCategoriesFromApi(token)
+            .then(response => {
+                const data  = response.data;
+                setCategoriesContext(data);
+            }).catch(error => {
+                dispatch({
+                    type: LOGOUT_USER,
+                    payload: {}
+                })
+                let errMsg =  (error.response.data.message);
+                alert(errMsg);
+            })
     }
 
     return (

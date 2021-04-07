@@ -6,10 +6,9 @@ import DeleteFolderModal from '../components/DeleteFolderModal';
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
-import { CategoriesContext } from '../contexts/CategoriesContext';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getCategoriesFromApi, getInventoryContent } from '../services';
+import { getInventoryContent } from '../services';
 import { handleBigOnePieceString } from '../utils';
 import { ThemeContext } from '../contexts/ThemeContext';
 
@@ -32,7 +31,6 @@ const ItemHolder = () => {
     const user = useSelector(state => state);
 
     const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
-    const [categoriesContext, setCategoriesContext] = useContext(CategoriesContext);
     const [themeContext, setThemeContext] = useContext(ThemeContext);
 
     const addFolderClose = () => {
@@ -49,17 +47,6 @@ const ItemHolder = () => {
 
     const deleteFolderClose = () => {
         setShowDeleteFolder(false);
-    }
-
-    const getCategories = (user) => {
-        getCategoriesFromApi(user.token)
-            .then(response => {
-                const data  = response.data;
-                setCategoriesContext(data);
-            }).catch(error => {
-                let errMsg =  (error.response.data.message);
-                    alert(errMsg);
-            })
     }
 
     const getData = (pathString) => {
@@ -86,7 +73,6 @@ const ItemHolder = () => {
         } else {
             getData('/api/inventory');
         }
-        getCategories(user);
     }
 
     useEffect(() => {

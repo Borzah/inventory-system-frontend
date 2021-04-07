@@ -4,7 +4,12 @@ import { useState, useContext, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CategoriesContext } from '../contexts/CategoriesContext';
-import { addImageToItem, addOrUpdateItem, getAllUserFoldersFromApi, getItemDtoFromApi } from '../services';
+import { 
+    addImageToItem, 
+    addOrUpdateItem, 
+    getAllUserFoldersFromApi, 
+    getItemDtoFromApi 
+} from '../services';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { getItemToAddOrUpdate } from '../utils';
 
@@ -28,6 +33,9 @@ const AddItem = (props) => {
     const [itemPrice, setItemPrice] = useState(null)
     const [folderToAddInto, setFolderToAddInto] = useState(currentFolderContext);
     const [allFolders, setAllFolders] = useState([]);
+    
+    const [initialCategory, setInitialCategory] = useState(null);
+    const [initialFolder, setInitialFolder] = useState(null);
 
     const fillInput = (name, serialNum, cat, desc, price, folder) => {
         setItemName(name);
@@ -52,10 +60,13 @@ const AddItem = (props) => {
                 let errMsg =  (error.response.data.message);
                 alert(errMsg);
             })
+            setInitialFolder(currentFolderContext);
             if (parameter !== "add") {
                 getItemDtoFromApi(parameter, user.token)
                 .then(response => {
                     const data  = response.data;
+                    setInitialCategory(data.categoryId);
+                    setInitialFolder(data.folderId);
                     fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice, data.folderId)
                 }).catch(error => {
                     let errMsg =  (error.response.data.message);
@@ -81,8 +92,11 @@ const AddItem = (props) => {
                 category, 
                 description, 
                 itemPrice);
-            if (item.folderId === "NO_FOLDER") {
+            if (item.folderId === "NO_FOLDER" || item.folderId === "Choose_") {
                 item.folderId = null;
+            }
+            if (item.categoryId === "Choose_") {
+                item.categoryId = null; 
             }
             let requestMethod = parameter === "add" ? 'post' : 'put';
             addOrUpdateItem(requestMethod, requestString, item, user.token)
@@ -147,7 +161,7 @@ const AddItem = (props) => {
                     className="form-select"
                     id="inputGroupSelect01"
                     onChange={(e) => setCategory(e.target.value)}>
-                    <option defaultValue={category}>Choose...</option>
+                    <option value={initialCategory ? initialCategory : null}>Choose_</option>
                     {categories.map(category => 
                         <option 
                             key={category.categoryId} 
@@ -161,7 +175,7 @@ const AddItem = (props) => {
                     className="form-select"
                     id="inputGroupSelect02"
                     onChange={(e) => setFolderToAddInto(e.target.value)}>
-                    <option defaultValue={folderToAddInto}>Choose...</option>
+                    <option value={initialFolder ? initialFolder : null}>Choose_</option>
                     <option value={null}>NO_FOLDER</option>
                     {allFolders.map(folder => 
                         <option 
