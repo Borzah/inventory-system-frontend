@@ -63,7 +63,7 @@ const ItemDetailView = (props) => {
                 <hr></hr>
             </div> : 
             <div>
-                <h4>Item image:</h4><img src={defaultImage} alt="Item image" width={200} height={300}></img>
+                <h4>No image yet</h4><img src={defaultImage} alt="Item image" width={200} height={300}></img>
                 <hr></hr>
             </div> }
 
