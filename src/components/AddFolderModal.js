@@ -50,21 +50,44 @@ const AddFolderModal = ({ show, hideModal, whenGoingOnPage }) => {
                 backdrop="static"
                 keyboard={true}
             >
-                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
-                <Modal.Title>Add folder</Modal.Title>
+                <Modal.Header 
+                    style={{color: "white"}} 
+                    className={`${themeContext.backgroundTheme}`}>
+
+                    <Modal.Title>
+                        Add folder
+                    </Modal.Title>
+
                 </Modal.Header>
+
                 <Modal.Body>
 
-                <input className="form-control me-2" type="text" placeholder="New Folder Name" aria-label="New Folder Name"
-                onChange={(e) => setFolderToAddName(e.target.value)}></input>
-                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => addNewFolder(e)}>Add!</button>
+                    <input 
+                        className="form-control me-2" 
+                        type="text" 
+                        placeholder="New Folder Name" 
+                        aria-label="New Folder Name"
+                        onChange={(e) => setFolderToAddName(e.target.value)}>
+                    </input>
+                    <button 
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        type="submit" 
+                        onClick={(e) => addNewFolder(e)}>
+                        Add!
+                    </button>
 
-                </Modal.Body>
+                    </Modal.Body>
+
                 <Modal.Footer>
-                <Button className={`${themeContext.buttonTheme}`} onClick={setHideModal}>
-                    Close
-                </Button>
+
+                    <Button 
+                        className={`${themeContext.buttonTheme}`} 
+                        onClick={setHideModal}>
+                        Close
+                    </Button>
+
                 </Modal.Footer>
+                
             </Modal>
     )
 }

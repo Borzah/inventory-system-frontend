@@ -29,24 +29,41 @@ const DeleteItemModal = ({ show, hideModal, itemToDeleteId }) => {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header style={{color: "white"}} 
-                              className={`${themeContext.backgroundTheme}`}>
-                <Modal.Title>Are you sure?</Modal.Title>
+                <Modal.Header 
+                    style={{color: "white"}} 
+                    className={`${themeContext.backgroundTheme}`}>
+
+                    <Modal.Title>
+                        Are you sure?
+                    </Modal.Title>
+
                 </Modal.Header>
+
                 <Modal.Body>
 
-                <div className="text-bold">All item data will be gone!</div>
-                <button 
-                    className={`btn ${themeContext.buttonTheme} mt-2`} 
-                    type="submit" 
-                    onClick={() => deleteItem()}>Delete</button>
+                    <div className="text-bold">
+                        All item data will be gone!
+                    </div>
+
+                    <button 
+                        className={`btn ${themeContext.buttonTheme} mt-2`} 
+                        type="submit" 
+                        onClick={() => deleteItem()}>
+                        Delete
+                    </button>
 
                 </Modal.Body>
+
                 <Modal.Footer>
-                <Button className={`${themeContext.buttonTheme}`} onClick={hideModal}>
-                    Cancel
-                </Button>
+
+                    <Button 
+                        className={`${themeContext.buttonTheme}`} 
+                        onClick={hideModal}>
+                        Cancel
+                    </Button>
+
                 </Modal.Footer>
+                
             </Modal>
     )
 }

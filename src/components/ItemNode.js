@@ -13,12 +13,17 @@ const ItemNode = (props) => {
 
     return (
         <div className="col mb-4">
-            <div onClick={() => history.push(pathString)} 
-            className={`${themeContext.elementNode} border border-dark rounded m-2 p-3 shadow-sm`}>
+        
+            <div 
+                onClick={() => history.push(pathString)} 
+                className={`${themeContext.elementNode} border border-dark rounded m-2 p-3 shadow-sm`}>
+
                 <i className="far fa-sticky-note"></i> 
                 {props.item.itemName.length > 20 ? 
                     handleBigOnePieceString(props.item.itemName) : props.item.itemName}
+
             </div>
+            
         </div>
     )
 }

@@ -59,48 +59,60 @@ const AllItems = () => {
 
     return (
         <div className="container mb-3 mt-3">
-        <h2><i className="fas fa-cubes"></i> Items</h2>
-        <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
-        <div className="container">
-        <form className="row">
-        <input 
-            className="form-control me-2 col-md mt-2" 
-            type="search" placeholder="Search" 
-            aria-label="Search" 
-            onChange={(e) => setSearchInput(e.target.value)}>
-        </input>
 
-        <select 
-            className="form-select col-md mt-2"
-            id="inputGroupSelect01"
-            onChange={(e) => setSearchAttribute(e.target.value)}>
-            <option defaultValue="">Search by</option>
-            <option value="name">Name</option>
-            <option value="serialNumber">Serial number</option>
-            <option value="category">Category</option>
-            <option value="description">Description</option>
-            <option value="price">Price</option>        
-        </select>
+            <h2>
+                <i className="fas fa-cubes"></i> Items
+            </h2>
 
-        <button 
-            className={`btn ${themeContext.buttonTheme} col-md mt-2`} 
-            type="submit" 
-            onClick={(e) => searchForItems(e)}>
-        <i className="fas fa-search"></i> Search</button>
-        
-        </form>
-        </div>
+            <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
 
-        <hr></hr>
-        
-        {
-            !isLoading ? 
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                {items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)} </div>: 
-            <Spinner className="extra-margin-top" animation="border" />
-        }
-        
-        </div>
+                <div className="container">
+
+                    <form className="row">
+
+                        <input 
+                            className="form-control me-2 col-md mt-2" 
+                            type="search" placeholder="Search" 
+                            aria-label="Search" 
+                            onChange={(e) => setSearchInput(e.target.value)}>
+                        </input>
+
+                        <select 
+                            className="form-select col-md mt-2"
+                            id="inputGroupSelect01"
+                            onChange={(e) => setSearchAttribute(e.target.value)}>
+                            <option defaultValue="">Search everywhere</option>
+                            <option value="name">Search by name</option>
+                            <option value="serialNumber">Search by serial number</option>
+                            <option value="category">Search by category</option>
+                            <option value="description">Search by description</option>
+                            <option value="price">Search by price</option>        
+                        </select>
+
+                        <button 
+                            className={`btn ${themeContext.buttonTheme} col-md mt-2`} 
+                            type="submit" 
+                            onClick={(e) => searchForItems(e)}>
+                            <i className="fas fa-search"></i> Search
+                        </button>
+                    
+                    </form>
+
+                </div>
+
+            <hr></hr>
+            
+            {
+                !isLoading ? 
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                        {items.map(itm => 
+                            <ItemNode key={itm.itemId} item={itm}/>)} 
+                    </div>: 
+                    <Spinner className="extra-margin-top" animation="border" />
+            }
+            
+            </div>
+
         </div>
     )
 }

@@ -84,40 +84,54 @@ const HomeView = () => {
 
     return (
         <>
+
         <HomeCarousel />
+
         <div className="container mb-3 mt-3">
 
-        <div className="container mb-5 mt-5 pb-3 pt-3 shadow-lg rounded">
-            <h3 className="d-flex justify-content-around mb-4">
-            <div><i className="fas fa-user-ninja"></i> Login</div></h3>
+            <div className="container mb-5 mt-5 pb-3 pt-3 shadow-lg rounded">
 
-            <input 
-                className="form-control me-2 mb-3" 
-                type="email" 
-                placeholder="Username" 
-                aria-label="Username"
-                onChange={(e) => setUsername(e.target.value)}>
-            </input>
+                <h3 className="d-flex justify-content-around mb-4">
+                    <div>
+                        <i className="fas fa-user-ninja"></i> Login
+                    </div>
+                </h3>
 
-            <input 
-                className="form-control me-2 mb-3" 
-                type="password" 
-                placeholder="Password" 
-                aria-label="Password"
-                onChange={(e) => setPassword(e.target.value)}>
-            </input>
+                <input 
+                    className="form-control me-2 mb-3" 
+                    type="email" 
+                    placeholder="Username" 
+                    aria-label="Username"
+                    onChange={(e) => setUsername(e.target.value)}>
+                </input>
 
-            <div className="d-flex justify-content-around mb-3">
-                <button className={`btn ${themeContext.buttonTheme}`} type="submit" onClick={(e) => login(e)}>
-                 Login</button>
+                <input 
+                    className="form-control me-2 mb-3" 
+                    type="password" 
+                    placeholder="Password" 
+                    aria-label="Password"
+                    onChange={(e) => setPassword(e.target.value)}>
+                </input>
+
+                <div className="d-flex justify-content-around mb-3">
+                    <button 
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        type="submit" 
+                        onClick={(e) => login(e)}>
+                        Login
+                    </button>
+                </div>
+
+                <div className="d-flex justify-content-around">
+                    <Link 
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        to="/register">
+                        Register
+                    </Link>
+                </div>
+
             </div>
-
-            <div className="d-flex justify-content-around">
-                <Link className={`btn ${themeContext.buttonTheme}`} to="/register">
-                 Register</Link>
             
-            </div>
-        </div>
         </div>
         </>
     )

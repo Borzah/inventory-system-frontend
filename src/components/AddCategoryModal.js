@@ -46,32 +46,45 @@ const AddCategoryModal = ({ show, hideModal }) => {
                 backdrop="static"
                 keyboard={true}
             >
-                <Modal.Header style={{color: "white"}} className={`${themeContext.backgroundTheme}`}>
-                <Modal.Title>Add Category</Modal.Title>
+                <Modal.Header 
+                    style={{color: "white"}} 
+                    className={`${themeContext.backgroundTheme}`}>
+
+                    <Modal.Title>
+                        Add Category
+                    </Modal.Title>
+
                 </Modal.Header>
-                <Modal.Body>
-                
-                <input 
-                    className="form-control me-2" 
-                    type="text" 
-                    placeholder="New Category" 
-                    aria-label="New Category"
-                    onChange={(e) => setCategoryToAdd(e.target.value)}>
-                </input>
 
-                <button 
-                    className={`btn ${themeContext.buttonTheme}`} 
-                    type="submit" 
-                    onClick={(e) => addNewCategory(e)}>
-                    Add!
-                </button>
+                    <Modal.Body>
+                    
+                        <input 
+                            className="form-control me-2" 
+                            type="text" 
+                            placeholder="New Category" 
+                            aria-label="New Category"
+                            onChange={(e) => setCategoryToAdd(e.target.value)}>
+                        </input>
 
-                </Modal.Body>
+                        <button 
+                            className={`btn ${themeContext.buttonTheme}`} 
+                            type="submit" 
+                            onClick={(e) => addNewCategory(e)}>
+                            Add!
+                        </button>
+
+                    </Modal.Body>
+
                 <Modal.Footer>
-                <button className={`btn ${themeContext.buttonTheme}`} onClick={setHideModal}>
-                    Close
-                </button>
+
+                    <button 
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        onClick={setHideModal}>
+                        Close
+                    </button>
+
                 </Modal.Footer>
+                
             </Modal>
     )
 }

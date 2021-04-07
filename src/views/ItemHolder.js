@@ -109,62 +109,107 @@ const ItemHolder = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h2><i className="fas fa-warehouse"></i> Inventory</h2>
+
+            <h2>
+                <i className="fas fa-warehouse"></i> Inventory
+            </h2>
             
             { !isLoading ?
-            <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
+                <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
 
-            <p className="h6 text-start">{pathName.length > 20 ? handleBigOnePieceString(pathName) : pathName}</p>
-            <hr></hr>
-            <div className="row"><h4 className="col-md mw-50">Folders</h4></div>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {folders.map(fol => 
-                <div key={fol.folderId} onClick={() => 
-                    getData(`/api/inventory?folderId=${fol.folderId}`)}>
-                    <FolderNode key={fol.folderId} folder={fol}/>
-                </div>)}</div>
-            <hr></hr>
-            <h4>Items</h4>
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-            {items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)}</div>
+                    <p className="h6 text-start">
+                        {pathName.length > 20 
+                            ? handleBigOnePieceString(pathName) 
+                            : pathName}
+                    </p>
 
-            <hr></hr>            
+                    <hr></hr>
 
-            <div className="row">
-                <div className="col-md mt-2">
-                <Link type="button" 
-                    className={`btn ${themeContext.buttonTheme}`} 
-                    to="/item/add">Add Item</Link>
+                    <div className="row">
+                        <h4 className="col-md mw-50">
+                            Folders
+                        </h4>
+                    </div>
+
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                        {folders.map(fol => 
+                            <div 
+                                key={fol.folderId} 
+                                onClick={() => getData(`/api/inventory?folderId=${fol.folderId}`)}>
+
+                                <FolderNode key={fol.folderId} folder={fol}/>
+                                
+                            </div>)}
+                    </div>
+
+                    <hr></hr>
+
+                    <h4>Items</h4>
+
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                        {items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)}
+                    </div>
+
+                    <hr></hr>            
+
+                    <div className="row">
+
+                        <div className="col-md mt-2">
+                            <Link 
+                                type="button" 
+                                className={`btn ${themeContext.buttonTheme}`} 
+                                to="/item/add">
+                                Add Item
+                            </Link>
+                        </div>
+
+                        <div className="col-md mt-2">
+                            <button 
+                                type="button" 
+                                className={`btn ${themeContext.buttonTheme}`} 
+                                onClick={addFolderShow}>
+                                Add folder
+                            </button>
+                        </div>
+
+                        {currentFolderId ?   
+                            <div className="col-md mt-2">
+                                <button 
+                                    type="button" 
+                                    className={`btn ${themeContext.buttonTheme}`} 
+                                    onClick={deleteFolderShow}>
+                                    DeleteFolder
+                                </button>
+                            </div> : ''}
+
+                        {currentFolderId ? 
+                            <div className="col-md mt-2">
+                                <button 
+                                    type="button" 
+                                    className={`btn ${themeContext.buttonTheme}`} 
+                                    onClick={() => goBackToParentFolder()}>
+                                    Go Back
+                                </button>
+                            </div> : ''}
+
+                    </div>
+
+                    <AddFolderModal 
+                        show={showAddFolder} 
+                        hideModal={addFolderClose} 
+                        whenGoingOnPage={whenGoingOnPage} />
+
+                    <DeleteFolderModal 
+                        show={showDeleteFolder} 
+                        hideModal={deleteFolderClose} 
+                        goBackToParentFolder={goBackToParentFolder} 
+                        folderId={currentFolderId} />
+                
                 </div>
-                <div className="col-md mt-2">
-                <button type="button" 
-                        className={`btn ${themeContext.buttonTheme}`} 
-                        onClick={addFolderShow}>Add folder</button>
-                </div>
-                {currentFolderId ? <div className="col-md mt-2">
-                            <button type="button" 
-                            className={`btn ${themeContext.buttonTheme}`} 
-                            onClick={deleteFolderShow}>DeleteFolder</button></div>: ''}
-                {currentFolderId ? <div className="col-md mt-2">
-                    <button type="button" 
-                    className={`btn ${themeContext.buttonTheme}`} 
-                    onClick={() => goBackToParentFolder()}
-                    >Go Back</button></div> : ''}
-            </div>
 
-            <AddFolderModal 
-                show={showAddFolder} 
-                hideModal={addFolderClose} 
-                whenGoingOnPage={whenGoingOnPage}/>
+                : <Spinner className="extra-margin-top" animation="border" />
+            }
 
-            <DeleteFolderModal 
-                show={showDeleteFolder} 
-                hideModal={deleteFolderClose} 
-                goBackToParentFolder={goBackToParentFolder} 
-                folderId={currentFolderId} />
-            
-            </div>
-            : <Spinner className="extra-margin-top" animation="border" />}
         </div>
     )
 }

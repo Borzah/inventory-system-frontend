@@ -37,7 +37,9 @@ const RegisterView = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h2><i className="fas fa-user-plus"></i> Register</h2>
+            <h2>
+                <i className="fas fa-user-plus"></i> Register
+            </h2>
             
             <div className="container mb-5 mt-5 pb-3 pt-3 shadow-lg rounded">
 
@@ -59,15 +61,20 @@ const RegisterView = () => {
 
                 <div className="d-flex justify-content-around">
                     <button 
-                    className={`btn ${themeContext.buttonTheme}`} 
-                    type="submit" 
-                    onClick={(e) => register(e)}>
-                     Register</button>
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        type="submit" 
+                        onClick={(e) => register(e)}>
+                        Register
+                    </button>
                 </div>
 
                 <div className="d-flex justify-content-around mt-3">
-                    <Link type="button" className={`btn ${themeContext.buttonTheme}`} to="/">
-                     Back</Link>
+                    <Link 
+                        type="button" 
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        to="/">
+                        Back
+                    </Link>
                 </div>
             
             </div>

@@ -40,8 +40,10 @@ const AdminView = () => {
             <h2><i className="fas fa-chart-bar"></i> Statistics</h2>
 
             <Table striped bordered hover responsive>
+
                 <thead 
-                className={`secondary-block ${themeContext.backgroundTheme}`}>
+                    className={`secondary-block ${themeContext.backgroundTheme}`}>
+
                     <tr>
                         <th>#</th>
                         <th>User</th>
@@ -50,7 +52,9 @@ const AdminView = () => {
                         <th>Registered At</th>
                         <th>Last item added</th>
                     </tr>
+
                 </thead>
+
                 <tbody>
                     {stats.map((stat, index) => 
                         <tr key={index}>
@@ -63,6 +67,7 @@ const AdminView = () => {
                         </tr>
                     )}
                 </tbody>
+                
                 </Table>
 
         </div>

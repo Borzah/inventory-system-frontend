@@ -109,36 +109,51 @@ const AddItem = (props) => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h3>{parameter === "add" ? 'Add item' : 'Update item'}</h3>
+
+            <h3>
+                {parameter === "add" ? 'Add item' : 'Update item'}
+            </h3>
             
             <form>
+
                 <label>Name</label>
                 <input 
-                className="form-control me-2 m-1" 
-                type="text" 
-                value={itemName}
-                aria-label="Item Name"
-                onChange={(e) => setItemName(e.target.value)}></input>
+                    className="form-control me-2 m-1" 
+                    type="text" 
+                    value={itemName}
+                    aria-label="Item Name"
+                    onChange={(e) => setItemName(e.target.value)}>
+                </input>
 
                 <label>Serial Number</label>
                 <input className="form-control me-2 m-1" 
-                type="text"
-                value={serialNumber}
-                aria-label="Serial Number"
-                onChange={(e) => setSerialNumber(e.target.value)}></input>
+                    type="text"
+                    value={serialNumber}
+                    aria-label="Serial Number"
+                    onChange={(e) => setSerialNumber(e.target.value)}>
+                </input>
 
-                <label htmlFor="formFile" className="form-label">Image</label>
-                <input className="form-control m-1"
-                 type="file" 
-                 onChange={(e) => setSelectedFile(e.target.files[0])}></input>
+                <label htmlFor="formFile" className="form-label">
+                    Image
+                </label>
+                <input 
+                    className="form-control m-1"
+                    type="file" 
+                    onChange={(e) => setSelectedFile(e.target.files[0])}>
+                </input>
 
-                 <label>Category</label>
+                <label>Category</label>
                 <select 
                     className="form-select"
                     id="inputGroupSelect01"
                     onChange={(e) => setCategory(e.target.value)}>
                     <option defaultValue={category}>Choose...</option>
-                    {categories.map(category => <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>)}
+                    {categories.map(category => 
+                        <option 
+                            key={category.categoryId} 
+                            value={category.categoryId}>
+                            {category.categoryName}
+                        </option>)}
                 </select>
 
                 <label>Folder</label>
@@ -148,40 +163,56 @@ const AddItem = (props) => {
                     onChange={(e) => setFolderToAddInto(e.target.value)}>
                     <option defaultValue={folderToAddInto}>Choose...</option>
                     <option value={null}>NO_FOLDER</option>
-                    {allFolders.map(folder => <option key={folder.folderId} value={folder.folderId}>{folder.folderName}</option>)}
+                    {allFolders.map(folder => 
+                        <option 
+                            key={folder.folderId} 
+                            value={folder.folderId}>
+                            {folder.folderName}
+                        </option>)}
                 </select>
 
                 <label>Description</label>
                 <input 
-                className="form-control me-2 m-1" 
-                type="text" 
-                value={description}
-                aria-label="Description"
-                onChange={(e) => setDescription(e.target.value)}></input>
+                    className="form-control me-2 m-1" 
+                    type="text" 
+                    value={description}
+                    aria-label="Description"
+                    onChange={(e) => setDescription(e.target.value)}>
+                </input>
 
                 <label>Price</label>
                 <input 
-                className="form-control me-2 m-1" 
-                type="number"
-                value={itemPrice} 
-                aria-label="Price"
-                onChange={(e) => setItemPrice(e.target.value)}></input>
+                    className="form-control me-2 m-1" 
+                    type="number"
+                    value={itemPrice} 
+                    aria-label="Price"
+                    onChange={(e) => setItemPrice(e.target.value)}>
+                </input>
 
                 {parameter === "add" ? 
-                <button className={`btn ${themeContext.buttonTheme}`} 
+                    <button 
+                        className={`btn ${themeContext.buttonTheme}`} 
                         type="submit" 
-                        onClick={(e) => addItem(e)}>Add</button>
+                        onClick={(e) => addItem(e)}>
+                        Add
+                    </button>
 
-                : <button className={`btn ${themeContext.buttonTheme}`} 
-                          type="submit" 
-                          onClick={(e) => addItem(e)}>Update</button> }
+                    : <button 
+                        className={`btn ${themeContext.buttonTheme}`} 
+                        type="submit" 
+                        onClick={(e) => addItem(e)}>
+                        Update
+                      </button> }
+
             </form>
 
             <hr></hr>
 
-            <Link type="button" 
-                  className={`btn ${themeContext.buttonTheme}`} 
-                  to="/inventory">Cancel
+            <Link 
+                type="button" 
+                className={`btn ${themeContext.buttonTheme}`} 
+                to="/inventory">
+                Cancel
             </Link>
 
         </div>

@@ -11,21 +11,18 @@ const HomeCarousel = () => {
                 <img
                 className="d-block w-100"
                 src={picOne}
-                alt="First slide"
                 />
             </Carousel.Item>
             <Carousel.Item>
                 <img
                 className="d-block w-100"
                 src={picTwo}
-                alt="Second slide"
                 />
             </Carousel.Item>
             <Carousel.Item>
                 <img
                 className="d-block w-100"
                 src={picThree}
-                alt="Third slide"
                 />
             </Carousel.Item>
         </Carousel>

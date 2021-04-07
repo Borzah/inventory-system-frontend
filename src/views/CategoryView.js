@@ -50,37 +50,58 @@ export const CategoryView = () => {
 
     return (
         <div className="container mb-3 mt-3">
-            <h3><i className="far fa-list-alt"></i> Categories</h3>
+
+            <h3>
+                <i className="far fa-list-alt"></i> Categories
+            </h3>
             
             <div className="container rounded mb-3 pb-3 pt-3 mt-3 shadow-lg">
             
-            {categoryItems.length > 0 ? <Accordion>
+                {categoryItems.length > 0 ? 
+                    
+                    <Accordion>
 
-                {categoryItems.map((category, index) => 
-                    <Card key={index}>
-                        <Accordion.Toggle className={`${themeContext.backgroundTheme} secondary-block-pointer pt-3 pb-3`} as={Card.Header} eventKey={index.toString()}>
-                        {category.name}
-                        </Accordion.Toggle>
-                        <Accordion.Collapse eventKey={index.toString()}>
-                        <Card.Body>
-                            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-                            {category.items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)}
-                            </div>
-                        </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>)}
-            </Accordion>
-             : <p>You have no items with categories yet.</p>
-                }
+                    {categoryItems.map((category, index) => 
+                        <Card key={index}>
+                            <Accordion.Toggle 
+                                className={`${themeContext.backgroundTheme} secondary-block-pointer pt-3 pb-3`} 
+                                as={Card.Header} 
+                                eventKey={index.toString()}>
+
+                                {category.name}
+
+                            </Accordion.Toggle>
+
+                            <Accordion.Collapse eventKey={index.toString()}>
+
+                                <Card.Body>
+                                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+                                    {category.items.map(itm => <ItemNode key={itm.itemId} item={itm}/>)}
+                                    </div>
+                                </Card.Body>
+
+                            </Accordion.Collapse>
+
+                        </Card>)}
+
+                    </Accordion>
+
+                    : <p>You have no items with categories yet.</p>}
+
                 <hr></hr>
             
-            <Button className={`${themeContext.buttonTheme}`} onClick={openAddCategory}>
+            <Button 
+                className={`${themeContext.buttonTheme}`} 
+                onClick={openAddCategory}>
                 Add new category!
             </Button>
 
-            <AddCategoryModal show={show} hideModal={closeAddCategory}/> 
+            <AddCategoryModal 
+                show={show} 
+                hideModal={closeAddCategory}/> 
 
             </div>
+            
         </div>
     )
 }
