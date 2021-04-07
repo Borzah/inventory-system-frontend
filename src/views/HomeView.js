@@ -22,6 +22,7 @@ const HomeView = () => {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [canClickLogin, setCanClickLogin] = useState(true);
 
     const history = useHistory();
 
@@ -54,36 +55,40 @@ const HomeView = () => {
     const dispatch = useDispatch();
 
     const login = () => {
-        if (!username || !password) {
-            alert("Cannot be empty fiels!");
-        } else {
-            let loginUser = {
-                username,
-                password
-            }
-            loginUserIn(loginUser)
-            .then(response => {
-                const data  = response.data;
-                dispatch({
-                    type: LOGIN_USER,
-                    payload: data
-                })
-                setCookie("jwtToken", data.token,
-                    {
-                        path: '/'
+        if (canClickLogin) {
+            if (!username || !password) {
+                alert("Cannot be empty fiels!");
+            } else {
+                setCanClickLogin(false);
+                let loginUser = {
+                    username,
+                    password
+                }
+                loginUserIn(loginUser)
+                .then(response => {
+                    const data  = response.data;
+                    dispatch({
+                        type: LOGIN_USER,
+                        payload: data
+                    })
+                    setCookie("jwtToken", data.token,
+                        {
+                            path: '/'
+                        }
+                    )
+                    if (data.role === 'USER') {
+                        getCategories(data.token);
+                        history.push("/inventory");
+                    } else {
+                        history.push("/admin");
                     }
-                )
-                if (data.role === 'USER') {
-                    getCategories(data.token);
-                    history.push("/inventory");
-                } else {
-                    history.push("/admin");
-                }
-            }).catch(error => {
-                if (error.response.data.message === "Unauthorized") {
-                    alert("Wrong username and/or password!");
-                }
-            })
+                }).catch(error => {
+                    if (error.response.data.message === "Unauthorized") {
+                        setCanClickLogin(true);
+                        alert("Wrong username and/or password!");
+                    }
+                })
+            }
         }
     }
 

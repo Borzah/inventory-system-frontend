@@ -11,27 +11,32 @@ const RegisterView = () => {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [canClickRegister, setCanClickRegister] = useState(true);
 
     const register = () => {
-        if (!username || !password) {
-            alert("Cannot be empty fields!")
-        } else {
-            let registerUser = {
-                username,
-                password
-            }
-            registerUserIn(registerUser)
-            .then(response => {
-                history.push("/");
-                alert("You can login now");
-            }).catch(error => {
-                let errMsg =  (error.response.data.message);
-                if (errMsg === "Validation failed for object='registerDto'. Error count: 1") {
-                    alert("Make sure username is valid email.")
-                } else {
-                    alert(errMsg);
+        if (canClickRegister) {
+            if (!username || !password) {
+                alert("Cannot be empty fields!");
+            } else {
+                setCanClickRegister(false);
+                let registerUser = {
+                    username,
+                    password
                 }
-          });
+                registerUserIn(registerUser)
+                .then(response => {
+                    history.push("/");
+                    alert("You can login now");
+                }).catch(error => {
+                    setCanClickRegister(true);
+                    let errMsg =  (error.response.data.message);
+                    if (errMsg === "Validation failed for object='registerDto'. Error count: 1") {
+                        alert("Make sure username is valid email.")
+                    } else {
+                        alert(errMsg);
+                    }
+            });
+            }
         }
     }
 
