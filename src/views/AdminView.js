@@ -54,7 +54,7 @@ const AdminView = () => {
                 <tbody>
                     {stats.map((stat, index) => 
                         <tr key={index}>
-                            <th>{index}</th>
+                            <th>{index + 1}</th>
                             <th>{stat.username}</th>
                             <th>{stat.numOfItems}</th>
                             <th>{stat.numOfFolders}</th>

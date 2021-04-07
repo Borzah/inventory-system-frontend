@@ -2,23 +2,23 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
-import { deleteFolderWithApi } from '../services';
-import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
+import { deleteItemWithApi } from '../services';
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const DeleteFolderModal = ({ show, hideModal, goBackToParentFolder, folderId }) => {
+const DeleteItemModal = ({ show, hideModal, itemToDeleteId }) => {
 
     const [themeContext, setThemeContext] = useContext(ThemeContext);
-    const [currentFolderContext, setCurrentFolderContext] = useContext(CurrentFolderContext);
+
+    const history = useHistory();
 
     const user = useSelector(state => state);
 
-    const deleteFolder = () => {
+    const deleteItem = () => {
         hideModal();
-        deleteFolderWithApi(folderId, user.token)
+        deleteItemWithApi(itemToDeleteId, user.token)
             .then(res => {
-                setCurrentFolderContext(folderId);
-                goBackToParentFolder();
+                history.goBack();
             });
     }
 
@@ -35,11 +35,11 @@ const DeleteFolderModal = ({ show, hideModal, goBackToParentFolder, folderId }) 
                 </Modal.Header>
                 <Modal.Body>
 
-                <div className="text-bold">All items and folders in it will be also deleted!</div>
+                <div className="text-bold">All item data will be gone!</div>
                 <button 
                     className={`btn ${themeContext.buttonTheme} mt-2`} 
                     type="submit" 
-                    onClick={() => deleteFolder()}>Delete</button>
+                    onClick={() => deleteItem()}>Delete</button>
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -51,4 +51,4 @@ const DeleteFolderModal = ({ show, hideModal, goBackToParentFolder, folderId }) 
     )
 }
 
-export default DeleteFolderModal;
+export default DeleteItemModal;

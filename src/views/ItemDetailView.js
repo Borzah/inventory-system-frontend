@@ -4,9 +4,10 @@ import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { deleteItemWithApi, getItemFromApi } from '../services';
+import { getItemFromApi } from '../services';
 import { getDateFromFullDate, handleBigOnePieceString } from '../utils';
 import { ThemeContext } from '../contexts/ThemeContext';
+import DeleteItemModal from '../components/DeleteItemModal';
 
 const ItemDetailView = (props) => {
 
@@ -15,6 +16,7 @@ const ItemDetailView = (props) => {
     const user = useSelector(state => state);
 
     const { itemId } = props.match.params;
+
     const history = useHistory();
 
     const updateString = `/item/${itemId}`;
@@ -22,6 +24,15 @@ const ItemDetailView = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [item, setItem] = useState();
+    const [showDeleteItem, setShowDeleteItem] = useState(false);
+
+    const deleteItemShow = () => {
+        setShowDeleteItem(true);
+    }
+
+    const deleteItemClose = () => {
+        setShowDeleteItem(false);
+    }
 
     useEffect(() => {
         if (typeof user === 'undefined') {
@@ -41,13 +52,6 @@ const ItemDetailView = (props) => {
                 })
         }
     }, [])
-
-    const deleteItem = () => {
-        deleteItemWithApi(itemId, user.token)
-            .then(res => {
-                history.goBack();
-            });
-    }
 
     return (
         <div>{ !isLoading ?
@@ -98,10 +102,15 @@ const ItemDetailView = (props) => {
             </div> : ''}
 
             <div className="d-flex justify-content-between mt-2">
-                <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={deleteItem}>Delete</button>
+                <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={deleteItemShow}>Delete</button>
                 <Link type="button" className={`btn ${themeContext.buttonTheme}`} to={updateString}>Update</Link>
                 <button type="button" className={`btn ${themeContext.buttonTheme}`} onClick={() => {history.goBack();}}>Go back</button>
             </div>
+
+            <DeleteItemModal 
+                show={showDeleteItem}
+                hideModal={deleteItemClose}
+                itemToDeleteId={itemId}/>
             
         </div> : <Spinner className="extra-margin-top" animation="border" />
         }
