@@ -26,6 +26,8 @@ const HomeView = () => {
 
     const history = useHistory();
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         if (cookie.jwtToken) {
             const jwt = cookie.jwtToken;
@@ -51,8 +53,6 @@ const HomeView = () => {
             })
         }
     }, [])
-
-    const dispatch = useDispatch();
 
     const login = () => {
         if (canClickLogin) {
