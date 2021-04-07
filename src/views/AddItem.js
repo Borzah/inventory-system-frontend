@@ -65,6 +65,7 @@ const AddItem = (props) => {
                 getItemDtoFromApi(parameter, user.token)
                 .then(response => {
                     const data  = response.data;
+                    console.log(data);
                     setInitialCategory(data.categoryId);
                     setInitialFolder(data.folderId);
                     fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice, data.folderId)
@@ -95,7 +96,7 @@ const AddItem = (props) => {
             if (item.folderId === "NO_FOLDER" || item.folderId === "Choose_") {
                 item.folderId = null;
             }
-            if (item.categoryId === "Choose_") {
+            if (item.categoryId === "NO_CATEGORY" || item.categoryId === "Choose_") {
                 item.categoryId = null; 
             }
             let requestMethod = parameter === "add" ? 'post' : 'put';
@@ -134,7 +135,7 @@ const AddItem = (props) => {
                 <input 
                     className="form-control me-2 m-1" 
                     type="text" 
-                    value={itemName}
+                    value={itemName || ""}
                     aria-label="Item Name"
                     onChange={(e) => setItemName(e.target.value)}>
                 </input>
@@ -142,7 +143,7 @@ const AddItem = (props) => {
                 <label>Serial Number</label>
                 <input className="form-control me-2 m-1" 
                     type="text"
-                    value={serialNumber}
+                    value={serialNumber || ""}
                     aria-label="Serial Number"
                     onChange={(e) => setSerialNumber(e.target.value)}>
                 </input>
@@ -161,7 +162,8 @@ const AddItem = (props) => {
                     className="form-select"
                     id="inputGroupSelect01"
                     onChange={(e) => setCategory(e.target.value)}>
-                    <option value={initialCategory ? initialCategory : null}>Choose_</option>
+                    <option value={initialCategory ? initialCategory : ""}>Choose_</option>
+                    <option value={""}>NO_CATEGORY</option>
                     {categories.map(category => 
                         <option 
                             key={category.categoryId} 
@@ -175,8 +177,8 @@ const AddItem = (props) => {
                     className="form-select"
                     id="inputGroupSelect02"
                     onChange={(e) => setFolderToAddInto(e.target.value)}>
-                    <option value={initialFolder ? initialFolder : null}>Choose_</option>
-                    <option value={null}>NO_FOLDER</option>
+                    <option value={initialFolder ? initialFolder : ""}>Choose_</option>
+                    <option value={""}>NO_FOLDER</option>
                     {allFolders.map(folder => 
                         <option 
                             key={folder.folderId} 
@@ -189,7 +191,7 @@ const AddItem = (props) => {
                 <input 
                     className="form-control me-2 m-1" 
                     type="text" 
-                    value={description}
+                    value={description || ""}
                     aria-label="Description"
                     onChange={(e) => setDescription(e.target.value)}>
                 </input>
@@ -198,7 +200,7 @@ const AddItem = (props) => {
                 <input 
                     className="form-control me-2 m-1" 
                     type="number"
-                    value={itemPrice} 
+                    value={itemPrice || ""} 
                     aria-label="Price"
                     onChange={(e) => setItemPrice(e.target.value)}>
                 </input>
