@@ -36,7 +36,7 @@ const ItemDetailView = (props) => {
 
     useEffect(() => {
         if (typeof user === 'undefined' || user.role === "ADMIN") {
-            history.push("/");
+            history.replace("/");
         } else {
             setIsLoading(true);
             getItemFromApi(itemId, user.token)

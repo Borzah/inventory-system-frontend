@@ -25,7 +25,7 @@ export const CategoryView = () => {
 
     useEffect(() => {
         if (typeof user === 'undefined' || user.role === "ADMIN") {
-            history.push("/");
+            history.replace("/");
         } else {
             getItemsByCategory(user.token)
             .then(response => {

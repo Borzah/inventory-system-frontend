@@ -27,7 +27,7 @@ const AdminView = () => {
 
     useEffect(() => {
         if (typeof user === 'undefined' || user.role === "USER") {
-            history.push("/");
+            history.replace("/");
         } else {
             getData();
         }

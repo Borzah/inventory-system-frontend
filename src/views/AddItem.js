@@ -48,7 +48,7 @@ const AddItem = (props) => {
 
     useEffect(() => {
         if (typeof user === 'undefined' || user.role === "ADMIN") {
-            history.push("/");
+            history.replace("/");
         } else {
             getAllUserFoldersFromApi(user.token)
             .then(response => {
