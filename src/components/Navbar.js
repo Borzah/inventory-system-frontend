@@ -60,7 +60,8 @@ const Navbar = () => {
                 <div 
                     style={{color: "white"}} 
                     className="navbar-brand">
-                    Inventory
+                    <Link to="/" style={{color: "white", textDecoration: "none"}}>
+                    Inventory</Link>
                 </div>
                 
                 <button 
@@ -89,7 +90,7 @@ const Navbar = () => {
                                 <Link 
                                     style={{color: "white"}} 
                                     className="nav-link" 
-                                    to='/inventory'>
+                                    to='/'>
                                     <i className="fas fa-warehouse"></i> My inventory
                                 </Link>
                             </li> : ''}
@@ -119,20 +120,20 @@ const Navbar = () => {
                                 <Link 
                                     style={{color: "white"}} 
                                     className="nav-link" 
-                                    to='/admin'>
+                                    to='/'>
                                     <i className="fas fa-chart-bar"></i> Statistics
                                 </Link>
                             </li> : ''}
 
-                        {(isAdmin || isUser) && cookie.jwtToken ?
-                            <li className="nav-item">
-                                <Link 
-                                    style={{color: "white"}} 
-                                    className="nav-link" 
-                                    to="/settings">
-                                    <i className="fas fa-cog"></i> Settings
-                                </Link>
-                            </li> : ''}
+
+                        <li className="nav-item">
+                            <Link 
+                                style={{color: "white"}} 
+                                className="nav-link" 
+                                to="/settings">
+                                <i className="fas fa-cog"></i> Settings
+                            </Link>
+                        </li>
 
                         {(isAdmin || isUser) && cookie.jwtToken ?
                         <li className="nav-item">

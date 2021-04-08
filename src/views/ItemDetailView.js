@@ -3,7 +3,7 @@ import defaultImage from '../assets/default-img.png';
 import DeleteItemModal from '../components/DeleteItemModal';
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import { useHistory, useDispatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getItemFromApi } from '../services';
 import { getDateFromFullDate, handleBigOnePieceString } from '../utils';
@@ -35,10 +35,8 @@ const ItemDetailView = (props) => {
     }
 
     useEffect(() => {
-        if (typeof user === 'undefined') {
+        if (typeof user === 'undefined' || user.role === "ADMIN") {
             history.push("/");
-        } else if (user.role === "ADMIN") {
-            history.push("/admin");
         } else {
             setIsLoading(true);
             getItemFromApi(itemId, user.token)
@@ -47,6 +45,9 @@ const ItemDetailView = (props) => {
                     setItem(data);
                     setIsLoading(false);
                 }).catch(error => {
+                    if (error.response.status === 401) {
+                        window.location.reload();
+                    }
                     let errMsg =  (error.response.data.message);
                     alert(errMsg);
                 })

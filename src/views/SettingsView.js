@@ -1,22 +1,10 @@
-import { useEffect, useContext } from 'react';
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { mainTheme, secondTheme, thirdTheme, fourthTheme } from '../themes';
 
 const SettingsView = () => {
 
     const [themeContext, setThemeContext] = useContext(ThemeContext);
-
-    const user = useSelector(state => state);
-    
-    const history = useHistory();
-
-    useEffect(() => {
-        if (typeof user === 'undefined') {
-            history.push("/")
-        }
-    }, [])
 
     return (
         <div className="container mb-3 mt-3">

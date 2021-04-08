@@ -47,10 +47,8 @@ const AddItem = (props) => {
     }
 
     useEffect(() => {
-        if (typeof user === 'undefined') {
+        if (typeof user === 'undefined' || user.role === "ADMIN") {
             history.push("/");
-        } else if (user.role === "ADMIN") {
-            history.push("/admin");
         } else {
             getAllUserFoldersFromApi(user.token)
             .then(response => {
@@ -108,13 +106,13 @@ const AddItem = (props) => {
                     formData.append("imageFile", selectedFile);
                     addImageToItem(itemId, formData, user.token)
                         .then((response) => {
-                            history.push("/inventory");
+                            history.push("/");
                         }).catch(error => {
                             let errMsg =  (error.response.data.message);
                             alert(errMsg);
                       });
                 }
-                history.push("/inventory");
+                history.push("/");
               }).catch(error => {
                 let errMsg =  (error.response.data.message);
                 alert(errMsg);
@@ -227,7 +225,7 @@ const AddItem = (props) => {
             <Link 
                 type="button" 
                 className={`btn ${themeContext.buttonTheme}`} 
-                to="/inventory">
+                to="/">
                 Cancel
             </Link>
 

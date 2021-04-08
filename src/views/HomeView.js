@@ -40,10 +40,7 @@ const HomeView = () => {
                 })
                 if (data.role === 'USER') {
                     getCategories(jwt);
-                    history.push("/inventory");
-                } else {
-                    history.push("/admin");
-                }
+                } 
             }).catch(error => {
                 dispatch({
                     type: LOGOUT_USER,
@@ -78,9 +75,6 @@ const HomeView = () => {
                     )
                     if (data.role === 'USER') {
                         getCategories(data.token);
-                        history.push("/inventory");
-                    } else {
-                        history.push("/admin");
                     }
                 }).catch(error => {
                     if (error.response.data.message === "Unauthorized") {

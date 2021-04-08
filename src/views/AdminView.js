@@ -26,10 +26,8 @@ const AdminView = () => {
     }
 
     useEffect(() => {
-        if (typeof user === 'undefined') {
+        if (typeof user === 'undefined' || user.role === "USER") {
             history.push("/");
-        } else if (user.role === "USER") {
-            history.push("/inventory");
         } else {
             getData();
         }

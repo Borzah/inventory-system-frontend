@@ -76,13 +76,7 @@ const ItemHolder = () => {
     }
 
     useEffect(() => {
-        if (typeof user === 'undefined') {
-            history.push("/");
-        } else if (user.role === "ADMIN") {
-            history.push("/admin");
-        } else {
-            whenGoingOnPage();
-        }
+        whenGoingOnPage();
     }, []);
 
     const goBackToParentFolder = () => {
@@ -101,13 +95,30 @@ const ItemHolder = () => {
             </h2>
             
             { !isLoading ?
+
                 <div className="container mb-3 pb-3 pt-3 mt-3 shadow-lg">
 
-                    <p className="h6 text-start">
+                <div className="d-flex flex-row bd-highlight mb-3">
+
+                {currentFolderId ? 
+                    <div>
+                        <button 
+                            type="button" 
+                            className={`btn ${themeContext.buttonTheme}`} 
+                            onClick={() => goBackToParentFolder()}>
+                            <i className="fas fa-arrow-left"></i>
+                        </button>
+                    </div> : ''}
+
+                    <div style={{width: "20px"}}></div>
+
+                    <p className="h6 text-start align-self-end">
                         {pathName.length > 20 
                             ? handleBigOnePieceString(pathName) 
                             : pathName}
                     </p>
+                
+                </div>
 
                     <hr></hr>
 
@@ -167,17 +178,6 @@ const ItemHolder = () => {
                                     DeleteFolder
                                 </button>
                             </div> : ''}
-
-                        {currentFolderId ? 
-                            <div className="col-md mt-2">
-                                <button 
-                                    type="button" 
-                                    className={`btn ${themeContext.buttonTheme}`} 
-                                    onClick={() => goBackToParentFolder()}>
-                                    Go Back
-                                </button>
-                            </div> : ''}
-
                     </div>
 
                     <AddFolderModal 

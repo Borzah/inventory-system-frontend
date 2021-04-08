@@ -34,10 +34,8 @@ const AllItems = () => {
     }
 
     useEffect(() => {
-        if (typeof user === 'undefined') {
+        if (typeof user === 'undefined' || user.role === "ADMIN") {
             history.push("/");
-        } else if (user.role === "ADMIN") {
-            history.push("/admin");
         } else {
             getData('/api/inventory/items');
         }

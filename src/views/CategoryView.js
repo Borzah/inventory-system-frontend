@@ -24,10 +24,8 @@ export const CategoryView = () => {
     const openAddCategory = () => setShow(true);
 
     useEffect(() => {
-        if (typeof user === 'undefined') {
+        if (typeof user === 'undefined' || user.role === "ADMIN") {
             history.push("/");
-        } else if (user.role === "ADMIN") {
-            history.push("/admin");
         } else {
             getItemsByCategory(user.token)
             .then(response => {
