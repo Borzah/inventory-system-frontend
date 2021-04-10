@@ -7,15 +7,12 @@ import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentFolderContext } from "../contexts/CurrentFolderContext";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { getInventoryContent } from '../services';
 import { handleBigOnePieceString } from '../utils';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 
 const ItemHolder = () => {
-
-    const history = useHistory();
 
     const [folders, setFolders] = useState([]);
     const [items, setItems] = useState([]);

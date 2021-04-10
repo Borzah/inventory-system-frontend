@@ -22,15 +22,15 @@ function App() {
 
     return (
         <Provider store={store}>
-          <ThemeContext.Provider value={[themeContext, setThemeContext]}>
-            <CurrentFolderContext.Provider value={[currentFolderContext, setCurrentFolderContext]}>
-              <CategoriesContext.Provider value={[categoriesContext, setCategoriesContext]}>
-                <div className={`App ${themeContext.appTheme}`}>
-                 <RouterComponent />
-                </div>
-              </CategoriesContext.Provider>
-            </CurrentFolderContext.Provider>
-          </ThemeContext.Provider>
+        <ThemeContext.Provider value={[themeContext, setThemeContext]}>
+        <CurrentFolderContext.Provider value={[currentFolderContext, setCurrentFolderContext]}>
+        <CategoriesContext.Provider value={[categoriesContext, setCategoriesContext]}>
+        <div className={`App ${themeContext.appTheme}`}>
+        <RouterComponent />
+        </div>
+        </CategoriesContext.Provider>
+        </CurrentFolderContext.Provider>
+        </ThemeContext.Provider>
         </Provider>
     );
 }

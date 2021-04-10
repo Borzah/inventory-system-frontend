@@ -31,7 +31,6 @@ const RegisterView = () => {
                     setCanClickRegister(true);
                     if (error.response.data) {
                         let errMsg =  (error.response.data.message);
-                        console.log(error.response)
                         alert(errMsg);
                     } else {
                         alert("Make sure username is valid email.")

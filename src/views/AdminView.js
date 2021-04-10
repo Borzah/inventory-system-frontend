@@ -21,7 +21,11 @@ const AdminView = () => {
                 const data  = response.data;
                 setStats(data);
             }).catch(error => {
-                console.log(error);
+                if (error.response.status === 401) {
+                    window.location.reload();
+                }
+                let errMsg =  (error.response.data.message);
+                alert(errMsg);
             })
     }
 

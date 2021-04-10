@@ -63,7 +63,6 @@ const AddItem = (props) => {
                 getItemDtoFromApi(parameter, user.token)
                 .then(response => {
                     const data  = response.data;
-                    console.log(data);
                     setInitialCategory(data.categoryId);
                     setInitialFolder(data.folderId);
                     fillInput(data.itemName, data.serialNumber, data.categoryId, data.description, data.itemPrice, data.folderId)
@@ -106,13 +105,13 @@ const AddItem = (props) => {
                     formData.append("imageFile", selectedFile);
                     addImageToItem(itemId, formData, user.token)
                         .then((response) => {
-                            history.push("/");
+                            history.replace("/");
                         }).catch(error => {
                             let errMsg =  (error.response.data.message);
                             alert(errMsg);
                       });
                 }
-                history.push("/");
+                history.replace("/");
               }).catch(error => {
                 let errMsg =  (error.response.data.message);
                 alert(errMsg);
@@ -128,7 +127,6 @@ const AddItem = (props) => {
             </h3>
             
             <form>
-
                 <label>Name</label>
                 <input 
                     className="form-control me-2 m-1" 
@@ -217,11 +215,8 @@ const AddItem = (props) => {
                         onClick={(e) => addItem(e)}>
                         Update
                       </button> }
-
             </form>
-
             <hr></hr>
-
             <Link 
                 type="button" 
                 className={`btn ${themeContext.buttonTheme}`} 

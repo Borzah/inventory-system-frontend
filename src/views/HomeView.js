@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { LOGIN_USER, LOGOUT_USER } from '../constants/actionTypes';
-import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { 
     getUserDataWithCookie, 
@@ -23,8 +22,6 @@ const HomeView = () => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [canClickLogin, setCanClickLogin] = useState(true);
-
-    const history = useHistory();
 
     const dispatch = useDispatch();
 

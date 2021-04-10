@@ -3,7 +3,7 @@ export const getDateFromFullDate = (fullDate) =>
 
 export const handleBigOnePieceString = (str) => {
     const max_size = 10;
-    const yardstick = new RegExp(`.{${max_size}}`, 'g'); // /.{10}/g;
+    const yardstick = new RegExp(`.{${max_size}}`, 'g');
     const pieces = str.match(yardstick);
     const accumulated = (pieces.length * max_size);
     const modulo = str.length % accumulated;

@@ -42,6 +42,12 @@ export const CategoryView = () => {
                     }
                 }
                 setCategoryItems(resultList);
+            }).catch(error => {
+                if (error.response.status === 401) {
+                    window.location.reload();
+                }
+                let errMsg =  (error.response.data.message);
+                alert(errMsg);
             })
         }
     }, [])
