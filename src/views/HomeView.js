@@ -77,10 +77,8 @@ const HomeView = () => {
                         getCategories(data.token);
                     }
                 }).catch(error => {
-                    if (error.response.data.message === "Unauthorized") {
-                        setCanClickLogin(true);
-                        alert("Wrong username and/or password!");
-                    }
+                    alert("Wrong username and/or password!");
+                    setCanClickLogin(true);
                 })
             }
         }

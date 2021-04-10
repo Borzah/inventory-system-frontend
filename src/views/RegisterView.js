@@ -29,11 +29,12 @@ const RegisterView = () => {
                     alert("You can login now");
                 }).catch(error => {
                     setCanClickRegister(true);
-                    let errMsg =  (error.response.data.message);
-                    if (errMsg === "Validation failed for object='registerDto'. Error count: 1") {
-                        alert("Make sure username is valid email.")
-                    } else {
+                    if (error.response.data) {
+                        let errMsg =  (error.response.data.message);
+                        console.log(error.response)
                         alert(errMsg);
+                    } else {
+                        alert("Make sure username is valid email.")
                     }
             });
             }
