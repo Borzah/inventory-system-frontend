@@ -82,12 +82,12 @@ const AllItems = () => {
                             className="form-select col-md mt-2"
                             id="inputGroupSelect01"
                             onChange={(e) => setSearchAttribute(e.target.value)}>
-                            <option defaultValue="">Search everywhere</option>
-                            <option value="name">Search by name</option>
+                            <option defaultValue="name">Search by name</option>
                             <option value="serialNumber">Search by serial number</option>
-                            <option value="category">Search by category</option>
                             <option value="description">Search by description</option>
-                            <option value="price">Search by price</option>        
+                            <option value="price">Search by price</option>
+                            <option value="category">Search by category</option>
+                            <option value="folder">Search by folder</option>     
                         </select>
 
                         <button 
