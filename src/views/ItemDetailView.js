@@ -117,7 +117,11 @@ const ItemDetailView = (props) => {
                 {item.categoryName ? 
                     <div>
                         <h4>Category:</h4>
-                        <div>{item.categoryName}</div>
+                        <div>
+                            {item.categoryName.length > 20 
+                                ? handleBigOnePieceString(item.categoryName) 
+                                : item.categoryName}
+                        </div>
                         <hr></hr>
                     </div> : ''}
 
